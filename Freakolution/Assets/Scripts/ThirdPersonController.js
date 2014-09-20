@@ -357,7 +357,7 @@ function Update() {
 	// ANIMATION sector
 	
 	// Set rotation to the move direction
-	/*
+	
 	if (IsGrounded())
 	{
 		
@@ -373,7 +373,7 @@ function Update() {
 			transform.rotation = Quaternion.LookRotation(xzMove);
 		}
 	}	
-	*/
+	
 	// We are in jump mode but just became grounded
 	if (IsGrounded())
 	{

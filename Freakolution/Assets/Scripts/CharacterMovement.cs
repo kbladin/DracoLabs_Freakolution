@@ -4,7 +4,13 @@ using System.Collections;
 public class CharacterMovement : MonoBehaviour {
 
 	private float speed = 20f;
-	
+
+	public Animator[] animators;
+
+	void Start()
+	{
+		animators = gameObject.GetComponentsInChildren<Animator>();
+	}
 	
 	void FixedUpdate()
 	{
@@ -15,5 +21,9 @@ public class CharacterMovement : MonoBehaviour {
 		
 		rigidbody.velocity = moveDirection * speed;
 		//rigidbody.AddForce(moveDirection*speed);
+
+		// Animation data
+		//Mathf.Abs (rigidbody.velocity);
+		animators [0].SetFloat ("speed", rigidbody.velocity.magnitude);
 	}
 }
