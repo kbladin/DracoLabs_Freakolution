@@ -4,8 +4,7 @@ using System.Collections;
 public class CharacterSprite : MonoBehaviour {
 	
 	private Rigidbody parent_rigid_body;
-	
-	public Animator anim;
+	private Animator anim;
 	
 	void Start()
 	{
