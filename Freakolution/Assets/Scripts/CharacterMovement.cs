@@ -21,6 +21,7 @@ public class CharacterMovement : MonoBehaviour {
 
 		}
 		moveDirection = new Vector3(horizontalInput, 0, verticalInput);
+
 		rigidbody.velocity = moveDirection * speed;
 		//rigidbody.AddForce(moveDirection*speed);
 	}
