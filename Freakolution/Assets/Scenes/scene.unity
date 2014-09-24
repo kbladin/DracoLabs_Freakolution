@@ -140,8 +140,6 @@ GameObject:
   - 114: {fileID: 378571539}
   - 143: {fileID: 378571535}
   - 114: {fileID: 378571534}
-  - 54: {fileID: 378571540}
-  - 136: {fileID: 378571538}
   m_Layer: 8
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -221,20 +219,6 @@ Transform:
   - {fileID: 2129984705}
   m_Father: {fileID: 0}
   m_RootOrder: 1
---- !u!136 &378571538
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 13600000, guid: d127608cf4dbaa642bdcefa5c70b4c52,
-    type: 2}
-  m_PrefabInternal: {fileID: 1471439825}
-  m_GameObject: {fileID: 378571533}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 1.25999999
-  m_Height: 3.73000002
-  m_Direction: 1
-  m_Center: {x: 0, y: 2.46000004, z: 0}
 --- !u!114 &378571539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,22 +232,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 0
---- !u!54 &378571540
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 5400000, guid: d127608cf4dbaa642bdcefa5c70b4c52,
-    type: 2}
-  m_PrefabInternal: {fileID: 1471439825}
-  m_GameObject: {fileID: 378571533}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!1001 &720279523
 Prefab:
   m_ObjectHideFlags: 0
@@ -529,7 +497,9 @@ Prefab:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1372557124}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+    - {fileID: 13600000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
   m_RootGameObject: {fileID: 378571533}
   m_IsPrefabParent: 0
