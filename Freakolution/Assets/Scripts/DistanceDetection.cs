@@ -21,6 +21,7 @@ public class DistanceDetection : MonoBehaviour {
 			
 			if(Physics.Raycast(rayCast, out hit))
 			{
+				distance = hit.distance;
 				Debug.Log(hit.distance);
 				
 				//hit.collider.GetComponent<PlayerScripts
