@@ -378,6 +378,39 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
+	public Node FindClosestWalkableNode(Vector3 pos){
+		int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) :  Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
+		int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
+		
+		if (x < 0 || z < 0 || x > Map.GetLength(0) || z > Map.GetLength(1))
+			return null;
+		
+		Node n = Map[x, z];
+		
+		if (!n.walkable)
+		{
+			n = null;
+			int radius = 1;
+			while (n == null  && x - radius > 0 && z -radius > 0 
+			       && x + radius < Map.GetLength(0) && z + radius < Map.GetLength(1)){
+				for(int i = x - radius; i < x + radius; i++) {
+					for(int j = z - radius; j < z +radius; j++) {
+						if(Map[i, j].walkable) {
+							n = Map[i,j];
+							break;
+						}
+					}
+				}
+				radius ++;
+			}
+		}
+//		UnityEngine.Debug.Log("c free a x=" + n.xCoord + ", y = " +n.zCoord);
+		return n;
+
+
+	}
+
+
 
 	public Node FindRealClosestNode(Vector3 pos)
 	{      
@@ -390,7 +423,6 @@ public class Pathfinder : MonoBehaviour
 		Node n = Map[x, z];
 		return n;
 	}
-
 
 
 
