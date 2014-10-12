@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour {
 	public void LoseHealth(float damage)
 	{
 		//implement damage formula
-		health -= - damage;
+		health -= damage;
 	}
 	
 	private void Attack()

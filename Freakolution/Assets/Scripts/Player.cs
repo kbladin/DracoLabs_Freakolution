@@ -45,6 +45,7 @@ public class Player : MonoBehaviour {
 		
 		if(Physics.Raycast(rayCast, out hit))
 		{	
+			Debug.Log(hit.distance);
 			if(hit.distance < attackRange && hit.transform.tag=="Enemy"){
 				
 				Enemy enemyComponent = hit.transform.GetComponent<Enemy>();
