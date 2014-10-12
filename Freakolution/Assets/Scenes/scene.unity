@@ -167,7 +167,7 @@ MonoBehaviour:
   runMaxAnimationSpeed: 1
   jumpAnimationSpeed: 1.14999998
   landAnimationSpeed: 1
-  walkSpeed: 10
+  walkSpeed: 7
   trotSpeed: 4
   runSpeed: 6
   inAirControlAcceleration: 3
