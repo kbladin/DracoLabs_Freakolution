@@ -49,9 +49,8 @@ public class RandomSpawn : MonoBehaviour {
 				spawnCount = 0;
 				waveCounter++;
 				//Sets a new lower timeLimit with the increasing wave number so that enemies spawn faster with each wave
-				timeLimit -= 0.2f;
-				if(timeLimit < 0.01f)
-					timeLimit = 0.01f;
+				if(timeLimit >= 0.3f)
+					timeLimit -= 0.2f;
 				//Sets the time you got between the waves
 				timer = -waveInterval;
 			}
