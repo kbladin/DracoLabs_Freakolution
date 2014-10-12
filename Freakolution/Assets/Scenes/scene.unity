@@ -168,7 +168,7 @@ MonoBehaviour:
   runMaxAnimationSpeed: 1
   jumpAnimationSpeed: 1.14999998
   landAnimationSpeed: 1
-  walkSpeed: 10
+  walkSpeed: 7
   trotSpeed: 4
   runSpeed: 6
   inAirControlAcceleration: 3
@@ -502,6 +502,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1001 &1471439825
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 1372557124}
+    - target: {fileID: 11400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: walkSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+  m_RootGameObject: {fileID: 378571533}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1617689871
 GameObject:
   m_ObjectHideFlags: 0
