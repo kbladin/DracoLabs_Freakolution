@@ -33,7 +33,8 @@ public class RandomSpawn : MonoBehaviour {
 		
 		//The gameObject that will be spawned
 		public GameObject enemyPrefab;
-		
+				
+		public GameObject player;
 		void Start () {
 			spawnIntervalTimer = 0.0f;
 			spawnCooldownTimer = 0.0f;
@@ -91,11 +92,10 @@ public class RandomSpawn : MonoBehaviour {
 			//The length will be determined by the number of spawn elements in Unity
 			int randomPick = Mathf.Abs(Random.Range(0,spawns.Length));
 			location = spawns[randomPick];
-			
+			enemyPrefab.GetComponent<AI>().setPlayer( player);
 			GameObject enemy = Instantiate(enemyPrefab, location.position, location.rotation) as GameObject;
-			enemies.Add(enemy);
+			
 			enemy.rigidbody.AddForce(location.forward * 100f);
-
 		}
 	
 }
