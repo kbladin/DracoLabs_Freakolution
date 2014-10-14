@@ -37,5 +37,9 @@ public class Node
         G = 0;
         H = 0;
     }
+
+	public Vector3 GetVector(){
+		return new Vector3(xCoord, yCoord, zCoord);
+	}
 }
 

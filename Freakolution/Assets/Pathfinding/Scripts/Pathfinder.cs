@@ -256,6 +256,10 @@ public class Pathfinder : MonoBehaviour
                 if (sortedOpenList.Count == 0)
                 {
                     print("Empty Openlist, closedList");
+
+					Node n = FindRealClosestNode(endPos);
+					n.walkable = false;
+
                     listMethod.Invoke(new List<Vector3>());
                     return;
                 }
@@ -387,7 +391,8 @@ public class Pathfinder : MonoBehaviour
 		
 		Node n = Map[x, z];
 		
-		if (!n.walkable)
+		if (n.currentObject != null)
+//			if (!n.walkable)
 		{
 			n = null;
 			int radius = 1;
@@ -395,12 +400,20 @@ public class Pathfinder : MonoBehaviour
 			       && x + radius < Map.GetLength(0) && z + radius < Map.GetLength(1)){
 				for(int i = x - radius; i < x + radius; i++) {
 					for(int j = z - radius; j < z +radius; j++) {
-						if(Map[i, j].walkable) {
-							n = Map[i,j];
-							break;
+						if(Map[i, j].currentObject == null) {
+//						if(Map[i, j].walkable) {
+							if(n== null)
+								n = Map[i,j];
+							else if(Vector3.Distance(Map[x, z].GetVector(), Map[i,j].GetVector()) < Vector3.Distance(Map[x, z].GetVector(), n.GetVector()))
+								n = Map[i,j];
+							else {
+							}
+//							break;
 						}
 					}
 				}
+
+
 				radius ++;
 			}
 		}
