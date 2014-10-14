@@ -1,59 +1,97 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RandomSpawn : MonoBehaviour {
+
 		// Variables
-		private float timer = 0.0f;
-		private float timeLimit = 2.0f;
-		private float spawnCount = 0.0f;
-		private float maxSpawn = 10.0f;
-		private float waveCounter = 1.0f;
-		private float waveInterval = 10.0f;
+		
+		// A timer that will reset at the end of spawnInterval
+		public float spawnIntervalTimer;
+		// A timer that will reset every spawn cooldown
+		public float spawnCooldownTimer;
+		// A timer that will reset every waveInterval
+		public float waveIntervalTimer;
+		// THe number of spawned enemies each wave
+		private int spawnCount;
+		// The number of waves that have passed (started)
+		private int waveCounter;
+		// THe between waves
+		private float waveInterval;
+		// the time that enemies are spawned in a wave
+		private float spawnInterval;
+		// The time it takes between spawning enemies in a wave
+		private float spawnCooldown;
 				
 		// Empty game objects with the spawn point locations
 		public Transform[] spawns;
 		
-		// Location of the spawned enemy
+		public List<GameObject> enemies;
+		
+		// Location of the latest spawned enemy
 		public Transform location;
 		
+		//The gameObject that will be spawned
 		public GameObject enemyPrefab;
+		
+		void Start () {
+			spawnIntervalTimer = 0.0f;
+			spawnCooldownTimer = 0.0f;
+			waveIntervalTimer = 0.0f;
+			spawnCooldown = 5.0f;
+			spawnCount = 0;
+			waveCounter = 1;
+			waveInterval = 10.0f;
+			spawnInterval = 20.0f;
+		}
 		
 		// Is executed every frame
 		void Update () {
 			
-			timer += Time.deltaTime;
-			//Debug.Log(timer);
-			if(timer >=timeLimit)
-				Spawn();
+			spawnIntervalTimer += Time.deltaTime;
+			
+			if(spawnIntervalTimer < spawnInterval)
+			{
+				spawnCooldownTimer += Time.deltaTime;
+				
+				if(spawnCooldownTimer >=spawnCooldown)
+				{
+					Spawn();
+					spawnCooldownTimer = 0.0f;
+					spawnCount++;
+				}
+						
+			}
+			else
+			{
+				if(enemies.Count == 0){
+					//wait for next wave
+					waveIntervalTimer += Time.deltaTime;
+					if(waveIntervalTimer > waveInterval)
+					{
+						waveCounter++;
+						spawnIntervalTimer=0.0f;
+						spawnCount = 0;
+						spawnCooldown *= 0.8f; 
+					}
+				}
+				
+			}
 			
 		}
 
 
 		
 		void Spawn()
-		{
-			timer = 0;
-			spawnCount++;
-			
+		{		
 			//Will randomly pick a number between 0 and the size of spawns array
 			//The length will be determined by the number of spawn elements in Unity
 			int randomPick = Mathf.Abs(Random.Range(0,spawns.Length));
 			location = spawns[randomPick];
 			
 			GameObject enemy = Instantiate(enemyPrefab, location.position, location.rotation) as GameObject;
-			
+			enemies.Add(enemy);
 			enemy.rigidbody.AddForce(location.forward * 100f);
-			
-			//Check if the correct amount of enemies for the wave has spawned already, then new wave.
-			if (spawnCount == maxSpawn) {
-				spawnCount = 0;
-				waveCounter++;
-				//Sets a new lower timeLimit with the increasing wave number so that enemies spawn faster with each wave
-				if(timeLimit >= 0.3f)
-					timeLimit -= 0.2f;
-				//Sets the time you got between the waves
-				timer = -waveInterval;
-			}
 
 		}
 	

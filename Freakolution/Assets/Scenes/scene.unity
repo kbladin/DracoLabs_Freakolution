@@ -619,11 +619,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0e93fd94edc5b499f78284dc41c47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timer: 0
+  spawnIntervalTimer: 0
+  spawnCooldownTimer: 0
+  waveIntervalTimer: 0
   spawns:
   - {fileID: 129478211}
   - {fileID: 70986795}
   - {fileID: 1211239664}
+  enemies: []
   location: {fileID: 0}
   enemyPrefab: {fileID: 100000, guid: 41a0391549214064c94f55a8d77ce97f, type: 2}
 --- !u!1 &2129984702
