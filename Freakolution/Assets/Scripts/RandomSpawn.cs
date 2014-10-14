@@ -15,7 +15,7 @@ public class RandomSpawn : MonoBehaviour {
 		// THe number of spawned enemies each wave
 		private int spawnCount;
 		// The number of waves that have passed (started)
-		private int waveCounter;
+		public int waveCounter;
 		// THe between waves
 		private float waveInterval;
 		// the time that enemies are spawned in a wave
