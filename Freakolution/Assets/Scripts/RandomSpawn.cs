@@ -48,14 +48,14 @@ public class RandomSpawn : MonoBehaviour {
 		// Is executed every frame
 		void Update () {
 			
-			spawnIntervalTimer += Time.deltaTime;
 			
 			if(spawnIntervalTimer < spawnInterval)
 			{
+				spawnIntervalTimer += Time.deltaTime;
 				spawnCooldownTimer += Time.deltaTime;
 				
 				if(spawnCooldownTimer >=spawnCooldown)
-				{
+				{	
 					Spawn();
 					spawnCooldownTimer = 0.0f;
 					spawnCount++;
@@ -64,7 +64,9 @@ public class RandomSpawn : MonoBehaviour {
 			}
 			else
 			{
-				if(enemies.Count == 0){
+				//Debug.Log(enemies.Count);
+				GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
+				if(enemy.Length == 0){
 					//wait for next wave
 					waveIntervalTimer += Time.deltaTime;
 					if(waveIntervalTimer > waveInterval)
@@ -73,7 +75,8 @@ public class RandomSpawn : MonoBehaviour {
 						spawnIntervalTimer=0.0f;
 						spawnCount = 0;
 						spawnCooldown *= 0.8f; 
-					}
+						waveIntervalTimer = 0.0f;
+				}
 				}
 				
 			}
