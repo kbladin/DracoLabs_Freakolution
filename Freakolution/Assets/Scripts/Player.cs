@@ -61,19 +61,6 @@ public class Player : MonoBehaviour {
 			enemyComponent.LoseHealth(damage);
 		}
 		
-		
-		/*if(Physics.SphereCast(transform.position, 1, rayDirection, out hit))
-		{	
-			cube.position=hit.point;
-			cube.rotation = Quaternion.LookRotation(hit.normal);
-			Debug.Log(hit.distance);
-			Debug.Log (hit.collider.gameObject.name);
-			if(hit.distance < attackRange && hit.transform.tag=="Enemy"){
-				
-				Enemy enemyComponent = hit.transform.GetComponent<Enemy>();
-				enemyComponent.LoseHealth(damage);
-			}
-		}*/
 	}
 	
 	
