@@ -48,7 +48,7 @@ public class Enemy : MonoBehaviour {
 	private void Attack()
 	{
 		RaycastHit hit;
-		Vector3 rayDirection = moveDirection;
+		Vector3 rayDirection = transform.forward;
 		Ray rayCast = new Ray(transform.position, rayDirection);
 		
 		
