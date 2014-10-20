@@ -4,14 +4,16 @@ using System.Collections;
 public class Player : MonoBehaviour {
 	
 	public float health;
+	public bool attacking;
 	private float attackRange;
 	private float damage;
 	//needs this to get movement direction
-	ThirdPersonController controller;
+	public ThirdPersonController controller;
 	
 	// Use this for initialization
 	void Start () 
 	{
+		attacking = false;
 		attackRange = 3f;
 		damage = 30f;
 		health = 200f;
@@ -39,6 +41,7 @@ public class Player : MonoBehaviour {
 	
 	private void Attack() 
 	{
+		attacking = true;
 		RaycastHit hit;
 		Vector3 rayDirection = controller.GetDirection();
 		Ray rayCast = new Ray(transform.position, rayDirection);

@@ -326,7 +326,7 @@ MonoBehaviour:
   runMaxAnimationSpeed: 1
   jumpAnimationSpeed: 1.14999998
   landAnimationSpeed: 1
-  walkSpeed: 10
+  walkSpeed: 6
   trotSpeed: 4
   runSpeed: 6
   inAirControlAcceleration: 3
@@ -390,6 +390,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
+  attacking: 0
+  controller: {fileID: 0}
 --- !u!1 &458603304
 GameObject:
   m_ObjectHideFlags: 0
@@ -1440,7 +1442,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1372557120}
   m_LocalRotation: {x: .21643962, y: 0, z: 0, w: .976296008}
-  m_LocalPosition: {x: 0, y: 13.9502983, z: -15.3615808}
+  m_LocalPosition: {x: 0, y: 6.52211189, z: -12.5280952}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1482,7 +1484,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11400002, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
       propertyPath: m_Camera
@@ -1507,6 +1509,15 @@ Prefab:
     - target: {fileID: 13600000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 21200000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300002, guid: c72a917fdf141441fb2467c9d093bd61,
+        type: 3}
+    - target: {fileID: 11400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: walkSpeed
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
@@ -2211,7 +2222,7 @@ SpriteRenderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 1420324065
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300026, guid: c72a917fdf141441fb2467c9d093bd61, type: 3}
+  m_Sprite: {fileID: 21300002, guid: c72a917fdf141441fb2467c9d093bd61, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!4 &2129984705
 Transform:
