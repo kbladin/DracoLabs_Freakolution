@@ -11,35 +11,30 @@ public class EnemySprite : MonoBehaviour {
 	
 	void FixedUpdate()
 	{
-		/*
+		Enemy enemyComponent = gameObject.GetComponentInParent<Enemy> ();
 		float horizontalAngle = Mathf.Atan2(
-			gameObject.GetComponentInParent<Player>().controller.GetDirection().z,
-			gameObject.GetComponentInParent<Player>().controller.GetDirection().x);
-*/
-		/*
-		anim.SetFloat ("speed", parent_character_controller.velocity.magnitude);
-		float characterSpeed = parent_character_controller.velocity.magnitude;
-
-		anim.speed = characterSpeed > 0.1f ? characterSpeed / 3 : 1.0f;
-		if (gameObject.GetComponentInParent<Player> ().attacking) {
-			anim.speed = 1;
-		}
+			enemyComponent.GetDirection().z,
+			enemyComponent.GetDirection().x);
+	
 		anim.SetFloat ("horizontalAngle", horizontalAngle);
 
-		if (gameObject.GetComponentInParent<Player>().attacking) {
+		float enemySpeed = enemyComponent.GetVelocity().magnitude;
+		anim.SetFloat ("speed", enemySpeed);
+		anim.speed = enemySpeed > 0.1f ? enemySpeed / 3 : 1.0f;
+
+		if (enemyComponent.attacking) {
+			anim.speed = 1;
 			anim.SetBool ("attacking", true);
-			//gameObject.GetComponentInParent<Player> ().attacking = false;
 		}
 
-		if ((anim.GetCurrentAnimatorStateInfo (0).IsName ("Character_attack_back") ||
-		     anim.GetCurrentAnimatorStateInfo (0).IsName ("Character_attack_front") ||
-		     anim.GetCurrentAnimatorStateInfo (0).IsName ("Character_attack_right") ||
-		    anim.GetCurrentAnimatorStateInfo (0).IsName ("Character_attack_left")) &&
+		if ((anim.GetCurrentAnimatorStateInfo (0).IsName ("Enemy_attack_back") ||
+		     anim.GetCurrentAnimatorStateInfo (0).IsName ("Enemy_attack_front") ||
+		     anim.GetCurrentAnimatorStateInfo (0).IsName ("Enemy_attack_right") ||
+		    anim.GetCurrentAnimatorStateInfo (0).IsName ("Enemy_attack_left")) &&
 		    anim.GetCurrentAnimatorStateInfo (0).normalizedTime > 0.8) { // 0.8 due to numerical problems
 			anim.SetBool ("attacking", false);
-			gameObject.GetComponentInParent<Player> ().attacking = false;
+			enemyComponent.attacking = false;
 		}
-		*/
 
 		/*
 		if (anim.GetCurrentAnimatorStateInfo (0).IsName ("Character_attack_left")) {

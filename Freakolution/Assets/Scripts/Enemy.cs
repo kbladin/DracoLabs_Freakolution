@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class Enemy : MonoBehaviour {
-	
+
+	public bool attacking;
+
 	private float health;
 	private float attackCooldownTime;
 	private Vector3 moveDirection;
@@ -44,14 +46,25 @@ public class Enemy : MonoBehaviour {
 		//implement damage formula
 		health -= damage;
 	}
+
+	public Vector3 GetDirection() {
+		// Does not work since the transform is affected by the camera. Need a separate direction vector.
+		return new Vector3(0,0,-1);
+	}
+
+	public Vector3 GetVelocity() {
+		// Function not implemented.
+		return new Vector3(1,0,0);
+	}
 	
 	private void Attack()
 	{
+		attacking = true;
+
 		RaycastHit hit;
-		Vector3 rayDirection = moveDirection;
+		Vector3 rayDirection = transform.forward;
 		Ray rayCast = new Ray(transform.position, rayDirection);
-		
-		
+
 		if(Physics.Raycast(rayCast, out hit))
 		{
 			float distance = hit.distance;
@@ -63,6 +76,5 @@ public class Enemy : MonoBehaviour {
 				attackCooldownTime = 0;
 			}
 		}
-	
 	}
 }

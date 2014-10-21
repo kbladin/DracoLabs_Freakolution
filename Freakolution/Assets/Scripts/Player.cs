@@ -7,14 +7,16 @@ public class Player : MonoBehaviour {
 	public bool attacking;
 	private float attackRange;
 	private float damage;
+	public Transform sphere;
 	//needs this to get movement direction
 	public ThirdPersonController controller;
 	
 	// Use this for initialization
 	void Start () 
 	{
+
 		attacking = false;
-		attackRange = 3f;
+		attackRange = 1f;
 		damage = 30f;
 		health = 200f;
 		controller = GetComponent<ThirdPersonController>();
@@ -32,7 +34,7 @@ public class Player : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-	
+
 	public void LoseHealth(float damage) 
 	{
 		//here needs to be damage formula
@@ -42,19 +44,28 @@ public class Player : MonoBehaviour {
 	private void Attack() 
 	{
 		attacking = true;
-		RaycastHit hit;
-		Vector3 rayDirection = controller.GetDirection();
-		Ray rayCast = new Ray(transform.position, rayDirection);
-		
-		if(Physics.Raycast(rayCast, out hit))
-		{	
-			Debug.Log(hit.distance);
-			if(hit.distance < attackRange && hit.transform.tag=="Enemy"){
-				
-				Enemy enemyComponent = hit.transform.GetComponent<Enemy>();
-				enemyComponent.LoseHealth(damage);
+
+		Vector3 attackDirection = controller.GetDirection();
+		sphere.position=transform.position + attackDirection * attackRange;
+		Collider[] targets = Physics.OverlapSphere(sphere.position, 0.5f);
+		Transform nearest = null;
+		float closestDistance = attackRange+2;
+		foreach (Collider hit in targets){
+			if(hit && hit.tag == "Enemy"){
+				float dist = Vector3.Distance(transform.position, hit.transform.position);
+				if(dist < closestDistance){
+					//Debug.Log(dist);
+					closestDistance = dist;
+					nearest = hit.transform;
+				}
 			}
 		}
+		
+		if(nearest){
+			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
+			enemyComponent.LoseHealth(damage);
+		}
+		
 	}
 	
 	

@@ -18,12 +18,11 @@ public class AI : Pathfinding {
 
 	private Node currentNode;
 	private Node previousNode;
-
+	
 	public void setPlayer(GameObject p) {
 		playerObject = p;
 		player = playerObject.transform;
 	}
-	
 
 	void Start () 
     {
