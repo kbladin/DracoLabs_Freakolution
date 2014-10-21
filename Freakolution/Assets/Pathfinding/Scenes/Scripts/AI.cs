@@ -251,11 +251,16 @@ public class AI : Pathfinding {
 //                }
 //            }
 
-
-
             direction.Normalize();
 
-            
+			Quaternion rotation = Quaternion.LookRotation(direction);
+			//Only want the enemy to rotate around the y axis. Dont know why direction is pointing a little
+			// bit upwards. 
+			rotation[0]=0;
+			rotation[2]=0;
+			// this rotation wont be needed later when enemies are sprites
+			transform.rotation = Quaternion.Lerp(transform.rotation, rotation, Time.time * 2f);
+			//transform.rotation = rotation;
             transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * speed);
             if (transform.position.x < Path[0].x + 0.4F && transform.position.x > Path[0].x - 0.4F && transform.position.z > Path[0].z - 0.4F && transform.position.z < Path[0].z + 0.4F)
             {

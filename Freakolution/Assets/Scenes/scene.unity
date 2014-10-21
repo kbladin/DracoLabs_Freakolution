@@ -497,7 +497,7 @@ MonoBehaviour:
   JS: 0
   isRange: 0
   rangeDistance: 1
-  speed: 12
+  speed: 7
   detectionRange: 50
   player: {fileID: 378571537}
 --- !u!23 &555725627
