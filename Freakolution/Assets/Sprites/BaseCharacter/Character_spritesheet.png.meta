@@ -88,6 +88,9 @@ TextureImporter:
     21300166: Character_spritesheet_42
     21300168: Character_spritesheet_43
     21300170: Character_spritesheet_44
+    21300172: Character_spritesheet_45
+    21300174: Character_spritesheet_46
+    21300176: Character_spritesheet_47
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -573,6 +576,36 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 512
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_spritesheet_45
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_spritesheet_46
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: Character_spritesheet_47
+      rect:
+        serializedVersion: 2
+        x: 1280
         y: 0
         width: 256
         height: 256
