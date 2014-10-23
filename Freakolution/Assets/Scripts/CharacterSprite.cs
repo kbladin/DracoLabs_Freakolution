@@ -12,7 +12,7 @@ public class CharacterSprite : MonoBehaviour {
 		parent_character_controller = GetComponentInParent<CharacterController>();
 	}
 	
-	void FixedUpdate()
+	void Update()
 	{
 		float horizontalAngle = Mathf.Atan2(
 			gameObject.GetComponentInParent<Player>().controller.GetDirection().z,
