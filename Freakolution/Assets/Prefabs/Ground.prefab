@@ -93,7 +93,7 @@ MonoBehaviour:
   enemies: []
   location: {fileID: 0}
   enemyPrefab: {fileID: 100000, guid: 41a0391549214064c94f55a8d77ce97f, type: 2}
-  player: {fileID: 100000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+  player: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

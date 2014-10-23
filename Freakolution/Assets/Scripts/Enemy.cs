@@ -48,19 +48,17 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public Vector3 GetDirection() {
-		// Does not work since the transform is affected by the camera. Need a separate direction vector.
-		return new Vector3(0,0,-1);
+		// Not implemented.
+		return new Vector3(0,0,1);
 	}
 
 	public Vector3 GetVelocity() {
 		// Function not implemented.
-		return new Vector3(1,0,0);
+		return new Vector3(0,0,1);
 	}
 	
 	private void Attack()
 	{
-		attacking = true;
-
 		RaycastHit hit;
 		Vector3 rayDirection = transform.forward;
 		Ray rayCast = new Ray(transform.position, rayDirection);
@@ -70,7 +68,8 @@ public class Enemy : MonoBehaviour {
 			float distance = hit.distance;
 			
 			if(distance < attackRange && hit.transform.tag=="Player"){
-				
+				attacking = true;
+
 				Player playerComponent = hit.transform.GetComponent<Player>();
 				playerComponent.LoseHealth(damage);
 				attackCooldownTime = 0;
