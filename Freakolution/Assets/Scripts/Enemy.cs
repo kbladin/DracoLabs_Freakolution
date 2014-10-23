@@ -49,18 +49,21 @@ public class Enemy : MonoBehaviour {
 
 	public Vector3 GetDirection() {
 		// Not implemented.
-		return new Vector3(0,0,1);
+		// return new Vector3(0,0,1);
+		return (GetVelocity ().magnitude > 0.1 ?
+		        GetComponent<AI> ().GetMoveDirection () :
+		        GetComponent<AI> ().GetDirectionToTarget ());
 	}
 
 	public Vector3 GetVelocity() {
 		// Function not implemented.
-		return new Vector3(0,0,1);
+		return GetComponent<AI>().GetVelocity();
 	}
 	
 	private void Attack()
 	{
 		RaycastHit hit;
-		Vector3 rayDirection = transform.forward;
+		Vector3 rayDirection = GetComponent<AI>().GetDirectionToTarget();
 		Ray rayCast = new Ray(transform.position, rayDirection);
 
 		if(Physics.Raycast(rayCast, out hit))

@@ -10,23 +10,25 @@ public class AI : Pathfinding {
 	public float detectionRange = 50f;
 
 	private GameObject playerObject;
-    public Transform player;
+    private Transform target;
     private CharacterController controller;
     private bool newPath = true;
     private bool moving = false;
     private GameObject[] AIList;
+	private GameObject[] playerList;
 
 	private Node currentNode;
 	private Node previousNode;
 	
 	public void setPlayer(GameObject p) {
 		playerObject = p;
-		player = playerObject.transform;
+		target = playerObject.transform;
 	}
 
 	void Start () 
     {
 //        AIList = GameObject.FindGameObjectsWithTag("Enemy");
+		playerList = GameObject.FindGameObjectsWithTag("Player");
 	}
 
 	bool isTargetOptimal(){
@@ -34,7 +36,7 @@ public class AI : Pathfinding {
 	}
 
 	bool isPositionOptimal() {
-		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(player.position);
+		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(target.position);
 		Node nTransform = Pathfinder.Instance.FindRealClosestNode(transform.position);
 
 
@@ -44,7 +46,7 @@ public class AI : Pathfinding {
 				//				StartCoroutine(NewPathToFreeSpot());
 				return false;
 			} else {
-				Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(player.position);
+				Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(target.position);
 				if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+0.4f) {
 					return true;
 				} else {
@@ -70,10 +72,10 @@ public class AI : Pathfinding {
 
 		//			if(Path.Count > 1){
 
-		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(player.position);
+		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(target.position);
 		Node nTransform = Pathfinder.Instance.FindRealClosestNode(transform.position);
 		Node nPathTarget = Pathfinder.Instance.FindRealClosestNode(Path[Path.Count - 1]);
-		Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(player.position);
+		Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(target.position);
 
 //		Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
 //		if(n.currentObject != null){
@@ -93,7 +95,7 @@ public class AI : Pathfinding {
 	}
 
 	bool isTargetWithinRange() {
-		if(Vector3.Distance(player.position, transform.position) < rangeDistance){
+		if(Vector3.Distance(target.position, transform.position) < rangeDistance){
 			return true;
 		} else {
 			return false;
@@ -101,16 +103,18 @@ public class AI : Pathfinding {
 	}
 
 	void findNewTarget() {
-
+		// Should actually find the one which is closest.
+		target = playerList[0].transform;
 	}
 
 	void Update () 
     {
-
+		findNewTarget();
+		/*
 //		this.rigidbody.WakeUp();
 		if (!isTargetOptimal()) {
 			findNewTarget();
-		}
+		}*/
 
 		if (!isPositionOptimal()){
 			//move
@@ -212,7 +216,7 @@ public class AI : Pathfinding {
     IEnumerator NewPath()
     {
 //        newPath = false;
-        FindPath(transform.position, player.position);
+        FindPath(transform.position, target.position);
         yield return new WaitForSeconds(1F);
         newPath = true;
     }
@@ -220,13 +224,27 @@ public class AI : Pathfinding {
 	IEnumerator NewPathToFreeSpot()
 	{
 //		newPath = false;
-		Node n = Pathfinder.Instance.FindClosestWalkableNode(player.position);
+		Node n = Pathfinder.Instance.FindClosestWalkableNode(target.position);
 
 		FindPath(transform.position, new Vector3(n.xCoord,0 , n.zCoord));
 		yield return new WaitForSeconds(1F);
 		newPath = true;
 	}
 
+	public Vector3 GetMoveDirection() {
+		return GetDirectionToTarget(); // This should be changed to return the actual move direction.
+	}
+
+	public Vector3 GetDirectionToTarget() {
+		if (target)
+						return (target.position - transform.position).normalized;
+				else
+						return new Vector3 (0,0,-1);
+	}
+
+	public Vector3 GetVelocity() {
+		return new Vector3 (0, 0, 0);
+	}
 
     private void MoveMethod()
     {
