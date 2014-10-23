@@ -6,12 +6,16 @@ public class Player : MonoBehaviour {
 	public float health;
 	private float attackRange;
 	private float damage;
+	private bool alive;
+	//property
+	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
 	ThirdPersonController controller;
 	
 	// Use this for initialization
 	void Start () 
 	{
+		alive = true;
 		attackRange = 3f;
 		damage = 30f;
 		health = 200f;
@@ -25,16 +29,18 @@ public class Player : MonoBehaviour {
 		{
 			Attack();
 		}
-		if(health <= 0)
-		{
-			Destroy(gameObject);
-		}
 	}
 	
 	public void LoseHealth(float damage) 
 	{
 		//here needs to be damage formula
 		this.health -= damage;
+		if(health <= 0)
+		{
+			alive = false;
+			gameObject.SetActive(false);
+			//GetComponentInChildren<Renderer>().enabled = false;
+		}
 	}
 	
 	private void Attack() 

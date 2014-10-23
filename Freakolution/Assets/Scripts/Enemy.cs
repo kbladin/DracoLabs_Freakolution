@@ -7,7 +7,7 @@ public class Enemy : MonoBehaviour {
 	private float attackCooldownTime;
 	private Vector3 moveDirection;
 	private float attackRange;
-	private float damage;
+	public float damage;
 	// Use this for initialization
 	void Start () 
 	{

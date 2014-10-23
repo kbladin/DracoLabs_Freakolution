@@ -15,6 +15,7 @@ public class AI : Pathfinding {
     private bool newPath = true;
     private bool moving = false;
     private GameObject[] AIList;
+    private GameObject[] playerList;
 
 	private Node currentNode;
 	private Node previousNode;
@@ -28,6 +29,7 @@ public class AI : Pathfinding {
 	void Start () 
     {
 //        AIList = GameObject.FindGameObjectsWithTag("Enemy");
+		playerList = GameObject.FindGameObjectsWithTag("Player");
 	}
 
 	bool isTargetOptimal(){
@@ -109,34 +111,36 @@ public class AI : Pathfinding {
     {
 
 //		this.rigidbody.WakeUp();
-		if (!isTargetOptimal()) {
+		if (!isTargetOptimal() || player == null) {
 			findNewTarget();
 		}
-
-		if (!isPositionOptimal()){
-			//move
-			if(!isPathOptimal()){
-				//newPath
-				StartCoroutine(NewPathToFreeSpot());
+		//maybe needs better solution, but if player is dead
+		//it should not continue
+		//if(player != null){
+			if (!isPositionOptimal()){
+				//move
+				if(!isPathOptimal()){
+					//newPath
+					StartCoroutine(NewPathToFreeSpot());
+				}
+	
+				if(Path.Count >1){
+				Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
+				
+				if(n.currentObject == null){
+					MoveMethod();
+	//				return false;
+				}
+				}
+	//			MoveMethod();
+	
+			} else {
+				//stop
+				if(isTargetWithinRange()){
+					//attack
+				}
 			}
-
-			if(Path.Count >1){
-			Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
-			
-			if(n.currentObject == null){
-				MoveMethod();
-//				return false;
-			}
-			}
-//			MoveMethod();
-
-		} else {
-			//stop
-			if(isTargetWithinRange()){
-				//attack
-			}
-		}
-
+	//	}
 
 
 //		if(Vector3.Distance(player.position, transform.position) < 55F && !moving){
