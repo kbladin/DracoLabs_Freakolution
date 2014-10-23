@@ -7,21 +7,30 @@ public class Player : MonoBehaviour {
 	public bool attacking;
 	private float attackRange;
 	private float damage;
+<<<<<<< HEAD
 	private bool alive;
 	//property
 	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
+	ThirdPersonController controller;
 	private string fireInputName;
+=======
+	public Transform sphere;
+	//needs this to get movement direction
 	public ThirdPersonController controller;
+>>>>>>> develop
 	
 	// Use this for initialization
 	void Start () 
 	{
+<<<<<<< HEAD
 		alive = true;
-		attackRange = 1f;
+		attackRange = 3f;
+=======
 
 		attacking = false;
-
+		attackRange = 1f;
+>>>>>>> develop
 		damage = 30f;
 		health = 200f;
 		controller = GetComponent<ThirdPersonController>();
@@ -54,10 +63,10 @@ public class Player : MonoBehaviour {
 		attacking = true;
 
 		Vector3 attackDirection = controller.GetDirection();
-		//sphere.position=transform.position + attackDirection * attackRange;
-		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 0.5f);
+		sphere.position=transform.position + attackDirection * attackRange;
+		Collider[] targets = Physics.OverlapSphere(sphere.position, 0.5f);
 		Transform nearest = null;
-		float closestDistance = attackRange+0.5f;
+		float closestDistance = attackRange+2;
 		foreach (Collider hit in targets){
 			if(hit && hit.tag == "Enemy"){
 				float dist = Vector3.Distance(transform.position, hit.transform.position);

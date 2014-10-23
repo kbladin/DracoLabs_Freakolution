@@ -93,7 +93,7 @@ MonoBehaviour:
   rangeDistance: 1
   speed: 12
   detectionRange: 50
-  player: {fileID: 0}
+  player: {fileID: 400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -105,6 +105,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b4f6af425562445ae1a0bcd0f12aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attacking: 0
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1

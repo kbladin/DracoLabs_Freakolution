@@ -1,96 +1,56 @@
 fileFormatVersion: 2
-guid: c72a917fdf141441fb2467c9d093bd61
+guid: 66273882dba67412cb91a3387776993e
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Character_spritesheet
-    21300002: Character_spritesheet_0
-    21300004: Character_spritesheet_1
-    21300006: Character_spritesheet_2
-    21300008: Character_spritesheet_3
-    21300010: Character_spritesheet_4
-    21300012: Character_spritesheet_5
-    21300014: Character_spritesheet_6
-    21300016: Character_spritesheet_7
-    21300018: Character_spritesheet_8
-    21300020: Character_spritesheet_9
-    21300022: Character_spritesheet_10
-    21300024: Character_spritesheet_11
-    21300026: character_spritesheet_0
-    21300028: character_spritesheet_1
-    21300030: character_spritesheet_2
-    21300032: character_spritesheet_3
-    21300034: character_spritesheet_4
-    21300036: character_spritesheet_5
-    21300038: character_spritesheet_6
-    21300040: character_spritesheet_7
-    21300042: character_spritesheet_8
-    21300044: character_spritesheet_9
-    21300046: character_spritesheet_10
-    21300048: character_spritesheet_11
-    21300050: character_spritesheet_12
-    21300052: character_spritesheet_13
-    21300054: character_spritesheet_14
-    21300056: character_spritesheet_15
-    21300058: character_spritesheet_16
-    21300060: character_spritesheet_17
-    21300062: character_spritesheet_18
-    21300064: character_spritesheet_19
-    21300066: character_spritesheet_20
-    21300068: character_spritesheet_21
-    21300070: character_spritesheet_22
-    21300072: character_spritesheet_23
-    21300074: character_spritesheet_24
-    21300076: character_spritesheet_25
-    21300078: character_spritesheet_26
-    21300080: character_spritesheet_27
-    21300082: character_spritesheet_28
-    21300084: character_spritesheet_29
-    21300086: character_spritesheet_30
-    21300088: character_spritesheet_31
-    21300090: character_spritesheet_32
-    21300092: character_spritesheet_33
-    21300094: character_spritesheet_34
-    21300096: character_spritesheet_35
-    21300098: character_spritesheet_36
-    21300100: character_spritesheet_37
-    21300102: character_spritesheet_38
-    21300104: character_spritesheet_39
-    21300106: Character_spritesheet_12
-    21300108: Character_spritesheet_13
-    21300110: Character_spritesheet_14
-    21300112: Character_spritesheet_15
-    21300114: Character_spritesheet_16
-    21300116: Character_spritesheet_17
-    21300118: Character_spritesheet_18
-    21300120: Character_spritesheet_19
-    21300122: Character_spritesheet_20
-    21300124: Character_spritesheet_21
-    21300126: Character_spritesheet_22
-    21300128: Character_spritesheet_23
-    21300130: Character_spritesheet_24
-    21300132: Character_spritesheet_25
-    21300134: Character_spritesheet_26
-    21300136: Character_spritesheet_27
-    21300138: Character_spritesheet_28
-    21300140: Character_spritesheet_29
-    21300142: Character_spritesheet_30
-    21300144: Character_spritesheet_31
-    21300146: Character_spritesheet_32
-    21300148: Character_spritesheet_33
-    21300150: Character_spritesheet_34
-    21300152: Character_spritesheet_35
-    21300154: Character_spritesheet_36
-    21300156: Character_spritesheet_37
-    21300158: Character_spritesheet_38
-    21300160: Character_spritesheet_39
-    21300162: Character_spritesheet_40
-    21300164: Character_spritesheet_41
-    21300166: Character_spritesheet_42
-    21300168: Character_spritesheet_43
-    21300170: Character_spritesheet_44
-    21300172: Character_spritesheet_45
-    21300174: Character_spritesheet_46
-    21300176: Character_spritesheet_47
+    21300000: Enemy_spritesheet
+    21300002: Enemy_spritesheet_0
+    21300004: Enemy_spritesheet_1
+    21300006: Enemy_spritesheet_2
+    21300008: Enemy_spritesheet_3
+    21300010: Enemy_spritesheet_4
+    21300012: Enemy_spritesheet_5
+    21300014: Enemy_spritesheet_6
+    21300016: Enemy_spritesheet_7
+    21300018: Enemy_spritesheet_8
+    21300020: Enemy_spritesheet_9
+    21300022: Enemy_spritesheet_10
+    21300024: Enemy_spritesheet_11
+    21300026: Enemy_spritesheet_12
+    21300028: Enemy_spritesheet_13
+    21300030: Enemy_spritesheet_14
+    21300032: Enemy_spritesheet_15
+    21300034: Enemy_spritesheet_16
+    21300036: Enemy_spritesheet_17
+    21300038: Enemy_spritesheet_18
+    21300040: Enemy_spritesheet_19
+    21300042: Enemy_spritesheet_20
+    21300044: Enemy_spritesheet_21
+    21300046: Enemy_spritesheet_22
+    21300048: Enemy_spritesheet_23
+    21300050: Enemy_spritesheet_24
+    21300052: Enemy_spritesheet_25
+    21300054: Enemy_spritesheet_26
+    21300056: Enemy_spritesheet_27
+    21300058: Enemy_spritesheet_28
+    21300060: Enemy_spritesheet_29
+    21300062: Enemy_spritesheet_30
+    21300064: Enemy_spritesheet_31
+    21300066: Enemy_spritesheet_32
+    21300068: Enemy_spritesheet_33
+    21300070: Enemy_spritesheet_34
+    21300072: Enemy_spritesheet_35
+    21300074: Enemy_spritesheet_36
+    21300076: Enemy_spritesheet_37
+    21300078: Enemy_spritesheet_38
+    21300080: Enemy_spritesheet_39
+    21300082: Enemy_spritesheet_40
+    21300084: Enemy_spritesheet_41
+    21300086: Enemy_spritesheet_42
+    21300088: Enemy_spritesheet_43
+    21300090: Enemy_spritesheet_44
+    21300092: Enemy_spritesheet_45
+    21300094: Enemy_spritesheet_46
+    21300096: Enemy_spritesheet_47
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -111,7 +71,7 @@ TextureImporter:
   generateCubemap: 0
   seamlessCubemap: 0
   textureFormat: -1
-  maxTextureSize: 4096
+  maxTextureSize: 2048
   textureSettings:
     filterMode: -1
     aniso: 1
@@ -132,7 +92,7 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: Character_spritesheet_0
+    - name: Enemy_spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,7 +102,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_1
+    - name: Enemy_spritesheet_1
       rect:
         serializedVersion: 2
         x: 256
@@ -152,7 +112,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_2
+    - name: Enemy_spritesheet_2
       rect:
         serializedVersion: 2
         x: 512
@@ -162,7 +122,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_3
+    - name: Enemy_spritesheet_3
       rect:
         serializedVersion: 2
         x: 768
@@ -172,7 +132,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_4
+    - name: Enemy_spritesheet_4
       rect:
         serializedVersion: 2
         x: 1024
@@ -182,7 +142,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_5
+    - name: Enemy_spritesheet_5
       rect:
         serializedVersion: 2
         x: 1280
@@ -192,7 +152,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_6
+    - name: Enemy_spritesheet_6
       rect:
         serializedVersion: 2
         x: 1536
@@ -202,7 +162,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_7
+    - name: Enemy_spritesheet_7
       rect:
         serializedVersion: 2
         x: 0
@@ -212,7 +172,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_8
+    - name: Enemy_spritesheet_8
       rect:
         serializedVersion: 2
         x: 256
@@ -222,7 +182,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_9
+    - name: Enemy_spritesheet_9
       rect:
         serializedVersion: 2
         x: 512
@@ -232,7 +192,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_10
+    - name: Enemy_spritesheet_10
       rect:
         serializedVersion: 2
         x: 768
@@ -242,7 +202,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_11
+    - name: Enemy_spritesheet_11
       rect:
         serializedVersion: 2
         x: 1024
@@ -252,7 +212,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_12
+    - name: Enemy_spritesheet_12
       rect:
         serializedVersion: 2
         x: 1280
@@ -262,7 +222,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_13
+    - name: Enemy_spritesheet_13
       rect:
         serializedVersion: 2
         x: 1536
@@ -272,7 +232,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_14
+    - name: Enemy_spritesheet_14
       rect:
         serializedVersion: 2
         x: 0
@@ -282,7 +242,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_15
+    - name: Enemy_spritesheet_15
       rect:
         serializedVersion: 2
         x: 256
@@ -292,7 +252,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_16
+    - name: Enemy_spritesheet_16
       rect:
         serializedVersion: 2
         x: 512
@@ -302,7 +262,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_17
+    - name: Enemy_spritesheet_17
       rect:
         serializedVersion: 2
         x: 768
@@ -312,7 +272,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_18
+    - name: Enemy_spritesheet_18
       rect:
         serializedVersion: 2
         x: 1024
@@ -322,7 +282,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_19
+    - name: Enemy_spritesheet_19
       rect:
         serializedVersion: 2
         x: 1280
@@ -332,7 +292,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_20
+    - name: Enemy_spritesheet_20
       rect:
         serializedVersion: 2
         x: 1536
@@ -342,7 +302,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_21
+    - name: Enemy_spritesheet_21
       rect:
         serializedVersion: 2
         x: 0
@@ -352,7 +312,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_22
+    - name: Enemy_spritesheet_22
       rect:
         serializedVersion: 2
         x: 256
@@ -362,7 +322,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_23
+    - name: Enemy_spritesheet_23
       rect:
         serializedVersion: 2
         x: 512
@@ -372,7 +332,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_24
+    - name: Enemy_spritesheet_24
       rect:
         serializedVersion: 2
         x: 768
@@ -382,7 +342,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_25
+    - name: Enemy_spritesheet_25
       rect:
         serializedVersion: 2
         x: 1024
@@ -392,7 +352,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_26
+    - name: Enemy_spritesheet_26
       rect:
         serializedVersion: 2
         x: 1280
@@ -402,7 +362,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_27
+    - name: Enemy_spritesheet_27
       rect:
         serializedVersion: 2
         x: 1536
@@ -412,7 +372,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_28
+    - name: Enemy_spritesheet_28
       rect:
         serializedVersion: 2
         x: 0
@@ -422,7 +382,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_29
+    - name: Enemy_spritesheet_29
       rect:
         serializedVersion: 2
         x: 256
@@ -432,7 +392,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_30
+    - name: Enemy_spritesheet_30
       rect:
         serializedVersion: 2
         x: 512
@@ -442,7 +402,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_31
+    - name: Enemy_spritesheet_31
       rect:
         serializedVersion: 2
         x: 768
@@ -452,7 +412,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_32
+    - name: Enemy_spritesheet_32
       rect:
         serializedVersion: 2
         x: 1024
@@ -462,7 +422,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_33
+    - name: Enemy_spritesheet_33
       rect:
         serializedVersion: 2
         x: 1280
@@ -472,7 +432,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_34
+    - name: Enemy_spritesheet_34
       rect:
         serializedVersion: 2
         x: 1536
@@ -482,7 +442,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_35
+    - name: Enemy_spritesheet_35
       rect:
         serializedVersion: 2
         x: 0
@@ -492,7 +452,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_36
+    - name: Enemy_spritesheet_36
       rect:
         serializedVersion: 2
         x: 256
@@ -502,7 +462,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_37
+    - name: Enemy_spritesheet_37
       rect:
         serializedVersion: 2
         x: 512
@@ -512,7 +472,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_38
+    - name: Enemy_spritesheet_38
       rect:
         serializedVersion: 2
         x: 768
@@ -522,7 +482,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_39
+    - name: Enemy_spritesheet_39
       rect:
         serializedVersion: 2
         x: 1024
@@ -532,7 +492,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_40
+    - name: Enemy_spritesheet_40
       rect:
         serializedVersion: 2
         x: 1280
@@ -542,7 +502,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_41
+    - name: Enemy_spritesheet_41
       rect:
         serializedVersion: 2
         x: 1536
@@ -552,7 +512,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_42
+    - name: Enemy_spritesheet_42
       rect:
         serializedVersion: 2
         x: 0
@@ -562,7 +522,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_43
+    - name: Enemy_spritesheet_43
       rect:
         serializedVersion: 2
         x: 256
@@ -572,7 +532,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_44
+    - name: Enemy_spritesheet_44
       rect:
         serializedVersion: 2
         x: 512
@@ -582,7 +542,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_45
+    - name: Enemy_spritesheet_45
       rect:
         serializedVersion: 2
         x: 768
@@ -592,7 +552,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_46
+    - name: Enemy_spritesheet_46
       rect:
         serializedVersion: 2
         x: 1024
@@ -602,7 +562,7 @@ TextureImporter:
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
-    - name: Character_spritesheet_47
+    - name: Enemy_spritesheet_47
       rect:
         serializedVersion: 2
         x: 1280

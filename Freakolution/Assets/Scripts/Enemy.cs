@@ -2,7 +2,9 @@
 using System.Collections;
 
 public class Enemy : MonoBehaviour {
-	
+
+	public bool attacking;
+
 	private float health;
 	private float attackCooldownTime;
 	private Vector3 moveDirection;
@@ -44,25 +46,37 @@ public class Enemy : MonoBehaviour {
 		//implement damage formula
 		health -= damage;
 	}
+
+	public Vector3 GetDirection() {
+		// Not implemented.
+		// return new Vector3(0,0,1);
+		return (GetVelocity ().magnitude > 0.1 ?
+		        GetComponent<AI> ().GetMoveDirection () :
+		        GetComponent<AI> ().GetDirectionToTarget ());
+	}
+
+	public Vector3 GetVelocity() {
+		// Function not implemented.
+		return GetComponent<AI>().GetVelocity();
+	}
 	
 	private void Attack()
 	{
 		RaycastHit hit;
-		Vector3 rayDirection = moveDirection;
+		Vector3 rayDirection = GetComponent<AI>().GetDirectionToTarget();
 		Ray rayCast = new Ray(transform.position, rayDirection);
-		
-		
+
 		if(Physics.Raycast(rayCast, out hit))
 		{
 			float distance = hit.distance;
 			
 			if(distance < attackRange && hit.transform.tag=="Player"){
-				
+				attacking = true;
+
 				Player playerComponent = hit.transform.GetComponent<Player>();
 				playerComponent.LoseHealth(damage);
 				attackCooldownTime = 0;
 			}
 		}
-	
 	}
 }

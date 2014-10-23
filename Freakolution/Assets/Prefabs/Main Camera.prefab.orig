@@ -12,6 +12,10 @@ GameObject:
   - 92: {fileID: 9200000}
   - 124: {fileID: 12400000}
   - 81: {fileID: 8100000}
+<<<<<<< HEAD
+  - 114: {fileID: 11400000}
+=======
+>>>>>>> develop
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -26,7 +30,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: .21643962, y: 0, z: 0, w: .976296008}
+<<<<<<< HEAD
+  m_LocalPosition: {x: 0, y: 13.9502983, z: -15.3615808}
+=======
   m_LocalPosition: {x: 0, y: 6.52211189, z: -12.5280952}
+>>>>>>> develop
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,6 +85,28 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
+<<<<<<< HEAD
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f7e4ba3a300dd4b98b69cb5a53151b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseGUI: {fileID: 0}
+  gameOverGUI: {fileID: 0}
+  playerSpawns:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  playerPrefab: {fileID: 100000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+=======
+>>>>>>> develop
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
