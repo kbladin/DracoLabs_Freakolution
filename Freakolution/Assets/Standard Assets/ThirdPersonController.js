@@ -90,6 +90,12 @@ private var lastGroundedTime = 0.0;
 
 private var isControllable = true;
 
+private var playerNumber : int;
+private var jumpInputName : String;
+private var horizontalInputName : String;
+private var verticalInputName : String;
+private var fireInputName : String;
+
 function Awake ()
 {
 	moveDirection = transform.TransformDirection(Vector3.forward);
@@ -123,6 +129,14 @@ public var jumpPoseAnimation : AnimationClip;
 			
 }
 
+function Start ()
+{
+	setJumpInputName(playerNumber);
+	setHorizontalInputName(playerNumber);
+	setVerticalInputName(playerNumber);
+	setFireInputName(playerNumber);
+}
+
 
 function UpdateSmoothedMovementDirection ()
 {
@@ -138,8 +152,8 @@ function UpdateSmoothedMovementDirection ()
 	// Always orthogonal to the forward vector
 	var right = Vector3(forward.z, 0, -forward.x);
 
-	var v = Input.GetAxisRaw("Vertical");
-	var h = Input.GetAxisRaw("Horizontal");
+	var v = Input.GetAxisRaw(verticalInputName);
+	var h = Input.GetAxisRaw(horizontalInputName);
 
 	// Are we moving backwards or looking backwards
 	if (v < -0.2)
@@ -251,7 +265,7 @@ function ApplyGravity ()
 	if (isControllable)	// don't move player at all if not controllable.
 	{
 		// Apply gravity
-		var jumpButton = Input.GetButton("Jump");
+		var jumpButton = Input.GetButton(jumpInputName);
 		
 		
 		// When we reach the apex of the jump we send out a message
@@ -294,7 +308,7 @@ function Update() {
 		Input.ResetInputAxes();
 	}
 
-	if (Input.GetButtonDown ("Jump"))
+	if (Input.GetButtonDown (jumpInputName))
 	{
 		lastJumpButtonTime = Time.time;
 	}
@@ -419,9 +433,14 @@ function GetLockCameraTimer ()
 	return lockCameraTimer;
 }
 
+function GetFireInputName()
+{
+	return fireInputName;
+}
+
 function IsMoving ()  : boolean
 {
-	return Mathf.Abs(Input.GetAxisRaw("Vertical")) + Mathf.Abs(Input.GetAxisRaw("Horizontal")) > 0.5;
+	return Mathf.Abs(Input.GetAxisRaw(verticalInputName)) + Mathf.Abs(Input.GetAxisRaw(horizontalInputName)) > 0.5;
 }
 
 function HasJumpReachedApex ()
@@ -439,3 +458,69 @@ function Reset ()
 	gameObject.tag = "Player";
 }
 
+function SetPlayerNumber(number)
+{
+	playerNumber = number;
+}
+
+function setJumpInputName(playerNumber)
+{	
+	switch(playerNumber)
+	{
+		case 0: 
+			jumpInputName = "Jump1";
+			break;
+		case 1:
+			jumpInputName = "Jump2";
+			break;
+		default:
+			jumpInputName = "Jump1";
+	}
+
+}
+function setHorizontalInputName(playerNumber)
+{	
+	switch(playerNumber)
+	{
+		case 0: 
+			horizontalInputName = "Horizontal1";
+			break;
+		case 1:
+			horizontalInputName = "Horizontal2";
+			break;
+		default:
+			horizontalInputName = "Horizontal1";
+	}
+
+}
+function setVerticalInputName(playerNumber)
+{	
+	switch(playerNumber)
+	{
+		case 0: 
+			verticalInputName = "Vertical1";
+			break;
+		case 1:
+			verticalInputName = "Vertical2";
+			break;
+		default:
+			verticalInputName = "Vertical1";
+	}
+
+}
+
+function setFireInputName(playerNumber)
+{	
+	switch(playerNumber)
+	{
+		case 0: 
+			fireInputName = "Fire1_1";
+			break;
+		case 1:
+			fireInputName = "Fire1_2";
+			break;
+		default:
+			fireInputName = "Fire1_1";
+	}
+
+}

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 /*
 * This class will handle things like playing music, Pause function,
@@ -11,19 +12,30 @@ public class GameManager : MonoBehaviour {
 	public GUITexture pauseGUI;
 	public GUITexture gameOverGUI;
 	
-	private GameObject[] players;
+	public Transform[] playerSpawns;
+	public GameObject playerPrefab;
+	private List<GameObject> players;
+	
+	private int numOfPlayers = 2;
 	
 	void Start () {
-	
+		players = new List<GameObject>();
+		for(int i = 0; i<numOfPlayers;i++)
+		{
+			GameObject player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation) as GameObject;
+			player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
+			players.Add (player);
+		}
+		
 		pauseGUI.enabled = false;
 		gameOverGUI.enabled = false;
-		players = GameObject.FindGameObjectsWithTag("Player");
+		//players = GameObject.FindGameObjectsWithTag("Player");
 	
 	}
 	
 	void Update () {
 	
-	
+
 		if(!gameOverGUI.enabled && Input.GetKeyUp(KeyCode.Escape)) 
 		{
 			pause = !pause;
@@ -56,7 +68,7 @@ public class GameManager : MonoBehaviour {
 	
 		bool someoneIsAlive = false;
 		Player playerScriptComponent;
-		for(int i=0; i<players.Length; i++)
+		for(int i=0; i<players.Count; i++)
 		{
 			playerScriptComponent = players[i].GetComponent<Player>();
 			if(playerScriptComponent.Alive)

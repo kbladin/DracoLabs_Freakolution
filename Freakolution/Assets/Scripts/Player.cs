@@ -11,6 +11,7 @@ public class Player : MonoBehaviour {
 	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
 	ThirdPersonController controller;
+	private string fireInputName;
 	
 	// Use this for initialization
 	void Start () 
@@ -20,12 +21,13 @@ public class Player : MonoBehaviour {
 		damage = 30f;
 		health = 200f;
 		controller = GetComponent<ThirdPersonController>();
+		fireInputName = controller.GetFireInputName();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		if(Input.GetButtonDown("Fire1"))
+		if(Input.GetButtonDown(fireInputName))
 		{
 			Attack();
 		}
