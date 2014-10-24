@@ -5,6 +5,10 @@ public class Player : MonoBehaviour {
 	
 	public float health;
 	public bool attacking;
+	public float attackCooldownTime;
+	public float buildCooldownTime;
+	private float attackCooldown = 0;
+	private float buildCooldown = 0;
 	private float attackRange;
 	private float damage;
 	private bool alive;
@@ -19,7 +23,7 @@ public class Player : MonoBehaviour {
 	private GameObject renderBlock;
 
 	// Use this for initialization
-	void Start () 
+	void Start ()
 	{
 		alive = true;
 		attackRange = 1f;
@@ -35,7 +39,7 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if(Input.GetButtonDown(fireInputName))
+		if(Input.GetButtonDown(fireInputName) && (attackCooldown > attackCooldownTime))
 		{
 			Attack();
 		}
@@ -45,14 +49,18 @@ public class Player : MonoBehaviour {
 		}
 		if(Input.GetButtonUp(controller.GetFire2InputName()))
 		{
+			if ((buildCooldown > buildCooldownTime))
+				BuildBlock ();
+
 			blockWait = false;
 			Destroy(renderBlock);
-			BuildBlock ();
 		}
 		if(blockWait){
 			RenderBlockWait();
 		}
 
+		attackCooldown += Time.deltaTime;
+		buildCooldown += Time.deltaTime;
 	}
 
 	public void LoseHealth(float damage) 
@@ -86,11 +94,11 @@ public class Player : MonoBehaviour {
 				}
 			}
 		}
-		
 		if(nearest){
 			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
 			enemyComponent.LoseHealth(damage);
 		}
+		attackCooldown = 0;
 	}
 
 	private void BuildBlock() {
@@ -99,6 +107,7 @@ public class Player : MonoBehaviour {
 			GameObject block = Instantiate(blockPrefab, location, transform.rotation) as GameObject;
 			block.GetComponent<Rigidbody> ().isKinematic = false;
 		}
+		buildCooldown = 0;
 	}
 
 	private void RenderBlockWait() {
@@ -108,11 +117,12 @@ public class Player : MonoBehaviour {
 				} else {
 			renderBlock.transform.position = location;	
 		}
-		if (Physics.CheckSphere (location, /*1 / Mathf.Sqrt (2))*/ 0.5f)) {
+		if (Physics.CheckSphere (location, /*1 / Mathf.Sqrt (2))*/0.5f)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
+		} else if (buildCooldown < buildCooldownTime) {
+						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
 				} else {
-			renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (0, 1f, 0, 0.4f);
-
+						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (0, 1f, 0, 0.4f);
 		}
 	}
 	
