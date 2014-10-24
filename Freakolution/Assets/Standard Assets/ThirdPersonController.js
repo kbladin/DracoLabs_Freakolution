@@ -78,7 +78,7 @@ private var lastJumpButtonTime = -10.0;
 // Last time we performed a jump
 private var lastJumpTime = -1.0;
 
-
+private var playerNumber : int;
 // the height we jumped from (Used to determine for how long to apply extra jump power after jumping.)
 private var lastJumpStartHeight = 0.0;
 
@@ -89,8 +89,6 @@ private var lastGroundedTime = 0.0;
 
 
 private var isControllable = true;
-
-private var playerNumber : int;
 private var jumpInputName : String;
 private var horizontalInputName : String;
 private var verticalInputName : String;
@@ -452,15 +450,15 @@ function IsGroundedWithTimeout ()
 {
 	return lastGroundedTime + groundedTimeout > Time.time;
 }
+	
+function SetPlayerNumber(number)
+{
+	playerNumber = number;
+}
 
 function Reset ()
 {
 	gameObject.tag = "Player";
-}
-
-function SetPlayerNumber(number)
-{
-	playerNumber = number;
 }
 
 function setJumpInputName(playerNumber)

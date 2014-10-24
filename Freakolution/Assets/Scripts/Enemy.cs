@@ -9,7 +9,8 @@ public class Enemy : MonoBehaviour {
 	private float attackCooldownTime;
 	private Vector3 moveDirection;
 	private float attackRange;
-	public float damage;
+	public float enemyDamage;
+	private Chemicals enemyChemicals;
 	// Use this for initialization
 	void Start () 
 	{
@@ -18,7 +19,9 @@ public class Enemy : MonoBehaviour {
 		health = 100f;
 		attackCooldownTime = 3f;
 		attackRange = 1f;
-		damage = 10f;
+		enemyDamage = 10f;
+		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
+		GetComponentInChildren<Light>().color = enemyChemicals.getChemicals();
 	}
 	
 	// Update is called once per frame
@@ -41,10 +44,10 @@ public class Enemy : MonoBehaviour {
 		
 	}
 	
-	public void LoseHealth(float damage)
+	public void LoseHealth(float damage, Chemicals chemicals)
 	{
 		//implement damage formula
-		health -= damage;
+		this.health -= damage*(1-chemicals.getReaction(enemyChemicals));
 	}
 
 	public Vector3 GetDirection() {
@@ -81,8 +84,13 @@ public class Enemy : MonoBehaviour {
 		
 		if(nearest){
 			Player enemyComponent = nearest.transform.GetComponent<Player>();
-			enemyComponent.LoseHealth(damage);
+			enemyComponent.LoseHealth(enemyDamage, enemyChemicals);
 			attackCooldownTime = 0;
 		}
+	}
+	
+	public void SetChemicals(Chemicals theChemicals)
+	{
+		enemyChemicals = theChemicals;
 	}
 }

@@ -88,13 +88,15 @@ public class RandomSpawn : MonoBehaviour {
 		
 		void Spawn()
 		{		
+			//int numOfPlayers = GameObject.FindGameObjectsWithTag("Player").Length;
+			//int randomChemicalPick = Mathf.Abs(Random.Range(0,numOfPlayers-1));
 			//Will randomly pick a number between 0 and the size of spawns array
 			//The length will be determined by the number of spawn elements in Unity
-			int randomPick = Mathf.Abs(Random.Range(0,spawns.Length));
-			location = spawns[randomPick];
+			int randomSpawnPick = Mathf.Abs(Random.Range(0,spawns.Length));
+			location = spawns[randomSpawnPick];
 			//enemyPrefab.GetComponent<AI>().setPlayer( player);
 			GameObject enemy = Instantiate(enemyPrefab, location.position, location.rotation) as GameObject;
-			
+			enemy.GetComponent<Enemy>().SetChemicals(new Chemicals());
 			//enemy.rigidbody.AddForce(location.forward * 100f);
 		}
 	

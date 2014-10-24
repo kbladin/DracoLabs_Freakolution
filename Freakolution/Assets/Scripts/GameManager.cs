@@ -16,14 +16,18 @@ public class GameManager : MonoBehaviour {
 	public GameObject playerPrefab;
 	private List<GameObject> players;
 	
-	private int numOfPlayers = 1;
+	private int numOfPlayers = 3;
 	
 	void Start () {
+	
+		
 		players = new List<GameObject>();
 		for(int i = 0; i<numOfPlayers;i++)
-		{
+		{	
+			
 			GameObject player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation) as GameObject;
 			player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
+			player.GetComponent<Player>().SetChemicals(new Chemicals(i));
 			players.Add (player);
 		}
 		

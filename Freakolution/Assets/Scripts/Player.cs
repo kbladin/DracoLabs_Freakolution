@@ -6,8 +6,9 @@ public class Player : MonoBehaviour {
 	public float health;
 	public bool attacking;
 	private float attackRange;
-	private float damage;
+	private float playerDamage;
 	private bool alive;
+	private Chemicals playerChemicals;
 	//property
 	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
@@ -21,8 +22,10 @@ public class Player : MonoBehaviour {
 		attackRange = 1f;
 
 		attacking = false;
+		ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
+		ps[1].startColor = playerChemicals.getChemicals();
 
-		damage = 30f;
+		playerDamage = 30f;
 		health = 200f;
 		controller = GetComponent<ThirdPersonController>();
 		fireInputName = controller.GetFireInputName();
@@ -30,22 +33,20 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 		if(Input.GetButtonDown(fireInputName))
 		{
 			Attack();
 		}
 	}
 
-	public void LoseHealth(float damage) 
+	public void LoseHealth(float damage, Chemicals enemyChemicals) 
 	{
 		//here needs to be damage formula
-		this.health -= damage;
+		this.health -= damage * (1 + enemyChemicals.getReaction(enemyChemicals));
 		if(health <= 0)
 		{
 			alive = false;
 			gameObject.SetActive(false);
-			//GetComponentInChildren<Renderer>().enabled = false;
 		}
 	}
 	
@@ -54,7 +55,7 @@ public class Player : MonoBehaviour {
 		attacking = true;
 
 		Vector3 attackDirection = controller.GetDirection();
-		//sphere.position=transform.position + attackDirection * attackRange;
+
 		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 0.5f);
 		Transform nearest = null;
 		float closestDistance = attackRange+0.5f;
@@ -71,10 +72,14 @@ public class Player : MonoBehaviour {
 		
 		if(nearest){
 			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
-			enemyComponent.LoseHealth(damage);
+			enemyComponent.LoseHealth(playerDamage, playerChemicals);
 		}
 		
 	}
 	
+	public void SetChemicals(Chemicals theChemicals)
+	{
+		playerChemicals = theChemicals;
+	}
 	
 }
