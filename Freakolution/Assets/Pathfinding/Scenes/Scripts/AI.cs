@@ -104,12 +104,21 @@ public class AI : Pathfinding {
 
 	void findNewTarget() {
 		// Should actually find the one which is closest.
-		target = playerList[0].transform;
+		float minimumDistance = 10000000000;
+		int minIndex = 0;
+		for (int i=0; i<playerList.Length; ++i) {
+			if ((playerList [i].transform.position - transform.position).magnitude < minimumDistance) {
+				minimumDistance = (playerList [i].transform.position - transform.position).magnitude;
+				minIndex = i;
+			}
+		}
+		target = playerList[minIndex].transform;
 	}
 
 	void Update () 
     {
 		findNewTarget();
+
 		/*
 //		this.rigidbody.WakeUp();
 		if (!isTargetOptimal() || player == null) {
@@ -245,7 +254,7 @@ public class AI : Pathfinding {
 	}
 
 	public Vector3 GetVelocity() {
-		return new Vector3 (0, 0, 0);
+			return new Vector3 (0, 0, 0);
 	}
 
     private void MoveMethod()
@@ -253,7 +262,8 @@ public class AI : Pathfinding {
         if (Path.Count > 0)
         {
 			Vector3 tarPos = Path[0]; 
-			tarPos.y = transform.lossyScale.y;
+			//tarPos.y = transform.lossyScale.y; // Does not make sense if they are gonna be able to walk up on things
+			tarPos.y = tarPos.y + 0.75f; // Height of the collider / 2.
 
             Vector3 direction = (tarPos - transform.position).normalized;
 

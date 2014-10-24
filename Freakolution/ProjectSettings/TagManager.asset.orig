@@ -3,16 +3,12 @@
 --- !u!78 &1
 TagManager:
   tags:
-<<<<<<< HEAD
-  - Enemy
-=======
   - Walkable
   - WPPathfinder
   - Waypoint
   - Obst
   - Enemy
   - Wall
->>>>>>> pathfinding
   - 
   Builtin Layer 0: Default
   Builtin Layer 1: TransparentFX
@@ -23,7 +19,7 @@ TagManager:
   Builtin Layer 6: 
   Builtin Layer 7: 
   User Layer 8: Player
-  User Layer 9: 
+  User Layer 9: ParticleSystem
   User Layer 10: 
   User Layer 11: 
   User Layer 12: 
@@ -51,11 +47,15 @@ TagManager:
     userID: 0
     uniqueID: 0
     locked: 0
+<<<<<<< HEAD
   - name: Player
     userID: 1
     uniqueID: 1420324065
     locked: 0
+  - name: ParticleSystem
+=======
   - name: 
+>>>>>>> develop
     userID: 2
     uniqueID: 4161670745
     locked: 0
