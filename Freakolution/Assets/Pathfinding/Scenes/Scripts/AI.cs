@@ -262,7 +262,8 @@ public class AI : Pathfinding {
         if (Path.Count > 0)
         {
 			Vector3 tarPos = Path[0]; 
-			tarPos.y = transform.lossyScale.y;
+			//tarPos.y = transform.lossyScale.y; // Does not make sense if they are gonna be able to walk up on things
+			tarPos.y = tarPos.y + 0.75f; // Height of the collider / 2.
 
             Vector3 direction = (tarPos - transform.position).normalized;
 
