@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	private float damage;
 	private bool alive;
 	private bool blockWait = false;
+	private GameObject carriedBlock;
 	//property
 	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
@@ -50,14 +51,28 @@ public class Player : MonoBehaviour {
 		}
 		if(Input.GetButtonUp(controller.GetFire2InputName()))
 		{
-			if ((buildCooldown > buildCooldownTime))
+			if ((buildCooldown > buildCooldownTime)) {
 				BuildBlock ();
+			}
 
 			blockWait = false;
 			Destroy(renderBlock);
 		}
 		if(blockWait){
 			RenderBlockWait();
+		}
+
+		if (Input.GetButtonDown (controller.GetFire3InputName ()) && carriedBlock) {
+			TryPlaceBlock();
+		} else if (Input.GetButtonDown (controller.GetFire3InputName ())) {
+			TryPickBlock();
+		}
+
+		if (carriedBlock) {
+			Vector3 location = transform.position + controller.GetDirection() * 1.3f;
+			carriedBlock.transform.position = location;
+			carriedBlock.GetComponent<Rigidbody>().isKinematic = true;
+			carriedBlock.GetComponent<BoxCollider>().enabled = false;
 		}
 
 		attackCooldown += Time.deltaTime;
@@ -111,8 +126,9 @@ public class Player : MonoBehaviour {
 		if (!Physics.CheckSphere (location, /*1 / Mathf.Sqrt(2))*/ 0.5f)) {
 			GameObject block = Instantiate(blockPrefab, location, transform.rotation) as GameObject;
 			block.GetComponent<Rigidbody> ().isKinematic = false;
+			Destroy(carriedBlock);
+			buildCooldown = 0;
 		}
-		buildCooldown = 0;
 	}
 
 	private void RenderBlockWait() {
@@ -130,5 +146,32 @@ public class Player : MonoBehaviour {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (0, 1f, 0, 0.4f);
 		}
 	}
-	
+
+	private void TryPickBlock () {
+		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
+		Collider[] targets = Physics.OverlapSphere(location , 0.5f);
+		float closestDistance = 1.3f+0.5f;
+		Collider nearest = null;
+		foreach (Collider hit in targets) {
+			if (hit.name == "Block" || hit.name == "Block(Clone)") {
+				float dist = Vector3.Distance(location, hit.transform.position);
+				if(dist < closestDistance){
+					closestDistance = dist;
+					nearest = hit;
+				}
+			}
+		}
+		if (nearest) {
+			carriedBlock = nearest.gameObject;
+		}
+	}
+
+	private void TryPlaceBlock () {
+		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
+		if (!Physics.CheckSphere (location, 0.5f) && carriedBlock) {
+						carriedBlock.GetComponent<Rigidbody> ().isKinematic = false;
+						carriedBlock.GetComponent<BoxCollider>().enabled = true;
+						carriedBlock = null;
+				}
+	}
 }
