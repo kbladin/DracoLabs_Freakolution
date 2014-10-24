@@ -121,9 +121,8 @@ MonoBehaviour:
   JS: 0
   isRange: 0
   rangeDistance: 1
-  speed: 7
+  speed: 3
   detectionRange: 50
-  player: {fileID: 0}
 --- !u!114 &11400002
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -136,6 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attacking: 0
+  damage: 0
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1

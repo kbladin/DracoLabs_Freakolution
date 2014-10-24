@@ -8,12 +8,16 @@ public class Player : MonoBehaviour {
 	private float attackRange;
 	private float damage;
 	private bool alive;
+	private bool blockWait = false;
 	//property
 	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
 	private string fireInputName;
 	public ThirdPersonController controller;
-	
+	public GameObject blockPrefab;
+	public GameObject renderBlockPrefab;
+	private GameObject renderBlock;
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -35,6 +39,20 @@ public class Player : MonoBehaviour {
 		{
 			Attack();
 		}
+		if(Input.GetButtonDown(controller.GetFire2InputName()))
+		{
+			blockWait = true;
+		}
+		if(Input.GetButtonUp(controller.GetFire2InputName()))
+		{
+			blockWait = false;
+			Destroy(renderBlock);
+			BuildBlock ();
+		}
+		if(blockWait){
+			RenderBlockWait();
+		}
+
 	}
 
 	public void LoseHealth(float damage) 
@@ -73,8 +91,29 @@ public class Player : MonoBehaviour {
 			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
 			enemyComponent.LoseHealth(damage);
 		}
-		
 	}
-	
+
+	private void BuildBlock() {
+		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
+		if (!Physics.CheckSphere (location, /*1 / Mathf.Sqrt(2))*/ 0.5f)) {
+			GameObject block = Instantiate(blockPrefab, location, transform.rotation) as GameObject;
+			block.GetComponent<Rigidbody> ().isKinematic = false;
+		}
+	}
+
+	private void RenderBlockWait() {
+		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
+		if (!renderBlock) {
+						renderBlock = Instantiate (renderBlockPrefab, location, transform.rotation) as GameObject;
+				} else {
+			renderBlock.transform.position = location;	
+		}
+		if (Physics.CheckSphere (location, /*1 / Mathf.Sqrt (2))*/ 0.5f)) {
+						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
+				} else {
+			renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (0, 1f, 0, 0.4f);
+
+		}
+	}
 	
 }

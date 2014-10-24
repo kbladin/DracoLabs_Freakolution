@@ -53,7 +53,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Fire2
+    m_Name: Fire2_1
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
@@ -197,7 +197,7 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Fire2
+    m_Name: Fire2_2
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 

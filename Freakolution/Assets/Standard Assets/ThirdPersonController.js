@@ -95,6 +95,7 @@ private var jumpInputName : String;
 private var horizontalInputName : String;
 private var verticalInputName : String;
 private var fireInputName : String;
+private var fire2InputName : String;
 
 function Awake ()
 {
@@ -135,6 +136,7 @@ function Start ()
 	setHorizontalInputName(playerNumber);
 	setVerticalInputName(playerNumber);
 	setFireInputName(playerNumber);
+	SetFire2InputName(playerNumber);
 }
 
 
@@ -438,6 +440,11 @@ function GetFireInputName()
 	return fireInputName;
 }
 
+function GetFire2InputName()
+{
+	return fire2InputName;
+}
+
 function IsMoving ()  : boolean
 {
 	return Mathf.Abs(Input.GetAxisRaw(verticalInputName)) + Mathf.Abs(Input.GetAxisRaw(horizontalInputName)) > 0.5;
@@ -521,6 +528,22 @@ function setFireInputName(playerNumber)
 			break;
 		default:
 			fireInputName = "Fire1_1";
+	}
+
+}
+
+function SetFire2InputName(playerNumber)
+{	
+	switch(playerNumber)
+	{
+		case 0: 
+			fire2InputName = "Fire2_1";
+			break;
+		case 1:
+			fire2InputName = "Fire2_2";
+			break;
+		default:
+			fire2InputName = "Fire2_1";
 	}
 
 }

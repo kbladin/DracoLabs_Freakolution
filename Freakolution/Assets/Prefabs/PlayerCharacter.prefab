@@ -44,7 +44,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .790794373, y: .999359131, z: 0}
+  m_LocalPosition: {x: -.756434798, y: 1.68879616e-16, z: -7.60566139}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -97,7 +97,7 @@ MonoBehaviour:
   runMaxAnimationSpeed: 1
   jumpAnimationSpeed: 1.14999998
   landAnimationSpeed: 1
-  walkSpeed: 6
+  walkSpeed: 4
   trotSpeed: 4
   runSpeed: 6
   inAirControlAcceleration: 3
@@ -133,6 +133,8 @@ MonoBehaviour:
   health: 0
   attacking: 0
   controller: {fileID: 0}
+  blockPrefab: {fileID: 100000, guid: c9618d5391277435a8d925dcb999441d, type: 2}
+  renderBlockPrefab: {fileID: 100000, guid: f7fb4332b7cf048a98dc7e68697f31ff, type: 2}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -152,7 +154,7 @@ CharacterController:
   m_GameObject: {fileID: 100000}
   serializedVersion: 2
   m_Height: 1.64999998
-  m_Radius: .419999987
+  m_Radius: .50999999
   m_SlopeLimit: 45
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982
