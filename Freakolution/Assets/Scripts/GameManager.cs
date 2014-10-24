@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour {
 	public GameObject playerPrefab;
 	private List<GameObject> players;
 	
-	private int numOfPlayers = 3;
+	private int numOfPlayers = 1;
 	
 	void Start () {
 	

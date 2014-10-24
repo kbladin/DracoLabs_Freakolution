@@ -44,6 +44,7 @@ public class Chemicals : MonoBehaviour
 		return chemicals;
 	}
 	
+	// Dot-product
 	public float getReaction(Chemicals targetChemicals)
 	{
 		return (this.chemicals.r * targetChemicals.chemicals.r + 
