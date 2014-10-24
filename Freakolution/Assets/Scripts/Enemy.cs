@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour {
 		moveDirection = Vector3.forward;
 		health = 100f;
 		attackCooldownTime = 3f;
-		attackRange = 2f;
+		attackRange = 1f;
 		damage = 10f;
 	}
 	
@@ -62,21 +62,27 @@ public class Enemy : MonoBehaviour {
 	
 	private void Attack()
 	{
-		RaycastHit hit;
-		Vector3 rayDirection = GetComponent<AI>().GetDirectionToTarget();
-		Ray rayCast = new Ray(transform.position, rayDirection);
-
-		if(Physics.Raycast(rayCast, out hit))
-		{
-			float distance = hit.distance;
-			
-			if(distance < attackRange && hit.transform.tag=="Player"){
-				attacking = true;
-
-				Player playerComponent = hit.transform.GetComponent<Player>();
-				playerComponent.LoseHealth(damage);
-				attackCooldownTime = 0;
+		
+		Vector3 attackDirection = GetComponent<AI>().GetDirectionToTarget();
+		//sphere.position=transform.position + attackDirection * attackRange;
+		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 0.5f);
+		Transform nearest = null;
+		float closestDistance = attackRange+0.5f;
+		foreach (Collider hit in targets){
+			if(hit && hit.tag == "Player"){
+				float dist = Vector3.Distance(transform.position, hit.transform.position);
+				if(dist < closestDistance){
+					attacking = true;
+					closestDistance = dist;
+					nearest = hit.transform;
+				}
 			}
+		}
+		
+		if(nearest){
+			Player enemyComponent = nearest.transform.GetComponent<Player>();
+			enemyComponent.LoseHealth(damage);
+			attackCooldownTime = 0;
 		}
 	}
 }

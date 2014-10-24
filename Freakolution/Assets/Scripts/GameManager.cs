@@ -29,7 +29,6 @@ public class GameManager : MonoBehaviour {
 		
 		pauseGUI.enabled = false;
 		gameOverGUI.enabled = false;
-		//players = GameObject.FindGameObjectsWithTag("Player");
 	
 	}
 	
