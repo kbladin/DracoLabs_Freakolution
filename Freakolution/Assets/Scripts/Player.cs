@@ -2,8 +2,9 @@
 using System.Collections;
 
 public class Player : MonoBehaviour {
-	
-	public float health;
+
+	public float maxHealth;
+	private float health;
 	public bool attacking;
 	public float attackCooldownTime;
 	public float buildCooldownTime;
@@ -31,7 +32,7 @@ public class Player : MonoBehaviour {
 		attacking = false;
 
 		damage = 30f;
-		health = 200f;
+		health = maxHealth;
 		controller = GetComponent<ThirdPersonController>();
 		fireInputName = controller.GetFireInputName();
 	}
@@ -73,6 +74,10 @@ public class Player : MonoBehaviour {
 			gameObject.SetActive(false);
 			//GetComponentInChildren<Renderer>().enabled = false;
 		}
+	}
+
+	public float GetHealth() {
+		return health;
 	}
 	
 	private void Attack() 
