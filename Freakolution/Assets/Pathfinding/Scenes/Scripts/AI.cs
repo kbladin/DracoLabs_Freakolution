@@ -224,6 +224,8 @@ public class AI : Pathfinding {
 //			tarPos.y = transform.lossyScale.y;
 			tarPos.y = tarPos.y + 0.75f; // Height of the collider / 2.
 
+			Vector3 realPos =  new Vector3(transform.position.x +0.2f,0.0f, transform.position.z +0.2f);
+
 			Vector3 direction = (tarPos - transform.position).normalized;
 //			Vector3 direction = (Path[0] - transform.position).normalized;
 
@@ -234,13 +236,13 @@ public class AI : Pathfinding {
             direction.Normalize();
 
             
-            transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * speed);
+			transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * speed);
             
 			if (transform.position.x < Path[0].x + 0.4F && transform.position.x > Path[0].x - 0.4F && transform.position.z > Path[0].z - 0.4F && transform.position.z < Path[0].z + 0.4F)
             {
 
 				resetPath = false;
-				transform.collider.enabled = true;
+//				transform.collider.enabled = true;
 
 				previousNode = currentNode;
 

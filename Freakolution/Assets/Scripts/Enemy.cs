@@ -70,9 +70,9 @@ public class Enemy : MonoBehaviour {
 		
 		Vector3 attackDirection = GetComponent<AI>().GetDirectionToTarget();
 		//sphere.position=transform.position + attackDirection * attackRange;
-		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 0.8f);
+		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 1.2f);
 		Transform nearest = null;
-		float closestDistance = attackRange+0.8f;
+		float closestDistance = attackRange+1.2f;
 		foreach (Collider hit in targets){
 			if(hit && hit.tag == "Player"){
 				float dist = Vector3.Distance(transform.position, hit.transform.position);
