@@ -85,7 +85,7 @@ public class Pathfinder : MonoBehaviour
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            StartCoroutine(PathHandler(queue[0].startPos, queue[0].endPos, queue[0].storeRef));
+            StartCoroutine(PathHandler(queue[0].startPos, queue[0].endPos, queue[0].storeRef, queue[0].isBestEffort));
             //queue[0].storeRef.Invoke(FindPath(queue[0].startPos, queue[0].endPos));
             queue.RemoveAt(0);
             sw.Stop();
@@ -181,14 +181,20 @@ public class Pathfinder : MonoBehaviour
     
     //---------------------------------------SETUP PATH QUEUE---------------------------------------//
 
-    public void InsertInQueue(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod)
+    public void InsertInQueue(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod, bool isBestEffort)
     {
-        QueuePath q = new QueuePath(startPos, endPos, listMethod);
+        QueuePath q = new QueuePath(startPos, endPos, listMethod, isBestEffort);
         queue.Add(q);
     }
 
-    #region astar
-    //---------------------------------------FIND PATH: A*------------------------------------------//
+	public void InsertInQueue(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod)
+	{
+		QueuePath q = new QueuePath(startPos, endPos, listMethod);
+		queue.Add(q);
+	}
+	
+	#region astar
+	//---------------------------------------FIND PATH: A*------------------------------------------//
 
     private Node[] openList;
     private Node[] closedList;
@@ -204,13 +210,16 @@ public class Pathfinder : MonoBehaviour
         closedList = new Node[size];
     }
 
-    IEnumerator PathHandler(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod)
+    IEnumerator PathHandler(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod, bool isBestEffort)
     {
-        yield return StartCoroutine(SinglePath(startPos, endPos, listMethod));
+        yield return StartCoroutine(SinglePath(startPos, endPos, listMethod, isBestEffort));
     }
 
-    IEnumerator SinglePath(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod)
-    {
+	IEnumerator SinglePath(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod, bool isBestEffort)
+	{
+		if(isBestEffort)
+			FindPathBestEffort(startPos, endPos, listMethod);
+		else
         FindPath(startPos, endPos, listMethod);
         yield return null;
     }
@@ -221,18 +230,19 @@ public class Pathfinder : MonoBehaviour
         List<Vector3> returnPath = new List<Vector3>();
         bool endPosValid = true;
         //Find start and end nodes, if we cant return null and stop!
-        SetStartAndEndNode(startPos, endPos);
+		SetStartAndEndNodeEmpty(startPos, endPos);
 
         if (startNode != null)
         {
             if (endNode == null)
             {
                 endPosValid = false;
-                FindEndNode(endPos);
+				FindEndNodeEmpty(endPos);
                 if (endNode == null)
                 {
                     //still no end node - we leave and sends an empty list
                     maxSearchRounds = 0;
+					print ("End node not valid");
                     listMethod.Invoke(new List<Vector3>());
                     return;
                 }
@@ -249,13 +259,15 @@ public class Pathfinder : MonoBehaviour
             BHInsertNode(new NodeSearch(startNode.ID, startNode.F));
 
             bool endLoop = false;
+			int loopCount = 0;
 
             while (!endLoop)
             {
                 //If we have no nodes on the open list AND we are not at the end, then we got stucked! return empty list then.
-                if (sortedOpenList.Count == 0)
+				if (sortedOpenList.Count == 0 || loopCount > 1000)
                 {
                     print("Empty Openlist, closedList");
+					print("Empty List Loop Count = " + loopCount);
 
 //					Node n = FindRealClosestNode(endPos);
 //					n.walkable = false;
@@ -288,6 +300,7 @@ public class Pathfinder : MonoBehaviour
                 {
                     NonDiagonalNeighborCheck();
                 }
+				loopCount++;
             }
 
 
@@ -328,28 +341,155 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    // Find start and end Node
-    private void SetStartAndEndNode(Vector3 start, Vector3 end)
-    {
-        startNode = FindClosestNode(start);
-        endNode = FindClosestNode(end);
-    }
+	public void FindPathBestEffort(Vector3 startPos, Vector3 endPos, Action<List<Vector3>> listMethod)
+	{
+		//The list we returns when path is found
+		List<Vector3> returnPath = new List<Vector3>();
+		bool endPosValid = true;
+		//Find start and end nodes, if we cant return null and stop!
+		SetStartAndEndNode(startPos, endPos);
+		
+		if (startNode != null)
+		{
+			if (endNode == null)
+			{
+				endPosValid = false;
+                FindEndNode(endPos);
+				if (endNode == null)
+				{
+					//still no end node - we leave and sends an empty list
+					maxSearchRounds = 0;
+					listMethod.Invoke(new List<Vector3>());
+					return;
+				}
+			}
+			
+			//Clear lists if they are filled
+			Array.Clear(openList, 0, openList.Length); 
+			Array.Clear(closedList, 0, openList.Length);
+			if (sortedOpenList.Count > 0) { sortedOpenList.Clear(); }
+			
+			//Insert start node
+			openList[startNode.ID] = startNode;
+			//sortedOpenList.Add(new NodeSearch(startNode.ID, startNode.F));
+			BHInsertNode(new NodeSearch(startNode.ID, startNode.F));
+			
+			bool endLoop = false;
 
-    public bool IsTheClosestNodeWalkable(Vector3 pos)
-    {
-        int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) : Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
-        int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
+			int loopCount = 0;
 
-        if (x < 0 || z < 0 || x > Map.GetLength(0) || z > Map.GetLength(1))
-            return false;
+			while (!endLoop)
+			{
+				//If we have no nodes on the open list AND we are not at the end, then we got stucked! return empty list then.
+				if (sortedOpenList.Count == 0 || loopCount > 1000)
+				{
+					print("Empty Openlist, closedList");
+					print("Empty List Loop Count = " + loopCount);
 
-        Node n = Map[x, z];
-        return n.walkable;
-    }
+					//					Node n = FindRealClosestNode(endPos);
+					//					n.walkable = false;
+					
+					listMethod.Invoke(new List<Vector3>());
+					return;
+				}
+				
+				//Get lowest node and insert it into the closed list
+				int id = BHGetLowest();
+				//sortedOpenList.Sort(sort);
+				//int id = sortedOpenList[0].ID;
+				currentNode = openList[id];
+				closedList[currentNode.ID] = currentNode;
+				openList[id] = null;
+				//sortedOpenList.RemoveAt(0);
+				
+				if (currentNode.ID == endNode.ID)
+				{
+//					print("Loop Count = " + loopCount);
+					endLoop = true;
+					continue;
+				}
+				//Now look at neighbours, check for unwalkable tiles, bounderies, open and closed listed nodes.
+				
+//				if (MoveDiagonal)
+//				{
+					NeighbourCheckBestEffort();
+//				}
+//				else
+//				{
+//					NonDiagonalNeighborCheck();
+//				}
+				loopCount++;
 
-    private Node FindClosestNode(Vector3 pos)
-    {      
-        int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) :  Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
+			}
+			
+			
+			while (currentNode.parent != null)
+			{
+				returnPath.Add(new Vector3(currentNode.xCoord, currentNode.yCoord, currentNode.zCoord));
+				currentNode = currentNode.parent;
+			}
+			
+			//returnPath.Add(startPos);
+			returnPath.Reverse();
+			
+			if (endPosValid)
+			{
+				//returnPath.Add(endPos);
+			}
+			
+			if (returnPath.Count > 2 && endPosValid)
+			{
+				//Now make sure we do not go backwards or go to long
+				if (Vector3.Distance(returnPath[returnPath.Count - 1], returnPath[returnPath.Count - 3]) < Vector3.Distance(returnPath[returnPath.Count - 3], returnPath[returnPath.Count - 2]))
+				{
+					returnPath.RemoveAt(returnPath.Count - 2);
+				}
+				if (Vector3.Distance(returnPath[1], startPos) < Vector3.Distance(returnPath[0], returnPath[1]))
+				{
+					returnPath.RemoveAt(0);
+				}
+			}
+			maxSearchRounds = 0;
+			listMethod.Invoke(returnPath);
+			
+		}
+		else
+		{
+			maxSearchRounds = 0;
+			listMethod.Invoke(new List<Vector3>());
+		}
+
+	}
+	
+	
+	// Find start and end Node
+	private void SetStartAndEndNode(Vector3 start, Vector3 end)
+	{
+		startNode = FindClosestNode(start);
+		endNode = FindClosestNode(end);
+	}
+
+	private void SetStartAndEndNodeEmpty(Vector3 start, Vector3 end)
+	{
+		startNode = FindClosestNodeEmpty(start);
+		endNode = FindClosestNodeEmpty(end);
+	}
+
+	public bool IsTheClosestNodeWalkable(Vector3 pos)
+	{
+		int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) : Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
+		int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
+		
+		if (x < 0 || z < 0 || x > Map.GetLength(0) || z > Map.GetLength(1))
+			return false;
+		
+		Node n = Map[x, z];
+		return n.walkable;
+	}
+	
+	private Node FindClosestNodeEmpty(Vector3 pos)
+	{      
+		int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) :  Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
         int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
 
         if (x < 0 || z < 0 || x > Map.GetLength(0) || z > Map.GetLength(1))
@@ -357,9 +497,9 @@ public class Pathfinder : MonoBehaviour
 
         Node n = Map[x, z];
 
-        if (n.walkable)
+		if (n.walkable && n.currentObject == null)
         {
-            return new Node(x, z, n.yCoord, n.ID, n.xCoord, n.zCoord, n.walkable);
+            return new Node(x, z, n.yCoord, n.ID, n.xCoord, n.zCoord, true);
         }
         else
         {
@@ -371,9 +511,9 @@ public class Pathfinder : MonoBehaviour
                     //Check they are within bounderies
                     if (i > -1 && i < Map.GetLength(1) && j > -1 && j < Map.GetLength(0))
                     {
-                        if (Map[j, i].walkable)
+						if (Map[j, i].walkable && Map[j, i].currentObject == null)
                         {
-                            return new Node(j, i, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, Map[j, i].walkable);
+                            return new Node(j, i, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, true);
                         }
                     }
                 }
@@ -381,6 +521,42 @@ public class Pathfinder : MonoBehaviour
             return null;
         }
     }
+
+	private Node FindClosestNode(Vector3 pos)
+	{      
+		int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) :  Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
+		int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
+		
+		if (x < 0 || z < 0 || x > Map.GetLength(0) || z > Map.GetLength(1))
+			return null;
+		
+		Node n = Map[x, z];
+		
+		if (n.walkable)
+		{
+			return new Node(x, z, n.yCoord, n.ID, n.xCoord, n.zCoord, n.walkable);
+		}
+		else
+		{
+			//If we get a non walkable tile, then look around its neightbours
+			for (int i = z - 1; i < z + 2; i++)
+			{
+				for (int j = x - 1; j < x + 2; j++)
+				{
+					//Check they are within bounderies
+					if (i > -1 && i < Map.GetLength(1) && j > -1 && j < Map.GetLength(0))
+					{
+						if (Map[j, i].walkable)
+						{
+							return new Node(j, i, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, Map[j, i].walkable);
+						}
+					}
+				}
+			}
+			return null;
+		}
+	}
+
 
 	public Node FindClosestWalkableNode(Vector3 pos){
 		int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) :  Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
@@ -391,8 +567,8 @@ public class Pathfinder : MonoBehaviour
 		
 		Node n = Map[x, z];
 		
-		if (n.currentObject != null)
-//			if (!n.walkable)
+//		if (n.currentObject != null)
+			if (!n.walkable)
 		{
 			n = null;
 			int radius = 1;
@@ -400,8 +576,8 @@ public class Pathfinder : MonoBehaviour
 			       && x + radius < Map.GetLength(0) && z + radius < Map.GetLength(1)){
 				for(int i = x - radius; i < x + radius; i++) {
 					for(int j = z - radius; j < z +radius; j++) {
-						if(Map[i, j].currentObject == null) {
-//						if(Map[i, j].walkable) {
+//						if(Map[i, j].currentObject == null) {
+						if(Map[i, j].walkable) {
 							if(n== null)
 								n = Map[i,j];
 							else if(Vector3.Distance(Map[x, z].GetVector(), Map[i,j].GetVector()) < Vector3.Distance(Map[x, z].GetVector(), n.GetVector()))
@@ -423,7 +599,46 @@ public class Pathfinder : MonoBehaviour
 
 	}
 
-
+	public Node FindClosestEmptyNode(Vector3 pos){
+		int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) :  Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
+		int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
+		
+		if (x < 0 || z < 0 || x > Map.GetLength(0) || z > Map.GetLength(1))
+			return null;
+		
+		Node n = Map[x, z];
+		
+		if (!n.walkable || n.currentObject != null)
+			//			if (!n.walkable)
+		{
+			n = null;
+			int radius = 1;
+			while (n == null  && x - radius > 0 && z -radius > 0 
+			       && x + radius < Map.GetLength(0) && z + radius < Map.GetLength(1)){
+				for(int i = x - radius; i < x + radius; i++) {
+					for(int j = z - radius; j < z +radius; j++) {
+						if(Map[i,j].walkable && Map[i, j].currentObject == null) {
+							//						if(Map[i, j].walkable) {
+							if(n== null)
+								n = Map[i,j];
+							else if(Vector3.Distance(Map[x, z].GetVector(), Map[i,j].GetVector()) < Vector3.Distance(Map[x, z].GetVector(), n.GetVector()))
+								n = Map[i,j];
+							else {
+							}
+							//							break;
+						}
+					}
+				}
+				
+				
+				radius ++;
+			}
+		}
+		//		UnityEngine.Debug.Log("c free a x=" + n.xCoord + ", y = " +n.zCoord);
+		return n;
+		
+		
+	}
 
 	public Node FindRealClosestNode(Vector3 pos)
 	{      
@@ -474,6 +689,42 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
+	private void FindEndNodeEmpty(Vector3 pos)
+	{       
+		int x = (MapStartPosition.x < 0F) ? Mathf.FloorToInt(((pos.x + Mathf.Abs(MapStartPosition.x)) / Tilesize)) : Mathf.FloorToInt((pos.x - MapStartPosition.x) / Tilesize);
+		int z = (MapStartPosition.y < 0F) ? Mathf.FloorToInt(((pos.z + Mathf.Abs(MapStartPosition.y)) / Tilesize)) : Mathf.FloorToInt((pos.z - MapStartPosition.y) / Tilesize);
+		
+		Node closestNode = Map[x, z];
+		List<Node> walkableNodes = new List<Node>();
+		
+		int turns = 1;
+		
+		while(walkableNodes.Count < 1 && maxSearchRounds < (int)10/Tilesize)
+		{
+			walkableNodes = EndNodeNeighbourCheckEmpty(x, z, turns);
+			turns++;
+			maxSearchRounds++;
+		}
+		
+		if (walkableNodes.Count > 0) //If we found some walkable tiles we will then return the nearest
+		{
+			int lowestDist = 99999999;
+			Node n = null;
+			
+			foreach (Node node in walkableNodes)
+			{
+				int i = GetHeuristics(closestNode, node);
+				if (i < lowestDist)
+				{
+					lowestDist = i;
+					n = node;
+				}
+			}
+			endNode = new Node(n.x, n.y, n.yCoord, n.ID, n.xCoord, n.zCoord, n.walkable);
+		}
+	}
+
+
     private List<Node> EndNodeNeighbourCheck(int x, int z, int r)
     {      
         List<Node> nodes = new List<Node>();
@@ -497,6 +748,31 @@ public class Pathfinder : MonoBehaviour
         return nodes;
     }
 
+	private List<Node> EndNodeNeighbourCheckEmpty(int x, int z, int r)
+	{      
+		List<Node> nodes = new List<Node>();
+		
+		for (int i = z - r; i < z + r + 1; i++)
+		{
+			for (int j = x - r; j < x + r + 1; j++)
+			{
+				//Check that we are within bounderis, and goes in ring around our end pos
+				if (i > -1 && j > -1 && i < Map.GetLength(0) && j < Map.GetLength(1) && ((i < z - r + 1 || i > z + r - 1) || (j < x - r + 1 || j > x + r - 1)))
+				{
+					//if it is walkable put it on the right list
+//					if (Map[j, i].walkable)
+					if (Map[j, i].walkable && Map[j, i].currentObject == null)
+
+					{
+						nodes.Add(Map[j, i]);
+					}
+				}
+			}
+		}
+		
+		return nodes;
+	}
+
     private void NeighbourCheck()
     {
         int x = currentNode.x;
@@ -513,7 +789,9 @@ public class Pathfinder : MonoBehaviour
                     if (i != y || j != x)
                     {
                         //Check the node is walkable
-                        if (Map[j, i].walkable)
+//                        if (Map[j, i].walkable)
+						if (Map[j, i].walkable && Map[j, i].currentObject == null)
+
                         {
                             //We do not recheck anything on the closed list
                             if (!OnClosedList(Map[j, i].ID))
@@ -524,7 +802,7 @@ public class Pathfinder : MonoBehaviour
                                     //If it is not on the open list then add it to
                                     if (!OnOpenList(Map[j, i].ID))
                                     {
-                                        Node addNode = new Node(Map[j, i].x, Map[j, i].y, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, Map[j, i].walkable, currentNode);
+										Node addNode = new Node(Map[j, i].x, Map[j, i].y, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, /* Map[j, i].walkable*/ true , currentNode);
                                         addNode.H = GetHeuristics(Map[j, i].x, Map[j, i].y);
                                         addNode.G = GetMovementCost(x, y, j, i) + currentNode.G;
                                         addNode.F = addNode.H + addNode.G;
@@ -556,37 +834,103 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    private void NonDiagonalNeighborCheck()
-    {            
-        int x = currentNode.x;
-        int y = currentNode.y;
+	private void NeighbourCheckBestEffort()
+	{
+		int x = currentNode.x;
+		int y = currentNode.y;
+		
+		for (int i = y - 1; i < y + 2; i++)
+		{
+			for (int j = x - 1; j < x + 2; j++)
+			{
+				//Check it is within the bounderies
+				if (i > -1 && i < Map.GetLength(1) && j > -1 && j < Map.GetLength(0))
+				{
+					//Dont check for the current node.
+					if (i != y || j != x)
+					{
+						//Check the node is walkable
+						if (Map[j, i].walkable)
+//							if (Map[j, i].currentObject == null)
 
-        for (int i = y - 1; i < y + 2; i++)
-        {
-            for (int j = x - 1; j < x + 2; j++)
-            {
-                //Check it is within the bounderies
-                if (i > -1 && i < Map.GetLength(1) && j > -1 && j < Map.GetLength(0))
-                {
-                    //Dont check for the current node.
-                    if (i != y || j != x)
-                    {
-                        //Check that we are not moving diagonal
-                        if(GetMovementCost(x, y, j, i) < 14)
-                        {
-                            //Check the node is walkable
-                            if (Map[j, i].walkable)
-                            {
-                                //We do not recheck anything on the closed list
-                                if (!OnClosedList(Map[j, i].ID))
-                                {
-                                    //Check if we can move up or jump down!
-                                    if ((Map[j, i].yCoord - currentNode.yCoord < ClimbLimit && Map[j, i].yCoord - currentNode.yCoord >= 0) || (currentNode.yCoord - Map[j, i].yCoord < MaxFalldownHeight && currentNode.yCoord >= Map[j, i].yCoord))
-                                    {
-                                        //If it is not on the open list then add it to
-                                        if (!OnOpenList(Map[j, i].ID))
-                                        {
-                                            Node addNode = new Node(Map[j, i].x, Map[j, i].y, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, Map[j, i].walkable, currentNode);
+//						if (Map[j, i].currentObject != null && Map[j, i].currentObject.tag == "Enemy")
+//							Map[j, i].currentObject.renderer.material.color = Color.black;
+//						if (Map[j, i].walkable ||  (Map[j, i].currentObject != null && Map[j, i].currentObject.tag == "Enemy"))
+//						if ( Map[j, i].walkable || Map[j, i].currentObject == null || Map[j, i].currentObject.tag == "Enemy" || Map[j, i].currentObject.tag == "AI")
+						{
+							//We do not recheck anything on the closed list
+							if (!OnClosedList(Map[j, i].ID))
+							{
+								//Check if we can move up or jump down!
+								if ((Map[j, i].yCoord - currentNode.yCoord < ClimbLimit && Map[j, i].yCoord - currentNode.yCoord >= 0) || (currentNode.yCoord - Map[j, i].yCoord < MaxFalldownHeight && currentNode.yCoord >= Map[j, i].yCoord))
+								{
+									//If it is not on the open list then add it to
+									if (!OnOpenList(Map[j, i].ID))
+									{
+										Node addNode = new Node(Map[j, i].x, Map[j, i].y, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord,   Map[j, i].walkable , currentNode);
+										addNode.H = GetHeuristics(Map[j, i].x, Map[j, i].y);
+										addNode.G = GetMovementCost(x, y, j, i) + currentNode.G;
+										addNode.F = addNode.H + addNode.G;
+										//Insert on open list
+										openList[addNode.ID] = addNode;
+										//Insert on sorted list
+										BHInsertNode(new NodeSearch(addNode.ID, addNode.F)); 
+										//sortedOpenList.Add(new NodeSearch(addNode.ID, addNode.F));
+									}
+									else
+									{
+										///If it is on openlist then check if the new paths movement cost is lower
+										Node n = GetNodeFromOpenList(Map[j, i].ID);
+										if (currentNode.G + GetMovementCost(x, y, j, i) < openList[Map[j, i].ID].G)
+										{
+											n.parent = currentNode;
+											n.G = currentNode.G + GetMovementCost(x, y, j, i);
+											n.F = n.G + n.H;
+											BHSortNode(n.ID, n.F);
+											//ChangeFValue(n.ID, n.F);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	
+	private void NonDiagonalNeighborCheck()
+	{            
+		int x = currentNode.x;
+		int y = currentNode.y;
+		
+		for (int i = y - 1; i < y + 2; i++)
+		{
+			for (int j = x - 1; j < x + 2; j++)
+			{
+				//Check it is within the bounderies
+				if (i > -1 && i < Map.GetLength(1) && j > -1 && j < Map.GetLength(0))
+				{
+					//Dont check for the current node.
+					if (i != y || j != x)
+					{
+						//Check that we are not moving diagonal
+						if(GetMovementCost(x, y, j, i) < 14)
+						{
+							//Check the node is walkable
+							if (Map[j, i].walkable)
+							{
+								//We do not recheck anything on the closed list
+								if (!OnClosedList(Map[j, i].ID))
+								{
+									//Check if we can move up or jump down!
+									if ((Map[j, i].yCoord - currentNode.yCoord < ClimbLimit && Map[j, i].yCoord - currentNode.yCoord >= 0) || (currentNode.yCoord - Map[j, i].yCoord < MaxFalldownHeight && currentNode.yCoord >= Map[j, i].yCoord))
+									{
+										//If it is not on the open list then add it to
+										if (!OnOpenList(Map[j, i].ID))
+										{
+											Node addNode = new Node(Map[j, i].x, Map[j, i].y, Map[j, i].yCoord, Map[j, i].ID, Map[j, i].xCoord, Map[j, i].zCoord, Map[j, i].walkable, currentNode);
                                             addNode.H = GetHeuristics(Map[j, i].x, Map[j, i].y);
                                             addNode.G = GetMovementCost(x, y, j, i) + currentNode.G;
                                             addNode.F = addNode.H + addNode.G;

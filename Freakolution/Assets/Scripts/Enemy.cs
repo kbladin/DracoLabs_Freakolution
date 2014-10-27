@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour {
 		health = 100f;
 		attackCooldownTime = 3f;
 		attackRange = 2f;
-		damage = 10f;
+		damage = 0f;
 	}
 	
 	// Update is called once per frame

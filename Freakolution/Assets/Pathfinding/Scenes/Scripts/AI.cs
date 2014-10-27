@@ -2,8 +2,7 @@ using UnityEngine;
 using System.Collections;
 
 public class AI : Pathfinding {
-
-
+	
 	public bool isRange = false;
 	public float rangeDistance = 1.0f;
 	public float speed = 12f;
@@ -14,10 +13,13 @@ public class AI : Pathfinding {
     private CharacterController controller;
     private bool newPath = true;
     private bool moving = false;
+	private bool resetPath = false;
     private GameObject[] AIList;
 
 	private Node currentNode;
 	private Node previousNode;
+
+
 
 	public void setPlayer(GameObject p) {
 		playerObject = p;
@@ -27,7 +29,7 @@ public class AI : Pathfinding {
 
 	void Start () 
     {
-//        AIList = GameObject.FindGameObjectsWithTag("Enemy");
+//		this.renderer.material.color = Color.red;
 	}
 
 	bool isTargetOptimal(){
@@ -37,60 +39,54 @@ public class AI : Pathfinding {
 	bool isPositionOptimal() {
 		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(player.position);
 		Node nTransform = Pathfinder.Instance.FindRealClosestNode(transform.position);
+//		print(nTransform.currentObject.GetInstanceID());
 
-
-		if(Path.Count == 0) {
-			if(nTransform.currentObject != null && nTransform.currentObject != gameObject){
-				//				Debug.Log("pas bon " + n.currentObject.ToString() + "contre " + gameObject.ToString());
-				//				StartCoroutine(NewPathToFreeSpot());
-				return false;
-			} else {
-				Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(player.position);
-				if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+0.4f) {
-					return true;
-				} else {
-					return false;
-				}
-
-			}
-		} else {
+		if(nTransform.currentObject == null){
+			this.renderer.material.color = Color.cyan;
 			return false;
 		}
 
 
+		if(nTransform.currentObject != null && nTransform.currentObject.GetInstanceID() != gameObject.GetInstanceID()){
+				this.renderer.material.color = Color.green;
+				return false;
+		} else {
+			Node nBestWalkable = Pathfinder.Instance.FindClosestEmptyNode(player.position);
+			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+rangeDistance) {
+				this.renderer.material.color = Color.blue;
+				return true;
+			} else {
+//				this.renderer.material.color = Color.blue;
+				return false;
+			}
 
-//		Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) < Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())
-
-
+		}
 	}
 
 	bool isPathOptimal() {
-		if (Path == null || Path.Count == 0){
+		if (Path == null || Path.Count == 0 ){ //|| !newPath
 			return false;
 		}
-
-		//			if(Path.Count > 1){
-
 		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(player.position);
 		Node nTransform = Pathfinder.Instance.FindRealClosestNode(transform.position);
 		Node nPathTarget = Pathfinder.Instance.FindRealClosestNode(Path[Path.Count - 1]);
 		Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(player.position);
 
-//		Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
-//		if(n.currentObject != null){
-//			return false;
-//		}
-
+		Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
+		if(n.currentObject != null){
+				return false;
+		}
 
 		if (Vector3.Distance(nPlayer.GetVector(), nPathTarget.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+0.4f) {
-//			if(nTransform.currentObject != null && nTransform.currentObject != gameObject){
-//				return false;
-//			}
+			if(nTransform.currentObject != null && nTransform.currentObject.GetInstanceID() != gameObject.GetInstanceID()){
+				return false;
+			}
+			this.renderer.material.color = Color.yellow;
+
 			return true;
 		} else {
 			return false;
 		}
-//		Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(player.position);
 	}
 
 	bool isTargetWithinRange() {
@@ -105,10 +101,8 @@ public class AI : Pathfinding {
 
 	}
 
-	void Update () 
+	void Update ()
     {
-
-//		this.rigidbody.WakeUp();
 		if (!isTargetOptimal()) {
 			findNewTarget();
 		}
@@ -117,18 +111,36 @@ public class AI : Pathfinding {
 			//move
 			if(!isPathOptimal()){
 				//newPath
-				StartCoroutine(NewPathToFreeSpot());
+				this.renderer.material.color = Color.red;
+				if(newPath)
+					StartCoroutine(NewPathToFreeSpot());
+				else 
+//				if(!resetPath)
+					StartCoroutine(NewPathBestEffort());
+
+//				if(Path.Count == 0 || resetPath){
+//					Node n = Pathfinder.Instance.FindClosestWalkableNode(transform.position);
+//					this.renderer.material.color = Color.black;
+//					Path.Add(new Vector3(n.xCoord, transform.position.y, n.zCoord));
+//					resetPath = true;
+//					transform.collider.enabled = false;
+//					MoveMethod();
+//				}
 			}
 
-			if(Path.Count >1){
-			Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
-			
-			if(n.currentObject == null){
+			//only move if next point on path is free
+			if (newPath && false){
 				MoveMethod();
-//				return false;
+			}
+			else {
+			if(Path.Count >1){
+				Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
+				if(n.currentObject == null || n.currentObject.GetInstanceID() == gameObject.GetInstanceID()){
+//						n.currentObject = gameObject;
+					MoveMethod();
+				} 
 			}
 			}
-//			MoveMethod();
 
 		} else {
 			//stop
@@ -136,98 +148,33 @@ public class AI : Pathfinding {
 				//attack
 			}
 		}
-
-
-
-//		if(Vector3.Distance(player.position, transform.position) < 55F && !moving){
-//			Node n = Pathfinder.Instance.FindRealClosestNode(transform.position);
-//			if(n.currentObject != null && n.currentObject != gameObject){
-//				//				Debug.Log("pas bon " + n.currentObject.ToString() + "contre " + gameObject.ToString());
-//				StartCoroutine(NewPathToFreeSpot());
-//			}
-//			if (newPath )
-//			{
-//				StartCoroutine(NewPathToFreeSpot());
-//				moving = true;
-//			}
-//		} 
-//        else if (Vector3.Distance(player.position, transform.position) < 5F)
-//        {
-//            //Stop!
-//			Node n = Pathfinder.Instance.FindRealClosestNode(this.transform.position);
-//			if(n.currentObject != null && n.currentObject != gameObject){
-//				//				Debug.Log("pas bon " + n.currentObject.ToString() + "contre " + gameObject.ToString());
-//				StartCoroutine(NewPathToFreeSpot());
-//			}
-//
-//			MoveMethod();
-//
-//        }
-//
-//		else if (Vector3.Distance(player.position, transform.position) < 65F && moving)
-//		{
-//			Node n = Pathfinder.Instance.FindClosestWalkableNode(player.position);
-//			Node nReal = Pathfinder.Instance.FindRealClosestNode(transform.position);
-//
-//			if (Path.Count > 0)
-//			{
-//				if (Vector3.Distance(player.position, Path[Path.Count - 1]) > 5F)
-//				{
-//					if(nReal.currentObject != null && nReal.currentObject != gameObject){
-//						//				Debug.Log("pas bon " + n.currentObject.ToString() + "contre " + gameObject.ToString());
-//						StartCoroutine(NewPathToFreeSpot());
-//					}
-//					else 
-//						if(Vector3.Distance(player.position, new Vector3(n.xCoord, 0 , n.zCoord)) < 4F)
-//					{
-//						StartCoroutine(NewPathToFreeSpot());
-//
-//					}
-//
-//				}
-//			}
-//			else
-//			{
-//
-//
-//				if(nReal.currentObject != null && nReal.currentObject != gameObject){
-//					//				Debug.Log("pas bon " + n.currentObject.ToString() + "contre " + gameObject.ToString());
-//					StartCoroutine(NewPathToFreeSpot());
-//				}
-//				else if (newPath && Vector3.Distance(player.position, new Vector3(n.xCoord, 0 , n.zCoord)) < 4F)
-//				{
-//					StartCoroutine(NewPathToFreeSpot());
-//				}
-//			}
-//			//Move the ai towards the player
-//			MoveMethod();
-//		} else {
-////			if(Path.Count == 0)
-////				moving = false;
-//
-//		}
-
-	
 	}
 
     IEnumerator NewPath()
     {
 //        newPath = false;
-        FindPath(transform.position, player.position);
+//        FindPath(transform.position, player.position);
         yield return new WaitForSeconds(1F);
         newPath = true;
     }
 
 	IEnumerator NewPathToFreeSpot()
 	{
-//		newPath = false;
-		Node n = Pathfinder.Instance.FindClosestWalkableNode(player.position);
+		newPath = false;
+		Node n = Pathfinder.Instance.FindClosestEmptyNode(player.position);
 
-		FindPath(transform.position, new Vector3(n.xCoord,0 , n.zCoord));
-		yield return new WaitForSeconds(1F);
+		FindPath(transform.position, new Vector3(n.xCoord,0 , n.zCoord), false);
+		yield return new WaitForSeconds(0.3F);
 		newPath = true;
 	}
 
+	IEnumerator NewPathBestEffort()
+	{
+		Node n = Pathfinder.Instance.FindClosestWalkableNode(player.position);
+		
+		FindPath(transform.position, new Vector3(n.xCoord,0 , n.zCoord), true);
+		yield return new WaitForSeconds(1F);
+	}
 
     private void MoveMethod()
     {
@@ -236,20 +183,10 @@ public class AI : Pathfinding {
 			Vector3 tarPos = Path[0]; 
 			tarPos.y = transform.lossyScale.y;
 
-            Vector3 direction = (tarPos - transform.position).normalized;
+			Vector3 direction = (tarPos - transform.position).normalized;
+//			Vector3 direction = (Path[0] - transform.position).normalized;
 
-//			int i = 0;
-//            foreach (GameObject g in AIList)
-//            {
-//				Debug.Log("Obj " + g.tag + " : " + i + " :: " + g.transform.position.ToString());
-//				i++;
-//                if(Vector3.Distance(g.transform.position, transform.position) < 1F)
-//                {
-//                    Vector3 dir = (transform.position - g.transform.position).normalized;
-//                    dir.Set(dir.x, 0, dir.z);
-//                    direction += 0.2F * dir;
-//                }
-//            }
+
 
 
 
@@ -257,29 +194,26 @@ public class AI : Pathfinding {
 
             
             transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * speed);
-            if (transform.position.x < Path[0].x + 0.4F && transform.position.x > Path[0].x - 0.4F && transform.position.z > Path[0].z - 0.4F && transform.position.z < Path[0].z + 0.4F)
+            
+			if (transform.position.x < Path[0].x + 0.4F && transform.position.x > Path[0].x - 0.4F && transform.position.z > Path[0].z - 0.4F && transform.position.z < Path[0].z + 0.4F)
             {
+
+				resetPath = false;
+				transform.collider.enabled = true;
+
 				previousNode = currentNode;
-				if(previousNode != null && previousNode.currentObject != null && previousNode.currentObject == gameObject){
-//					previousNode.walkable = true;
+
+				if(previousNode != null && previousNode.currentObject != null && previousNode.currentObject.GetInstanceID() == gameObject.GetInstanceID()){
+//					previousNode.walkable =  true;
 					previousNode.currentObject = null;
 				}
+
 				Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
 				currentNode = n;//Pathfinder.Instance.Map[n.x, n.y];
 				if( currentNode.currentObject == null ){//&& Path.Count == 1 currentNode.walkable == true &&
 //					currentNode.walkable = false;
 					currentNode.currentObject = gameObject;
 				} 
-//				else {
-//					StartCoroutine(NewPath());
-//				}
-
-//				if(Path.Count > 1) {
-//					Node n1 = Pathfinder.Instance.FindRealClosestNode(Path[1]);
-//					if(n1.walkable == false){
-//						StartCoroutine(NewPath());
-//					}
-//				}
                 Path.RemoveAt(0);
             }
 

@@ -8,7 +8,12 @@ public class Player : MonoBehaviour {
 	private float damage;
 	//needs this to get movement direction
 	ThirdPersonController controller;
-	
+
+	Node previousNode = null;
+	Node currentNode = null;
+	bool previousObst = false;
+
+
 	// Use this for initialization
 	void Start () 
 	{
@@ -29,6 +34,47 @@ public class Player : MonoBehaviour {
 		{
 			Destroy(gameObject);
 		}
+
+
+		previousNode = currentNode;
+
+		if(previousNode != null ){
+			if(!previousObst)
+				previousNode.walkable = true;
+			previousNode.currentObject = null;
+		}
+
+		currentNode = Pathfinder.Instance.FindRealClosestNode(transform.position);
+		if(currentNode.walkable == false) {
+			previousObst = true;
+		} else {
+			previousObst = false;
+		}
+
+		currentNode.walkable = false;
+		currentNode.currentObject = gameObject;
+		
+		
+
+		if(currentNode.currentObject != gameObject){
+
+			
+
+
+
+		}
+
+
+//		if(previousNode != null && previousNode.currentObject != null && previousNode.currentObject == gameObject){
+//
+//		}
+
+
+
+
+
+			//		print ("node n x=" + n.xCoord+ ", y=" + n.zCoord);
+
 	}
 	
 	public void LoseHealth(float damage) 

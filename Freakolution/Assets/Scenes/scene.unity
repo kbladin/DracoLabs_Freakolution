@@ -281,7 +281,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 262155520}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.8627644, y: 2.5, z: 2.55498886}
+  m_LocalPosition: {x: 10.752202, y: 2.5, z: 2.55498886}
   m_LocalScale: {x: 2.13101649, y: 5, z: 6.3085556}
   m_Children: []
   m_Father: {fileID: 0}
@@ -330,7 +330,7 @@ MonoBehaviour:
   trotSpeed: 4
   runSpeed: 6
   inAirControlAcceleration: 3
-  jumpHeight: .5
+  jumpHeight: 2.1400001
   gravity: 20
   speedSmoothing: 10
   rotateSpeed: 500
@@ -1017,7 +1017,7 @@ MonoBehaviour:
   MapStartPosition: {x: -100, y: -100}
   MapEndPosition: {x: 100, y: 100}
   DisallowedTags:
-  - Wall
+  - Obst
   IgnoreTags:
   - Enemy
   - Player
@@ -1384,6 +1384,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
+      propertyPath: jumpHeight
+      value: 2.1400001
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d127608cf4dbaa642bdcefa5c70b4c52, type: 2}
   m_RootGameObject: {fileID: 378571533}
@@ -1632,10 +1636,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0e93fd94edc5b499f78284dc41c47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnIntervalTimer: 0
-  spawnCooldownTimer: 0
-  waveIntervalTimer: 0
+  spawnCount: 100
   waveCounter: 0
+  waveInterval: 2
+  spawnInterval: 10
+  spawnCooldown: .5
   spawns:
   - {fileID: 129478211}
   - {fileID: 70986795}
