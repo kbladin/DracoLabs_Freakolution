@@ -612,7 +612,7 @@ public class Pathfinder : MonoBehaviour
 			//			if (!n.walkable)
 		{
 			n = null;
-			int radius = 1;
+			int radius = 0;
 			while (n == null  && x - radius > 0 && z -radius > 0 
 			       && x + radius < Map.GetLength(0) && z + radius < Map.GetLength(1)){
 				for(int i = x - radius; i < x + radius; i++) {
@@ -634,7 +634,7 @@ public class Pathfinder : MonoBehaviour
 				radius ++;
 			}
 		}
-		//		UnityEngine.Debug.Log("c free a x=" + n.xCoord + ", y = " +n.zCoord);
+				UnityEngine.Debug.Log("c free a x=" + n.xCoord + ", y = " +n.zCoord);
 		return n;
 		
 		

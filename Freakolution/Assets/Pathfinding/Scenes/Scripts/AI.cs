@@ -78,14 +78,14 @@ public class AI : Pathfinding {
 		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(target.position);
 		Node nTransform = Pathfinder.Instance.FindRealClosestNode(transform.position);
 		Node nPathTarget = Pathfinder.Instance.FindRealClosestNode(Path[Path.Count - 1]);
-		Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(target.position);
+		Node nBestWalkable = Pathfinder.Instance.FindClosestEmptyNode(target.position);
 
 		Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
 		if(n.currentObject != null){
 				return false;
 		}
 
-		if (Vector3.Distance(nPlayer.GetVector(), nPathTarget.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+0.4f) {
+		if (Vector3.Distance(nPlayer.GetVector(), nPathTarget.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())) {
 			if(nTransform.currentObject != null && nTransform.currentObject.GetInstanceID() != gameObject.GetInstanceID()){
 				return false;
 			}

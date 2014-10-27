@@ -18,10 +18,15 @@ public class Enemy : MonoBehaviour {
 		moveDirection = Vector3.forward;
 		health = 100f;
 		attackCooldownTime = 3f;
+<<<<<<< HEAD
 		attackRange = 1f;
 		enemyDamage = 10f;
 		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
 		GetComponentInChildren<Light>().color = enemyChemicals.getChemicals();
+=======
+		attackRange = 2f;
+		damage = 0f;
+>>>>>>> finish_pf
 	}
 	
 	// Update is called once per frame
@@ -52,12 +57,10 @@ public class Enemy : MonoBehaviour {
 
 	public Vector3 GetDirection() {
 		// Not implemented.
-//		 return new Vector3(1,0,0);
+		// return new Vector3(0,0,1);
 		return (GetVelocity ().magnitude > 0.1 ?
 		        GetComponent<AI> ().GetMoveDirection () :
 		        GetComponent<AI> ().GetDirectionToTarget ());
-
-//		return GetComponent<AI> ().GetMoveDirection ();
 	}
 
 	public Vector3 GetVelocity() {
@@ -70,9 +73,9 @@ public class Enemy : MonoBehaviour {
 		
 		Vector3 attackDirection = GetComponent<AI>().GetDirectionToTarget();
 		//sphere.position=transform.position + attackDirection * attackRange;
-		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 0.8f);
+		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 0.5f);
 		Transform nearest = null;
-		float closestDistance = attackRange+0.8f;
+		float closestDistance = attackRange+0.5f;
 		foreach (Collider hit in targets){
 			if(hit && hit.tag == "Player"){
 				float dist = Vector3.Distance(transform.position, hit.transform.position);
