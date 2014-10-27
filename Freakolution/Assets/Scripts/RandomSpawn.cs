@@ -21,7 +21,7 @@ public class RandomSpawn : MonoBehaviour {
 		// the time that enemies are spawned in a wave
 		public float spawnInterval = 20.0f;
 		// The time it takes between spawning enemies in a wave
-		public float spawnCooldown = 3.0f;
+		public float spawnCooldown = 5.0f;
 				
 		// Empty game objects with the spawn point locations
 		public Transform[] spawns;

@@ -151,7 +151,7 @@ public class Player : MonoBehaviour {
 
 	private void BuildBlock() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		if (!Physics.CheckSphere (location, /*1 / Mathf.Sqrt(2))*/ 0.5f)) {
+		if (!Physics.CheckSphere (location, /*1 / Mathf.Sqrt(2))*/ 0.35f)) {
 			Node n = Pathfinder.Instance.FindRealClosestNode(location);
 
 			Vector3 realLoc = new Vector3(n.xCoord, 0.5f, n.zCoord);
@@ -173,7 +173,7 @@ public class Player : MonoBehaviour {
 				} else {
 			renderBlock.transform.position = location;	
 		}
-		if (Physics.CheckSphere (location, /*1 / Mathf.Sqrt (2))*/0.5f)) {
+		if (Physics.CheckSphere (location, /*1 / Mathf.Sqrt (2))*/0.35f)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
 		} else if (buildCooldown < buildCooldownTime) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
