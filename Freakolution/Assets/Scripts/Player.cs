@@ -211,7 +211,7 @@ public class Player : MonoBehaviour {
 	}
 	private void TryPlaceBlock () {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		if (!Physics.CheckSphere (location, 0.5f) && carriedBlock) {
+		if (!Physics.CheckSphere (location, 0.35f) && carriedBlock) {
 						Node n = Pathfinder.Instance.FindRealClosestNode(location);
 			Vector3 realLoc = new Vector3(n.xCoord, 0.5f, n.zCoord);
 						carriedBlock.transform.position = realLoc;
