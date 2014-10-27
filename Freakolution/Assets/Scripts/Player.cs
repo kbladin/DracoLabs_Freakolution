@@ -24,7 +24,9 @@ public class Player : MonoBehaviour {
 	public GameObject blockPrefab;
 	public GameObject renderBlockPrefab;
 	private GameObject renderBlock;
-
+	Node previousNode = null;
+	Node currentNode = null;
+	bool previousObst = false;
 	// Use this for initialization
 	void Start ()
 	{
@@ -79,6 +81,28 @@ public class Player : MonoBehaviour {
 
 		attackCooldown += Time.deltaTime;
 		buildCooldown += Time.deltaTime;
+
+
+		previousNode = currentNode;
+
+		if(previousNode != null ){
+			if(!previousObst)
+				previousNode.walkable = true;
+			previousNode.currentObject = null;
+		}
+
+		currentNode = Pathfinder.Instance.FindRealClosestNode(transform.position);
+		if(currentNode.walkable == false) {
+			previousObst = true;
+		} else {
+			previousObst = false;
+		}
+
+		currentNode.walkable = false;
+		currentNode.currentObject = gameObject;
+		
+
+
 	}
 
 	public void LoseHealth(float damage, Chemicals enemyChemicals) 

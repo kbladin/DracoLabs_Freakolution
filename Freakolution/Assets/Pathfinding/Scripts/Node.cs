@@ -17,7 +17,7 @@ public class Node
     public int F            = 0;
     public int H            = 0;
     public int G            = 0;
-
+	
 	public GameObject currentObject = null;
 
     //Use for faster look ups
