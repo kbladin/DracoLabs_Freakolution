@@ -157,7 +157,7 @@ public class Player : MonoBehaviour {
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
 		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.35f)) {
 			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
-			n.yCoord ++; //n.walkable = false;
+			n.walkable = false;
 			n.currentObject = block;
 			
 			block.GetComponent<Rigidbody> ().isKinematic = true;
@@ -217,7 +217,8 @@ public class Player : MonoBehaviour {
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
 		if (!Physics.CheckSphere (realLoc, 0.35f) && carriedBlock) {
 			carriedBlock.transform.position = realLoc;
-			n.yCoord ++; //n.walkable = false;
+			n.walkable = false;
+			n.currentObject = carriedBlock;
 
 			carriedBlock.GetComponent<Rigidbody> ().isKinematic = true;
 			carriedBlock.GetComponent<BoxCollider>().enabled = true;
