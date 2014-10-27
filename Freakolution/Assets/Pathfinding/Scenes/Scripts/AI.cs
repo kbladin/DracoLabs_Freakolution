@@ -4,17 +4,18 @@ using System.Collections;
 public class AI : Pathfinding {
 	
 	public bool isRange = false;
-	public float rangeDistance = 1.0f;
+	public float rangeDistance = 0.5f;
 	public float speed = 12f;
 	public float detectionRange = 50f;
 
 	private GameObject playerObject;
-    public Transform player;
-    private CharacterController controller;
+	private Transform target;
+	private CharacterController controller;
     private bool newPath = true;
     private bool moving = false;
 	private bool resetPath = false;
     private GameObject[] AIList;
+	private GameObject[] playerList;
 
 	private Node currentNode;
 	private Node previousNode;
@@ -23,37 +24,39 @@ public class AI : Pathfinding {
 
 	public void setPlayer(GameObject p) {
 		playerObject = p;
-		player = playerObject.transform;
+		target = playerObject.transform;
 	}
 	
 
 	void Start () 
     {
 //		this.renderer.material.color = Color.red;
+		playerList = GameObject.FindGameObjectsWithTag("Player");
+
 	}
 
-	bool isTargetOptimal(){
-		return true;
-	}
+//	bool isTargetOptimal(){
+//		return true;
+//	}
 
 	bool isPositionOptimal() {
-		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(player.position);
+		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(target.position);
 		Node nTransform = Pathfinder.Instance.FindRealClosestNode(transform.position);
 //		print(nTransform.currentObject.GetInstanceID());
 
 		if(nTransform.currentObject == null){
-			this.renderer.material.color = Color.cyan;
+//			this.renderer.material.color = Color.cyan;
 			return false;
 		}
 
 
 		if(nTransform.currentObject != null && nTransform.currentObject.GetInstanceID() != gameObject.GetInstanceID()){
-				this.renderer.material.color = Color.green;
+//				this.renderer.material.color = Color.green;
 				return false;
 		} else {
-			Node nBestWalkable = Pathfinder.Instance.FindClosestEmptyNode(player.position);
+			Node nBestWalkable = Pathfinder.Instance.FindClosestEmptyNode(target.position);
 			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+rangeDistance) {
-				this.renderer.material.color = Color.blue;
+//				this.renderer.material.color = Color.blue;
 				return true;
 			} else {
 //				this.renderer.material.color = Color.blue;
@@ -67,10 +70,10 @@ public class AI : Pathfinding {
 		if (Path == null || Path.Count == 0 ){ //|| !newPath
 			return false;
 		}
-		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(player.position);
+		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(target.position);
 		Node nTransform = Pathfinder.Instance.FindRealClosestNode(transform.position);
 		Node nPathTarget = Pathfinder.Instance.FindRealClosestNode(Path[Path.Count - 1]);
-		Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(player.position);
+		Node nBestWalkable = Pathfinder.Instance.FindClosestWalkableNode(target.position);
 
 		Node n = Pathfinder.Instance.FindRealClosestNode(Path[0]);
 		if(n.currentObject != null){
@@ -81,7 +84,7 @@ public class AI : Pathfinding {
 			if(nTransform.currentObject != null && nTransform.currentObject.GetInstanceID() != gameObject.GetInstanceID()){
 				return false;
 			}
-			this.renderer.material.color = Color.yellow;
+//			this.renderer.material.color = Color.yellow;
 
 			return true;
 		} else {
@@ -90,7 +93,7 @@ public class AI : Pathfinding {
 	}
 
 	bool isTargetWithinRange() {
-		if(Vector3.Distance(player.position, transform.position) < rangeDistance){
+		if(Vector3.Distance(target.position, transform.position) < rangeDistance){
 			return true;
 		} else {
 			return false;
@@ -98,20 +101,27 @@ public class AI : Pathfinding {
 	}
 
 	void findNewTarget() {
-
+		// Should actually find the one which is closest.
+		float minimumDistance = 10000000000;
+		int minIndex = 0;
+		for (int i=0; i<playerList.Length; ++i) {
+			if ((playerList [i].transform.position - transform.position).magnitude < minimumDistance) {
+				minimumDistance = (playerList [i].transform.position - transform.position).magnitude;
+				minIndex = i;
+			}
+		}
+		target = playerList[minIndex].transform;
 	}
 
 	void Update ()
     {
-		if (!isTargetOptimal()) {
-			findNewTarget();
-		}
+		findNewTarget();
 
 		if (!isPositionOptimal()){
 			//move
 			if(!isPathOptimal()){
 				//newPath
-				this.renderer.material.color = Color.red;
+//				this.renderer.material.color = Color.red;
 				if(newPath)
 					StartCoroutine(NewPathToFreeSpot());
 				else 
@@ -161,7 +171,7 @@ public class AI : Pathfinding {
 	IEnumerator NewPathToFreeSpot()
 	{
 		newPath = false;
-		Node n = Pathfinder.Instance.FindClosestEmptyNode(player.position);
+		Node n = Pathfinder.Instance.FindClosestEmptyNode(target.position);
 
 		FindPath(transform.position, new Vector3(n.xCoord,0 , n.zCoord), false);
 		yield return new WaitForSeconds(0.3F);
@@ -170,7 +180,7 @@ public class AI : Pathfinding {
 
 	IEnumerator NewPathBestEffort()
 	{
-		Node n = Pathfinder.Instance.FindClosestWalkableNode(player.position);
+		Node n = Pathfinder.Instance.FindClosestWalkableNode(target.position);
 		
 		FindPath(transform.position, new Vector3(n.xCoord,0 , n.zCoord), true);
 		yield return new WaitForSeconds(1F);
@@ -182,10 +192,12 @@ public class AI : Pathfinding {
 	}
 
 	public Vector3 GetDirectionToTarget() {
-		if (target)
-						return (target.position - transform.position).normalized;
-				else
-						return new Vector3 (0,0,-1);
+		if (target){
+			return (target.position - transform.position).normalized;
+		}	else {
+//			print("no target!");
+			return new Vector3 (0,0,-1);
+		}
 	}
 
 	public Vector3 GetVelocity() {
@@ -196,7 +208,8 @@ public class AI : Pathfinding {
         if (Path.Count > 0)
         {
 			Vector3 tarPos = Path[0]; 
-			tarPos.y = transform.lossyScale.y;
+//			tarPos.y = transform.lossyScale.y;
+			tarPos.y = tarPos.y + 0.75f; // Height of the collider / 2.
 
 			Vector3 direction = (tarPos - transform.position).normalized;
 //			Vector3 direction = (Path[0] - transform.position).normalized;
