@@ -172,7 +172,7 @@ MonoBehaviour:
   PathType: 0
   JS: 0
   isRange: 0
-  rangeDistance: 1
+  rangeDistance: .200000003
   speed: 3
   detectionRange: 50
 --- !u!114 &11400002

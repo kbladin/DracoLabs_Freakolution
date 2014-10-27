@@ -31,23 +31,27 @@ public class AI : Pathfinding {
 	void Start () 
     {
 //		this.renderer.material.color = Color.red;
-		playerList = GameObject.FindGameObjectsWithTag("Player");
-
+		SetPlayerList();
 	}
 
 //	bool isTargetOptimal(){
 //		return true;
 //	}
 
+	void SetPlayerList(){
+		playerList = GameObject.FindGameObjectsWithTag("Player");
+
+		//need to remove dead player
+	}
+
 	bool isPositionOptimal() {
 		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(target.position);
 		Node nTransform = Pathfinder.Instance.FindRealClosestNode(transform.position);
 //		print(nTransform.currentObject.GetInstanceID());
 
-		if(nTransform.currentObject == null){
-//			this.renderer.material.color = Color.cyan;
-			return false;
-		}
+//		if(nTransform.currentObject == null){
+//			return false;
+//		}
 
 
 		if(nTransform.currentObject != null && nTransform.currentObject.GetInstanceID() != gameObject.GetInstanceID()){
@@ -57,6 +61,7 @@ public class AI : Pathfinding {
 			Node nBestWalkable = Pathfinder.Instance.FindClosestEmptyNode(target.position);
 			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+rangeDistance) {
 //				this.renderer.material.color = Color.blue;
+//				transform.LookAt(target.position);
 				return true;
 			} else {
 //				this.renderer.material.color = Color.blue;
@@ -85,7 +90,6 @@ public class AI : Pathfinding {
 				return false;
 			}
 //			this.renderer.material.color = Color.yellow;
-
 			return true;
 		} else {
 			return false;
@@ -105,6 +109,10 @@ public class AI : Pathfinding {
 		float minimumDistance = 10000000000;
 		int minIndex = 0;
 		for (int i=0; i<playerList.Length; ++i) {
+//			Player p = playerList[i].GetComponent<Player>();
+			if( !playerList[i].GetComponent<Player>().Alive)
+				continue;
+
 			if ((playerList [i].transform.position - transform.position).magnitude < minimumDistance) {
 				minimumDistance = (playerList [i].transform.position - transform.position).magnitude;
 				minIndex = i;
@@ -188,14 +196,19 @@ public class AI : Pathfinding {
 
 
 	public Vector3 GetMoveDirection() {
-		return GetDirectionToTarget(); // This should be changed to return the actual move direction.
+//		return GetDirectionToTarget(); // This should be changed to return the actual move direction.
+
+		if(Path.Count > 0)
+			return (Path[0] - transform.position).normalized;
+		else
+			return new Vector3 (0,0,-1);
 	}
 
 	public Vector3 GetDirectionToTarget() {
 		if (target){
 			return (target.position - transform.position).normalized;
 		}	else {
-//			print("no target!");
+			print("no target!");
 			return new Vector3 (0,0,-1);
 		}
 	}

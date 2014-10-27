@@ -113,6 +113,9 @@ public class Player : MonoBehaviour {
 		{
 			alive = false;
 			gameObject.SetActive(false);
+
+			currentNode.walkable = true;
+			currentNode.currentObject = null;
 		}
 	}
 
@@ -149,8 +152,15 @@ public class Player : MonoBehaviour {
 	private void BuildBlock() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		if (!Physics.CheckSphere (location, /*1 / Mathf.Sqrt(2))*/ 0.5f)) {
-			GameObject block = Instantiate(blockPrefab, location, transform.rotation) as GameObject;
-			block.GetComponent<Rigidbody> ().isKinematic = false;
+			Node n = Pathfinder.Instance.FindRealClosestNode(location);
+
+			Vector3 realLoc = new Vector3(n.xCoord, location.y, n.zCoord);
+
+			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
+			n.walkable = false;
+			n.currentObject = block;
+			
+			block.GetComponent<Rigidbody> ().isKinematic = true;
 			Destroy(carriedBlock);
 			buildCooldown = 0;
 		}
@@ -187,7 +197,10 @@ public class Player : MonoBehaviour {
 			}
 		}
 		if (nearest) {
+			Node n = Pathfinder.Instance.FindRealClosestNode(nearest.gameObject.transform.position);
 			carriedBlock = nearest.gameObject;
+			n.walkable = true;
+
 		}
 	}
 	
@@ -199,7 +212,12 @@ public class Player : MonoBehaviour {
 	private void TryPlaceBlock () {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		if (!Physics.CheckSphere (location, 0.5f) && carriedBlock) {
-						carriedBlock.GetComponent<Rigidbody> ().isKinematic = false;
+						Node n = Pathfinder.Instance.FindRealClosestNode(location);
+						Vector3 realLoc = new Vector3(n.xCoord, location.y, n.zCoord);
+						carriedBlock.transform.position = realLoc;
+						n.walkable = false;
+
+						carriedBlock.GetComponent<Rigidbody> ().isKinematic = true;
 						carriedBlock.GetComponent<BoxCollider>().enabled = true;
 						carriedBlock = null;
 				}

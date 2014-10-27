@@ -266,8 +266,8 @@ public class Pathfinder : MonoBehaviour
                 //If we have no nodes on the open list AND we are not at the end, then we got stucked! return empty list then.
 				if (sortedOpenList.Count == 0 || loopCount > 1000)
                 {
-                    print("Empty Openlist, closedList");
-					print("Empty List Loop Count = " + loopCount);
+//                    print("Empty Openlist, closedList");
+//					print("Empty List Loop Count = " + loopCount);
 
 //					Node n = FindRealClosestNode(endPos);
 //					n.walkable = false;
@@ -383,8 +383,8 @@ public class Pathfinder : MonoBehaviour
 				//If we have no nodes on the open list AND we are not at the end, then we got stucked! return empty list then.
 				if (sortedOpenList.Count == 0 || loopCount > 1000)
 				{
-					print("Empty Openlist, closedList");
-					print("Empty List Loop Count = " + loopCount);
+//					print("Empty Openlist, closedList");
+//					print("Empty List Loop Count = " + loopCount);
 
 					//					Node n = FindRealClosestNode(endPos);
 					//					n.walkable = false;
