@@ -208,7 +208,7 @@ public class AI : Pathfinding {
 		if (target){
 			return (target.position - transform.position).normalized;
 		}	else {
-			print("no target!");
+//			print("no target!");
 			return new Vector3 (0,0,-1);
 		}
 	}

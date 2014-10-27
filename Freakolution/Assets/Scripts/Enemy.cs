@@ -52,10 +52,12 @@ public class Enemy : MonoBehaviour {
 
 	public Vector3 GetDirection() {
 		// Not implemented.
-		// return new Vector3(0,0,1);
+//		 return new Vector3(1,0,0);
 		return (GetVelocity ().magnitude > 0.1 ?
 		        GetComponent<AI> ().GetMoveDirection () :
 		        GetComponent<AI> ().GetDirectionToTarget ());
+
+//		return GetComponent<AI> ().GetMoveDirection ();
 	}
 
 	public Vector3 GetVelocity() {
