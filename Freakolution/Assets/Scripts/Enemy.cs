@@ -54,7 +54,7 @@ public class Enemy : MonoBehaviour {
 		// Not implemented.
 //		 return new Vector3(1,0,0);
 		return (GetVelocity ().magnitude > 0.1 ?
-		        GetComponent<AI> ().GetMoveDirection () :
+		        GetComponent<AI> ().GetVelocity ().normalized :
 		        GetComponent<AI> ().GetDirectionToTarget ());
 
 //		return GetComponent<AI> ().GetMoveDirection ();

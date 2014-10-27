@@ -74,7 +74,9 @@ public class Player : MonoBehaviour {
 
 		if (carriedBlock) {
 			Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-			carriedBlock.transform.position = location;
+			Node n = Pathfinder.Instance.FindRealClosestNode(location);
+			Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
+			carriedBlock.transform.position = realLoc;
 			carriedBlock.GetComponent<Rigidbody>().isKinematic = true;
 			carriedBlock.GetComponent<BoxCollider>().enabled = false;
 		}
@@ -151,13 +153,11 @@ public class Player : MonoBehaviour {
 
 	private void BuildBlock() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		if (!Physics.CheckSphere (location, /*1 / Mathf.Sqrt(2))*/ 0.35f)) {
-			Node n = Pathfinder.Instance.FindRealClosestNode(location);
-
-			Vector3 realLoc = new Vector3(n.xCoord, 0.5f, n.zCoord);
-
+		Node n = Pathfinder.Instance.FindRealClosestNode(location);
+		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
+		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.35f)) {
 			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
-			n.walkable = false;
+			n.yCoord ++; //n.walkable = false;
 			n.currentObject = block;
 			
 			block.GetComponent<Rigidbody> ().isKinematic = true;
@@ -168,12 +168,14 @@ public class Player : MonoBehaviour {
 
 	private void RenderBlockWait() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
+		Node n = Pathfinder.Instance.FindRealClosestNode(location);
+		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
 		if (!renderBlock) {
-						renderBlock = Instantiate (renderBlockPrefab, location, transform.rotation) as GameObject;
+			renderBlock = Instantiate (renderBlockPrefab, realLoc, transform.rotation) as GameObject;
 				} else {
-			renderBlock.transform.position = location;	
+			renderBlock.transform.position = realLoc;	
 		}
-		if (Physics.CheckSphere (location, /*1 / Mathf.Sqrt (2))*/0.35f)) {
+		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.35f)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
 		} else if (buildCooldown < buildCooldownTime) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
@@ -184,8 +186,8 @@ public class Player : MonoBehaviour {
 
 	private void TryPickBlock () {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		Collider[] targets = Physics.OverlapSphere(location , 0.5f);
-		float closestDistance = 1.3f+0.5f;
+		Collider[] targets = Physics.OverlapSphere(location , 0.35f);
+		float closestDistance = 1.3f+0.35f;
 		Collider nearest = null;
 		foreach (Collider hit in targets) {
 			if (hit.name == "Block" || hit.name == "Block(Clone)") {
@@ -199,7 +201,7 @@ public class Player : MonoBehaviour {
 		if (nearest) {
 			Node n = Pathfinder.Instance.FindRealClosestNode(nearest.gameObject.transform.position);
 			carriedBlock = nearest.gameObject;
-			n.walkable = true;
+			n.yCoord--;//n.walkable = true;
 
 		}
 	}
@@ -211,15 +213,15 @@ public class Player : MonoBehaviour {
 	}
 	private void TryPlaceBlock () {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		if (!Physics.CheckSphere (location, 0.35f) && carriedBlock) {
-						Node n = Pathfinder.Instance.FindRealClosestNode(location);
-			Vector3 realLoc = new Vector3(n.xCoord, 0.5f, n.zCoord);
-						carriedBlock.transform.position = realLoc;
-						n.walkable = false;
+		Node n = Pathfinder.Instance.FindRealClosestNode(location);
+		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
+		if (!Physics.CheckSphere (realLoc, 0.35f) && carriedBlock) {
+			carriedBlock.transform.position = realLoc;
+			n.yCoord ++; //n.walkable = false;
 
-						carriedBlock.GetComponent<Rigidbody> ().isKinematic = true;
-						carriedBlock.GetComponent<BoxCollider>().enabled = true;
-						carriedBlock = null;
+			carriedBlock.GetComponent<Rigidbody> ().isKinematic = true;
+			carriedBlock.GetComponent<BoxCollider>().enabled = true;
+			carriedBlock = null;
 				}
 	}
 }

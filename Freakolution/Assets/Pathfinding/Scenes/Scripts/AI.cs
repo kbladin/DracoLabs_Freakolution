@@ -193,17 +193,7 @@ public class AI : Pathfinding {
 		FindPath(transform.position, new Vector3(n.xCoord,0 , n.zCoord), true);
 		yield return new WaitForSeconds(1F);
 	}
-
-
-	public Vector3 GetMoveDirection() {
-//		return GetDirectionToTarget(); // This should be changed to return the actual move direction.
-
-		if(Path.Count > 0)
-			return (Path[0] - transform.position).normalized;
-		else
-			return new Vector3 (0,0,-1);
-	}
-
+	
 	public Vector3 GetDirectionToTarget() {
 		if (target){
 			return (target.position - transform.position).normalized;
@@ -224,7 +214,7 @@ public class AI : Pathfinding {
 //			tarPos.y = transform.lossyScale.y;
 			tarPos.y = tarPos.y + 0.75f; // Height of the collider / 2.
 
-			Vector3 realPos =  new Vector3(transform.position.x +0.2f,0.0f, transform.position.z +0.2f);
+			//Vector3 realPos =  new Vector3(transform.position.x +0.2f,0.0f, transform.position.z +0.2f);
 
 			Vector3 direction = (tarPos - transform.position).normalized;
 //			Vector3 direction = (Path[0] - transform.position).normalized;
