@@ -201,7 +201,7 @@ public class Player : MonoBehaviour {
 		if (nearest) {
 			Node n = Pathfinder.Instance.FindRealClosestNode(nearest.gameObject.transform.position);
 			carriedBlock = nearest.gameObject;
-			n.yCoord--;//n.walkable = true;
+			n.walkable = true;
 
 		}
 	}
