@@ -12,6 +12,13 @@ public class Enemy : MonoBehaviour {
 	public float enemyDamage;
 	private Chemicals enemyChemicals;
 	// Use this for initialization
+	public GameObject drawSpherePrefab;
+	private GameObject drawSphere;
+	public GameObject sparkPrefab;
+	private GameObject spark;
+	/*public GameObject drawCapsulePrefab;
+	private GameObject drawCapsule;
+*/
 	void Start () 
 	{
 		// needs to get the enemies movement direction
@@ -41,6 +48,25 @@ public class Enemy : MonoBehaviour {
 		{
 			attackCooldownTime += Time.deltaTime;
 		}
+
+		if (spark && !spark.GetComponent<ParticleSystem>().IsAlive()) {
+			Destroy (spark);
+		}
+		/*
+		if (!drawCapsule) {
+			drawCapsule =
+				Instantiate (
+					drawCapsulePrefab, 
+					transform.position,
+					transform.rotation) as GameObject;
+		} else {
+			drawCapsule.transform.position = transform.position;
+			drawCapsule.GetComponent<Transform>().localScale =
+				new Vector3(
+					1f,
+					0.71f,
+					1f);
+		}*/
 		
 	}
 	
@@ -70,9 +96,23 @@ public class Enemy : MonoBehaviour {
 		
 		Vector3 attackDirection = GetComponent<AI>().GetDirectionToTarget();
 		//sphere.position=transform.position + attackDirection * attackRange;
-		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 1.2f);
+		Vector3 attackPosition = transform.position + attackDirection * attackRange;
+		float attackRadius = 0.7f;
+		Collider[] targets = Physics.OverlapSphere(attackPosition, attackRadius);
 		Transform nearest = null;
-		float closestDistance = attackRange+1.2f;
+		float closestDistance = attackRange+attackRadius;
+		/*
+		if (!drawSphere) {
+						drawSphere =
+				Instantiate (
+				drawSpherePrefab, 
+				attackPosition,
+				transform.rotation) as GameObject;
+				} else {
+			drawSphere.transform.position = transform.position + attackDirection * attackRange;
+			drawSphere.GetComponent<Transform>().localScale = new Vector3(attackRadius,attackRadius,attackRadius);
+		}*/
+
 		foreach (Collider hit in targets){
 			if(hit && hit.tag == "Player"){
 				float dist = Vector3.Distance(transform.position, hit.transform.position);
@@ -88,6 +128,7 @@ public class Enemy : MonoBehaviour {
 			Player enemyComponent = nearest.transform.GetComponent<Player>();
 			enemyComponent.LoseHealth(enemyDamage, enemyChemicals);
 			attackCooldownTime = 0;
+			spark = Instantiate(sparkPrefab, attackPosition, transform.rotation) as GameObject;
 		}
 	}
 	
