@@ -100,7 +100,7 @@ public class Player : MonoBehaviour {
 			previousObst = false;
 		}
 
-		currentNode.walkable = false;
+		//currentNode.walkable = false;
 		currentNode.currentObject = gameObject;
 		
 
