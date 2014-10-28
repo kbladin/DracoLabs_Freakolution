@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour {
 		attackRange = 1f;
 		enemyDamage = 10f;
 		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
-		GetComponentInChildren<Light>().color = enemyChemicals.getChemicals();
+		GetComponentInChildren<ParticleSystem>().startColor = enemyChemicals.getChemicalsWithAlpha(0.15f);
 	}
 	
 	// Update is called once per frame
