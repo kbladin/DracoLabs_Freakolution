@@ -24,7 +24,7 @@ public class Camera : MonoBehaviour {
 		Vector3 meanPos = new Vector3(0,0,0);
 		foreach (GameObject player in players) {
 			if (player.GetComponent<Player>().Alive)
-			meanPos += player.transform.position;
+				meanPos += player.transform.position;
 		}
 		meanPos /= players.Length;
 
