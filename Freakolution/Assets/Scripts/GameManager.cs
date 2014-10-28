@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour {
 			pauseGUI.enabled = false;
 		}
 		
-		if(!isPlayersAlive())
+		if(!isPlayersAlive() && !gameOverGUI.enabled)
 		{
 			//Game over... bitch
 			// load main menu.
