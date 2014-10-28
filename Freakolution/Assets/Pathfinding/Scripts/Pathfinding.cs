@@ -14,11 +14,24 @@ public class Pathfinding : MonoBehaviour
     public PathfinderType PathType = PathfinderType.GridBased;
 	public bool JS = false;
 
-    public void FindPath(Vector3 startPosition, Vector3 endPosition)
+	public void FindPath(Vector3 startPosition, Vector3 endPosition)
+	{
+		if (PathType == PathfinderType.GridBased)
+		{
+			Pathfinder.Instance.InsertInQueue(startPosition, endPosition, SetList);
+		}
+		else if (PathType == PathfinderType.WaypointBased)
+		{
+			WaypointPathfinder.Instance.InsertInQueue(startPosition, endPosition, SetList);          
+		}
+	}
+	
+	
+	public void FindPath(Vector3 startPosition, Vector3 endPosition, bool isBestEffort)
     {
         if (PathType == PathfinderType.GridBased)
         {
-            Pathfinder.Instance.InsertInQueue(startPosition, endPosition, SetList);
+            Pathfinder.Instance.InsertInQueue(startPosition, endPosition, SetList, isBestEffort);
         }
         else if (PathType == PathfinderType.WaypointBased)
         {

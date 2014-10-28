@@ -726,7 +726,7 @@ MonoBehaviour:
   MapStartPosition: {x: -100, y: -100}
   MapEndPosition: {x: 100, y: 100}
   DisallowedTags:
-  - Wall
+  - Obst
   IgnoreTags:
   - Enemy
   - Player
@@ -1231,10 +1231,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0e93fd94edc5b499f78284dc41c47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnIntervalTimer: 0
-  spawnCooldownTimer: 0
-  waveIntervalTimer: 0
+  spawnCount: 0
   waveCounter: 0
+  waveInterval: 10
+  spawnInterval: 20
+  spawnCooldown: 5
   spawns:
   - {fileID: 129478211}
   - {fileID: 70986795}

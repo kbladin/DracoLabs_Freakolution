@@ -19,14 +19,21 @@ public class Player : MonoBehaviour {
 	//property
 	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
+<<<<<<< HEAD
 	private string fireInputName;
 	public ThirdPersonController controller;
 	public GameObject blockPrefab;
 	public GameObject renderBlockPrefab;
 	private GameObject renderBlock;
+=======
+	ThirdPersonController controller;
+
 	Node previousNode = null;
 	Node currentNode = null;
 	bool previousObst = false;
+
+>>>>>>> finish_pf
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -62,6 +69,7 @@ public class Player : MonoBehaviour {
 			blockWait = false;
 			Destroy(renderBlock);
 		}
+<<<<<<< HEAD
 		if(blockWait){
 			RenderBlockWait();
 		}
@@ -74,15 +82,14 @@ public class Player : MonoBehaviour {
 
 		if (carriedBlock) {
 			Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-			Node n = Pathfinder.Instance.FindRealClosestNode(location);
-			Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-			carriedBlock.transform.position = realLoc;
+			carriedBlock.transform.position = location;
 			carriedBlock.GetComponent<Rigidbody>().isKinematic = true;
 			carriedBlock.GetComponent<BoxCollider>().enabled = false;
 		}
 
 		attackCooldown += Time.deltaTime;
 		buildCooldown += Time.deltaTime;
+=======
 
 
 		previousNode = currentNode;
@@ -103,8 +110,28 @@ public class Player : MonoBehaviour {
 		currentNode.walkable = false;
 		currentNode.currentObject = gameObject;
 		
+		
+
+		if(currentNode.currentObject != gameObject){
+
+			
 
 
+
+		}
+
+
+//		if(previousNode != null && previousNode.currentObject != null && previousNode.currentObject == gameObject){
+//
+//		}
+
+
+
+
+
+			//		print ("node n x=" + n.xCoord+ ", y=" + n.zCoord);
+
+>>>>>>> finish_pf
 	}
 
 	public void LoseHealth(float damage, Chemicals enemyChemicals) 
@@ -115,9 +142,6 @@ public class Player : MonoBehaviour {
 		{
 			alive = false;
 			gameObject.SetActive(false);
-
-			currentNode.walkable = true;
-			currentNode.currentObject = null;
 		}
 	}
 
@@ -153,14 +177,9 @@ public class Player : MonoBehaviour {
 
 	private void BuildBlock() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		Node n = Pathfinder.Instance.FindRealClosestNode(location);
-		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.35f)) {
-			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
-			n.walkable = false;
-			n.currentObject = block;
-			
-			block.GetComponent<Rigidbody> ().isKinematic = true;
+		if (!Physics.CheckSphere (location, /*1 / Mathf.Sqrt(2))*/ 0.5f)) {
+			GameObject block = Instantiate(blockPrefab, location, transform.rotation) as GameObject;
+			block.GetComponent<Rigidbody> ().isKinematic = false;
 			Destroy(carriedBlock);
 			buildCooldown = 0;
 		}
@@ -168,14 +187,12 @@ public class Player : MonoBehaviour {
 
 	private void RenderBlockWait() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		Node n = Pathfinder.Instance.FindRealClosestNode(location);
-		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
 		if (!renderBlock) {
-			renderBlock = Instantiate (renderBlockPrefab, realLoc, transform.rotation) as GameObject;
+						renderBlock = Instantiate (renderBlockPrefab, location, transform.rotation) as GameObject;
 				} else {
-			renderBlock.transform.position = realLoc;	
+			renderBlock.transform.position = location;	
 		}
-		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.35f)) {
+		if (Physics.CheckSphere (location, /*1 / Mathf.Sqrt (2))*/0.5f)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
 		} else if (buildCooldown < buildCooldownTime) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
@@ -186,8 +203,8 @@ public class Player : MonoBehaviour {
 
 	private void TryPickBlock () {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		Collider[] targets = Physics.OverlapSphere(location , 0.35f);
-		float closestDistance = 1.3f+0.35f;
+		Collider[] targets = Physics.OverlapSphere(location , 0.5f);
+		float closestDistance = 1.3f+0.5f;
 		Collider nearest = null;
 		foreach (Collider hit in targets) {
 			if (hit.name == "Block" || hit.name == "Block(Clone)") {
@@ -199,10 +216,7 @@ public class Player : MonoBehaviour {
 			}
 		}
 		if (nearest) {
-			Node n = Pathfinder.Instance.FindRealClosestNode(nearest.gameObject.transform.position);
 			carriedBlock = nearest.gameObject;
-			n.walkable = true;
-
 		}
 	}
 	
@@ -213,16 +227,10 @@ public class Player : MonoBehaviour {
 	}
 	private void TryPlaceBlock () {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		Node n = Pathfinder.Instance.FindRealClosestNode(location);
-		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, 0.35f) && carriedBlock) {
-			carriedBlock.transform.position = realLoc;
-			n.walkable = false;
-			n.currentObject = carriedBlock;
-
-			carriedBlock.GetComponent<Rigidbody> ().isKinematic = true;
-			carriedBlock.GetComponent<BoxCollider>().enabled = true;
-			carriedBlock = null;
+		if (!Physics.CheckSphere (location, 0.5f) && carriedBlock) {
+						carriedBlock.GetComponent<Rigidbody> ().isKinematic = false;
+						carriedBlock.GetComponent<BoxCollider>().enabled = true;
+						carriedBlock = null;
 				}
 	}
 }

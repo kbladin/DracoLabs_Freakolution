@@ -7,21 +7,21 @@ public class RandomSpawn : MonoBehaviour {
 		// Variables
 		
 		// A timer that will reset at the end of spawnInterval
-		public float spawnIntervalTimer;
+		private float spawnIntervalTimer = 0.0f;
 		// A timer that will reset every spawn cooldown
-		public float spawnCooldownTimer;
+		private float spawnCooldownTimer = 0.0f;
 		// A timer that will reset every waveInterval
-		public float waveIntervalTimer;
+		private float waveIntervalTimer = 0.0f;
 		// THe number of spawned enemies each wave
-		private int spawnCount;
+		public int spawnCount = 0;
 		// The number of waves that have passed (started)
-		public int waveCounter;
+		public int waveCounter = 1;
 		// THe between waves
-		private float waveInterval;
+		public float waveInterval = 10.0f;
 		// the time that enemies are spawned in a wave
-		private float spawnInterval;
+		public float spawnInterval = 20.0f;
 		// The time it takes between spawning enemies in a wave
-		private float spawnCooldown;
+		public float spawnCooldown = 5.0f;
 				
 		// Empty game objects with the spawn point locations
 		public Transform[] spawns;
@@ -36,14 +36,14 @@ public class RandomSpawn : MonoBehaviour {
 				
 		public GameObject player;
 		void Start () {
-			spawnIntervalTimer = 0.0f;
-			spawnCooldownTimer = 0.0f;
-			waveIntervalTimer = 0.0f;
-			spawnCooldown = 5.0f;
-			spawnCount = 0;
-			waveCounter = 1;
-			waveInterval = 10.0f;
-			spawnInterval = 20.0f;
+//			spawnIntervalTimer = 0.0f;
+//			spawnCooldownTimer = 0.0f;
+//			waveIntervalTimer = 0.0f;
+//			spawnCooldown = 5.0f;
+//			spawnCount = 0;
+//			waveCounter = 1;
+//			waveInterval = 10.0f;
+//			spawnInterval = 20.0f;
 		}
 		
 		// Is executed every frame
