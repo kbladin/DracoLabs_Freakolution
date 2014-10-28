@@ -32,7 +32,7 @@ GameObject:
   - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: CharacterSprite
-  m_TagString: Untagged
+  m_TagString: Sprite
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -130,7 +130,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .721128285, y: 1.19890153, z: -9.31983089}
+  m_LocalPosition: {x: -.0486187227, y: 1.90662802e-16, z: -8.58668804}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400008}
@@ -327,7 +327,7 @@ MonoBehaviour:
   canJump: 1
 --- !u!114 &11400002
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
@@ -348,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f4c3dbad5b1f47b9cecb1facd8ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 100
   attacking: 0
   attackCooldownTime: .5
   buildCooldownTime: 0
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1131937d4caa46942a728251aa03bd2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Camera: {fileID: 2000000, guid: 2e226ce40bdb54d4ba8235eccfb0b784, type: 2}
+  m_Camera: {fileID: 0}
 --- !u!143 &14300000
 CharacterController:
   m_ObjectHideFlags: 1
@@ -397,7 +397,7 @@ CharacterController:
   m_GameObject: {fileID: 100000}
   serializedVersion: 2
   m_Height: 1.54999995
-  m_Radius: .5
+  m_Radius: .400000006
   m_SlopeLimit: 45
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982
