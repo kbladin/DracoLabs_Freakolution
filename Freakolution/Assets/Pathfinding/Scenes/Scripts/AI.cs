@@ -59,7 +59,7 @@ public class AI : Pathfinding {
 				return false;
 		} else {
 			Node nBestWalkable = Pathfinder.Instance.FindClosestEmptyNode(target.position);
-			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+rangeDistance) {
+			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <=rangeDistance) {// Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+
 //				this.renderer.material.color = Color.blue;
 //				transform.LookAt(target.position);
 				return true;
@@ -149,7 +149,7 @@ public class AI : Pathfinding {
 			}
 
 			//only move if next point on path is free
-			if (newPath ){//&& false
+			if (newPath){//&& false
 				MoveMethod();
 			}
 			else {
