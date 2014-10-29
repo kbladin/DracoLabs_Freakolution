@@ -17,6 +17,7 @@ public class AI : Pathfinding {
     private GameObject[] AIList;
 
 
+
 	private Node currentNode;
 	private Node previousNode;
 
@@ -54,7 +55,7 @@ public class AI : Pathfinding {
 				return false;
 		} else {
 			Node nBestWalkable = Pathfinder.Instance.FindClosestEmptyNode(target.position);
-			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+rangeDistance) {
+			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <=rangeDistance) {// Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+
 //				this.renderer.material.color = Color.blue;
 //				transform.LookAt(target.position);
 				return true;
@@ -125,7 +126,7 @@ public class AI : Pathfinding {
 			}
 
 			//only move if next point on path is free
-			if (newPath ){//&& false
+			if (newPath){//&& false
 				MoveMethod();
 			}
 			else {
@@ -182,7 +183,18 @@ public class AI : Pathfinding {
 	}
 
 	public Vector3 GetVelocity() {
+
+		if(isPositionOptimal()){
 			return new Vector3 (0, 0, 0);
+
+		}
+
+			if (Path.Count > 0){
+				Vector3 direction = (Path[0] - transform.position).normalized;
+				return direction * speed;
+			} else {
+				return new Vector3 (0, 0, 0);
+			} 
 	}
     private void MoveMethod()
     {
