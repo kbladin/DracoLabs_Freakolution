@@ -130,6 +130,8 @@ public class AI : Pathfinding {
 			if(!isPathOptimal()){
 				//newPath
 //				this.renderer.material.color = Color.red;
+
+
 				if(newPath)
 					StartCoroutine(NewPathToFreeSpot());
 				else 
@@ -147,7 +149,7 @@ public class AI : Pathfinding {
 			}
 
 			//only move if next point on path is free
-			if (newPath && false){
+			if (newPath ){//&& false
 				MoveMethod();
 			}
 			else {

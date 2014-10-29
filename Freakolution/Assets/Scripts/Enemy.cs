@@ -101,7 +101,7 @@ public class Enemy : MonoBehaviour {
 		Collider[] targets = Physics.OverlapSphere(attackPosition, attackRadius);
 		Transform nearest = null;
 		float closestDistance = attackRange+attackRadius;
-		/*
+
 		if (!drawSphere) {
 						drawSphere =
 				Instantiate (
@@ -111,7 +111,7 @@ public class Enemy : MonoBehaviour {
 				} else {
 			drawSphere.transform.position = transform.position + attackDirection * attackRange;
 			drawSphere.GetComponent<Transform>().localScale = new Vector3(attackRadius,attackRadius,attackRadius);
-		}*/
+		}
 
 		foreach (Collider hit in targets){
 			if(hit && hit.tag == "Player"){
