@@ -37,6 +37,7 @@ public class Enemy : MonoBehaviour {
 		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
 		GetComponentInChildren<ParticleSystem>().startColor = enemyChemicals.getChemicalsWithAlpha(0.15f);
 		SetPlayerList ();
+		findNewTarget();
 	}
 
 	void SetPlayerList(){

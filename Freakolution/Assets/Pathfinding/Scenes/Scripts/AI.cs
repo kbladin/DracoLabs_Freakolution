@@ -15,34 +15,26 @@ public class AI : Pathfinding {
     private bool moving = false;
 	private bool resetPath = false;
     private GameObject[] AIList;
-	private GameObject[] playerList;
 
 	private Node currentNode;
 	private Node previousNode;
 
 
 
-	public void setPlayer(GameObject p) {
-		playerObject = p;
-		target = playerObject.transform;
+	public void setPlayer(Transform t) {
+		target = t;
 	}
 	
 
 	void Start () 
     {
 //		this.renderer.material.color = Color.red;
-		SetPlayerList();
+
 	}
 
 //	bool isTargetOptimal(){
 //		return true;
 //	}
-
-	void SetPlayerList(){
-		playerList = GameObject.FindGameObjectsWithTag("Player");
-
-		//need to remove dead player
-	}
 
 	bool isPositionOptimal() {
 		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(target.position);
@@ -104,27 +96,8 @@ public class AI : Pathfinding {
 		}
 	}
 
-	void findNewTarget() {
-		// Should actually find the one which is closest.
-		float minimumDistance = 10000000000;
-		int minIndex = 0;
-		for (int i=0; i<playerList.Length; ++i) {
-//			Player p = playerList[i].GetComponent<Player>();
-			if( !playerList[i].GetComponent<Player>().Alive)
-				continue;
-
-			if ((playerList [i].transform.position - transform.position).magnitude < minimumDistance) {
-				minimumDistance = (playerList [i].transform.position - transform.position).magnitude;
-				minIndex = i;
-			}
-		}
-		target = playerList[minIndex].transform;
-	}
-
 	void Update ()
     {
-		findNewTarget();
-
 		if (!isPositionOptimal()){
 			//move
 			if(!isPathOptimal()){
