@@ -13,9 +13,11 @@ public class Enemy : MonoBehaviour {
 	private Chemicals enemyChemicals;
 	// Use this for initialization
 	public GameObject drawSpherePrefab;
-	private GameObject drawSphere;
+	//private GameObject drawSphere;
 	public GameObject sparkPrefab;
-	private GameObject spark;
+	public GameObject bloodPrefab;
+	private GameObject[] playerList;
+	private float[] damageTaken;
 	/*public GameObject drawCapsulePrefab;
 	private GameObject drawCapsule;
 */
@@ -34,11 +36,47 @@ public class Enemy : MonoBehaviour {
 		enemyDamage = 10f;
 		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
 		GetComponentInChildren<ParticleSystem>().startColor = enemyChemicals.getChemicalsWithAlpha(0.15f);
+		SetPlayerList ();
 	}
-	
+
+	void SetPlayerList(){
+		playerList = GameObject.FindGameObjectsWithTag("Player");
+		damageTaken = new float[playerList.Length];
+		
+		//need to remove dead player
+	}
+
+	void findNewTarget() {
+		// Should actually find the one which is closest.
+		float minimumDistance = 10000000000;
+		float maxDamageTaken = 0;
+		int maxDmgIndex = 0;
+		int minDistIndex = 0;
+		for (int i=0; i<playerList.Length; ++i) {
+			//			Player p = playerList[i].GetComponent<Player>();
+			if( !playerList[i].GetComponent<Player>().Alive)
+				continue;
+			
+			if (damageTaken[i] > maxDamageTaken) {
+				maxDamageTaken = damageTaken[i];
+				maxDmgIndex = i;
+			}
+			
+			if ((playerList [i].transform.position - transform.position).magnitude < minimumDistance) {
+				minimumDistance = (playerList [i].transform.position - transform.position).magnitude;
+				minDistIndex = i;
+			}
+		}
+		if (maxDamageTaken > 0)
+			GetComponentInParent<AI> ().setPlayer (playerList[maxDmgIndex].transform); 
+		else
+			GetComponentInParent<AI> ().setPlayer (playerList[minDistIndex].transform); 
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
+		findNewTarget();
 		if(health < 0)
 		{
 			Destroy(gameObject);
@@ -54,9 +92,6 @@ public class Enemy : MonoBehaviour {
 			attackCooldownTime += Time.deltaTime;
 		}
 
-		if (spark && !spark.GetComponent<ParticleSystem>().IsAlive()) {
-			Destroy (spark);
-		}
 		/*
 		if (!drawCapsule) {
 			drawCapsule =
@@ -75,13 +110,18 @@ public class Enemy : MonoBehaviour {
 		
 	}
 	
-	public void LoseHealth(float damage, Chemicals chemicals)
+	public void LoseHealth(float damage, Chemicals chemicals, Player playerAttacked)
 	{
 		//play sound effect
 		int randClip = Random.Range(0, hurtAudio.Length) ;
 		audio.PlayOneShot(hurtAudio[randClip]);;
 		//implement damage formula
-		this.health -= damage*(1-chemicals.getReaction(enemyChemicals));
+		this.health -= damage * (1-enemyChemicals.getReaction(chemicals));
+		for (int i=0; i<playerList.Length; ++i) {
+			if (playerList[i].GetComponent<Player>() == playerAttacked)
+				damageTaken[i] += damage;
+		}
+		Destroy(Instantiate (bloodPrefab, transform.position, transform.rotation) as GameObject, 15f);
 	}
 
 	public Vector3 GetDirection() {
@@ -118,8 +158,8 @@ public class Enemy : MonoBehaviour {
 				} else {
 			drawSphere.transform.position = transform.position + attackDirection * attackRange;
 			drawSphere.GetComponent<Transform>().localScale = new Vector3(attackRadius,attackRadius,attackRadius);
-		}*/
-
+		}
+		*/
 		foreach (Collider hit in targets){
 			if(hit && hit.tag == "Player"){
 				float dist = Vector3.Distance(transform.position, hit.transform.position);
@@ -136,7 +176,7 @@ public class Enemy : MonoBehaviour {
 			Player enemyComponent = nearest.transform.GetComponent<Player>();
 			enemyComponent.LoseHealth(enemyDamage, enemyChemicals);
 			attackCooldownTime = 0;
-			spark = Instantiate(sparkPrefab, attackPosition, transform.rotation) as GameObject;
+			Destroy(Instantiate(sparkPrefab, attackPosition, transform.rotation) as GameObject, 1f);
 		}
 	}
 	

@@ -44,6 +44,10 @@ public class Player : MonoBehaviour {
 		attacking = false;
 		ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
 		ps[1].startColor = playerChemicals.getChemicals();
+		GetComponentInChildren<SpriteRenderer> ().color =
+			new Color(playerChemicals.getChemicals ().r + 0.6f,
+			          playerChemicals.getChemicals ().g + 0.6f,
+			          playerChemicals.getChemicals ().b + 0.6f);
 
 		playerDamage = 30f;
 		health = maxHealth;
@@ -128,6 +132,7 @@ public class Player : MonoBehaviour {
 
 	}
 
+
 	public void LoseHealth(float damage, Chemicals enemyChemicals) 
 	{
 		//play sound effect
@@ -135,7 +140,7 @@ public class Player : MonoBehaviour {
 		AudioSource.PlayClipAtPoint(hurtAudio[randClip], transform.position);
 		
 		//Damagae formula
-		this.health -= damage * (1 + enemyChemicals.getReaction(enemyChemicals));
+		this.health -= damage * playerChemicals.getReaction(enemyChemicals);
 		if(health <= 0)
 		{
 			alive = false;
@@ -175,7 +180,7 @@ public class Player : MonoBehaviour {
 		}
 		if(nearest){
 			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
-			enemyComponent.LoseHealth(playerDamage, playerChemicals);
+			enemyComponent.LoseHealth(playerDamage, playerChemicals, this);
 			AudioSource.PlayClipAtPoint(hitEnemy,transform.position);
 		}
 		else
@@ -193,7 +198,7 @@ public class Player : MonoBehaviour {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.35f)) {
+		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.45f)) {
 			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
 			n.walkable = false;
 			n.currentObject = block;
@@ -213,7 +218,7 @@ public class Player : MonoBehaviour {
 				} else {
 			renderBlock.transform.position = realLoc;	
 		}
-		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.35f)) {
+		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.45f)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
 		} else if (buildCooldown < buildCooldownTime) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
@@ -224,7 +229,7 @@ public class Player : MonoBehaviour {
 
 	private void TryPickBlock () {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		Collider[] targets = Physics.OverlapSphere(location , 0.35f);
+		Collider[] targets = Physics.OverlapSphere(location , 0.45f);
 		float closestDistance = 1.3f+0.35f;
 		Collider nearest = null;
 		foreach (Collider hit in targets) {
@@ -253,7 +258,7 @@ public class Player : MonoBehaviour {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, 0.35f) && carriedBlock) {
+		if (!Physics.CheckSphere (realLoc, 0.45f) && carriedBlock) {
 			carriedBlock.transform.position = realLoc;
 			n.walkable = false;
 			n.currentObject = carriedBlock;

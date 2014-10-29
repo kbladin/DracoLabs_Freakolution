@@ -197,7 +197,7 @@ MonoBehaviour:
   PathType: 0
   JS: 0
   isRange: 0
-  rangeDistance: .200000003
+  rangeDistance: 1
   speed: 3
   detectionRange: 50
 --- !u!114 &11400002
@@ -215,6 +215,7 @@ MonoBehaviour:
   enemyDamage: 0
   drawSpherePrefab: {fileID: 100000, guid: 02b321a9046334cd48cf75de8902e9f9, type: 2}
   sparkPrefab: {fileID: 100000, guid: 97aa96d99f5964bb297f532aeba729e3, type: 2}
+  bloodPrefab: {fileID: 100000, guid: a2dc0dec355164a839bf4b09188c912c, type: 2}
   zapAudio: {fileID: 8300000, guid: 117dfc4e438c1ee44878231296a8d6ed, type: 3}
   hurtAudio:
   - {fileID: 8300000, guid: bcf0c434dedb984479f58cf268bf9bed, type: 3}

@@ -471,8 +471,8 @@ public class Pathfinder : MonoBehaviour
 
 	private void SetStartAndEndNodeEmpty(Vector3 start, Vector3 end)
 	{
-		startNode = FindClosestNodeEmpty(start);
-		endNode = FindClosestNodeEmpty(end);
+		startNode = FindClosestEmptyNode(start);//FindClosestNodeEmpty(start);
+		endNode = FindClosestEmptyNode(end);//FindClosestNodeEmpty(end);
 	}
 
 	public bool IsTheClosestNodeWalkable(Vector3 pos)
