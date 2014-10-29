@@ -110,7 +110,7 @@ public class Player : MonoBehaviour {
 	public void LoseHealth(float damage, Chemicals enemyChemicals) 
 	{
 		//here needs to be damage formula
-		this.health -= damage * (1 + enemyChemicals.getReaction(enemyChemicals));
+		this.health -= damage * playerChemicals.getReaction(enemyChemicals);
 		if(health <= 0)
 		{
 			alive = false;
@@ -155,7 +155,7 @@ public class Player : MonoBehaviour {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.35f)) {
+		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.45f)) {
 			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
 			n.walkable = false;
 			n.currentObject = block;
@@ -175,7 +175,7 @@ public class Player : MonoBehaviour {
 				} else {
 			renderBlock.transform.position = realLoc;	
 		}
-		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.35f)) {
+		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.45f)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
 		} else if (buildCooldown < buildCooldownTime) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
@@ -186,7 +186,7 @@ public class Player : MonoBehaviour {
 
 	private void TryPickBlock () {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
-		Collider[] targets = Physics.OverlapSphere(location , 0.35f);
+		Collider[] targets = Physics.OverlapSphere(location , 0.45f);
 		float closestDistance = 1.3f+0.35f;
 		Collider nearest = null;
 		foreach (Collider hit in targets) {
@@ -215,7 +215,7 @@ public class Player : MonoBehaviour {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, 0.35f) && carriedBlock) {
+		if (!Physics.CheckSphere (realLoc, 0.45f) && carriedBlock) {
 			carriedBlock.transform.position = realLoc;
 			n.walkable = false;
 			n.currentObject = carriedBlock;

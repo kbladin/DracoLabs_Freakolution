@@ -73,7 +73,7 @@ public class Enemy : MonoBehaviour {
 	public void LoseHealth(float damage, Chemicals chemicals)
 	{
 		//implement damage formula
-		this.health -= damage*(1-chemicals.getReaction(enemyChemicals));
+		this.health -= damage * (1-enemyChemicals.getReaction(chemicals));
 	}
 
 	public Vector3 GetDirection() {

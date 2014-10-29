@@ -319,7 +319,7 @@ MonoBehaviour:
   trotSpeed: 4
   runSpeed: 6
   inAirControlAcceleration: 3
-  jumpHeight: .5
+  jumpHeight: 0
   gravity: 20
   speedSmoothing: 10
   rotateSpeed: 500
