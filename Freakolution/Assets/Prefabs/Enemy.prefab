@@ -12,6 +12,7 @@ GameObject:
   - 114: {fileID: 11400002}
   - 136: {fileID: 13600000}
   - 54: {fileID: 5400000}
+  - 82: {fileID: 8200000}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -108,6 +109,64 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!82 &8200000
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -156,6 +215,12 @@ MonoBehaviour:
   enemyDamage: 0
   drawSpherePrefab: {fileID: 100000, guid: 02b321a9046334cd48cf75de8902e9f9, type: 2}
   sparkPrefab: {fileID: 100000, guid: 97aa96d99f5964bb297f532aeba729e3, type: 2}
+  zapAudio: {fileID: 8300000, guid: 117dfc4e438c1ee44878231296a8d6ed, type: 3}
+  hurtAudio:
+  - {fileID: 8300000, guid: bcf0c434dedb984479f58cf268bf9bed, type: 3}
+  - {fileID: 8300000, guid: 437889e4c498db847bab8a7586a50595, type: 3}
+  - {fileID: 8300000, guid: 94eb282a407d27644a1d6bda8a32fc3a, type: 3}
+  - {fileID: 8300000, guid: 5c902ba14f0e3dc4da6c133829fe1a8a, type: 3}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 0

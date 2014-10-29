@@ -19,6 +19,11 @@ public class Enemy : MonoBehaviour {
 	/*public GameObject drawCapsulePrefab;
 	private GameObject drawCapsule;
 */
+
+	//Sound effects
+	public AudioClip zapAudio;
+	public AudioClip[] hurtAudio;
+	
 	void Start () 
 	{
 		// needs to get the enemies movement direction
@@ -72,6 +77,9 @@ public class Enemy : MonoBehaviour {
 	
 	public void LoseHealth(float damage, Chemicals chemicals)
 	{
+		//play sound effect
+		int randClip = Random.Range(0, hurtAudio.Length) ;
+		audio.PlayOneShot(hurtAudio[randClip]);;
 		//implement damage formula
 		this.health -= damage*(1-chemicals.getReaction(enemyChemicals));
 	}
@@ -93,7 +101,6 @@ public class Enemy : MonoBehaviour {
 	
 	private void Attack()
 	{
-		
 		Vector3 attackDirection = GetComponent<AI>().GetDirectionToTarget();
 		//sphere.position=transform.position + attackDirection * attackRange;
 		Vector3 attackPosition = transform.position + attackDirection * attackRange;
@@ -118,6 +125,7 @@ public class Enemy : MonoBehaviour {
 				float dist = Vector3.Distance(transform.position, hit.transform.position);
 				if(dist < closestDistance){
 					attacking = true;
+					audio.PlayOneShot(zapAudio);
 					closestDistance = dist;
 					nearest = hit.transform;
 				}
