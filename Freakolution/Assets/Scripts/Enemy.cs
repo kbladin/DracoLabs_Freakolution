@@ -113,7 +113,7 @@ public class Enemy : MonoBehaviour {
 			if (playerList[i].GetComponent<Player>() == playerAttacked)
 				damageTaken[i] += damage;
 		}
-		Destroy(Instantiate (bloodPrefab, transform.position, transform.rotation) as GameObject, 3f);
+		Destroy(Instantiate (bloodPrefab, transform.position, transform.rotation) as GameObject, 15f);
 	}
 
 	public Vector3 GetDirection() {
