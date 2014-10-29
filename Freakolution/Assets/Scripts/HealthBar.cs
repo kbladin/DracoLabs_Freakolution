@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class HealthBar : MonoBehaviour {
@@ -9,7 +9,12 @@ public class HealthBar : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		float scaleHealth = GetComponentInParent<Player> ().GetHealth () / GetComponentInParent<Player> ().maxHealth;
+		float scaleHealth = 0.0f;
+		//Check if parent is an Enemy or Player, to know which script to get values from
+		if (transform.parent != null && transform.parent.tag == "Enemy")
+			scaleHealth = GetComponentInParent<Enemy> ().GetHealth () / GetComponentInParent<Enemy> ().maxHealth;
+		else if(transform.parent != null && transform.parent.tag == "Player")
+			scaleHealth = GetComponentInParent<Player> ().GetHealth () / GetComponentInParent<Player> ().maxHealth;
 
 		float r = Mathf.Min(2 * (1 - scaleHealth), 1f);
 		float g = Mathf.Min(2 * scaleHealth, 1f);

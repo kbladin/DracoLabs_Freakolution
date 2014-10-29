@@ -27,6 +27,14 @@ public class Player : MonoBehaviour {
 	Node previousNode = null;
 	Node currentNode = null;
 	bool previousObst = false;
+	//Sound effects
+	public AudioClip[] attackAudio;
+	public AudioClip[] hurtAudio;
+	public AudioClip barrelDrop;
+	public AudioClip missSwoosh;
+	public AudioClip hitEnemy;
+	public AudioClip runningAudio;
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -75,6 +83,19 @@ public class Player : MonoBehaviour {
 		} else if (Input.GetButtonDown (controller.GetFire3InputName ())) {
 			TryPickBlock();
 		}
+		
+		CharacterController characterController = GetComponent<CharacterController>();
+		
+		if(characterController.velocity.magnitude >= 0.2f && characterController.isGrounded && !audio.isPlaying)
+		{
+			audio.clip = runningAudio;
+			audio.Play();
+		}
+		else if(characterController.velocity.magnitude < 0.2f && audio.isPlaying)
+		{
+			audio.clip = runningAudio;
+			audio.Stop();
+		}
 
 		if (carriedBlock) {
 			Vector3 location = transform.position + controller.GetDirection() * 1.3f;
@@ -114,7 +135,11 @@ public class Player : MonoBehaviour {
 
 	public void LoseHealth(float damage, Chemicals enemyChemicals) 
 	{
-		//here needs to be damage formula
+		//play sound effect
+		int randClip = Random.Range(0, hurtAudio.Length) ;
+		AudioSource.PlayClipAtPoint(hurtAudio[randClip], transform.position);
+		
+		//Damagae formula
 		this.health -= damage * playerChemicals.getReaction(enemyChemicals);
 		if(health <= 0)
 		{
@@ -127,13 +152,17 @@ public class Player : MonoBehaviour {
 	}
 
 	public float GetHealth() {
-		return health;
+		return this.health;
 	}
 	
 	private void Attack() 
 	{
 		attacking = true;
-
+		
+		//play sound effect
+		int randClip = Random.Range(0, attackAudio.Length) ;
+		AudioSource.PlayClipAtPoint(attackAudio[randClip], transform.position);
+		
 		Vector3 attackDirection = controller.GetDirection();
 
 		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 0.5f);
@@ -152,11 +181,20 @@ public class Player : MonoBehaviour {
 		if(nearest){
 			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
 			enemyComponent.LoseHealth(playerDamage, playerChemicals, this);
+			AudioSource.PlayClipAtPoint(hitEnemy,transform.position);
+		}
+		else
+		{
+			AudioSource.PlayClipAtPoint(missSwoosh,transform.position);
 		}
 		attackCooldown = 0;
 	}
 
 	private void BuildBlock() {
+	
+		//Play sound effect
+		AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
+		
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);

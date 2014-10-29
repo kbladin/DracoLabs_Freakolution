@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public bool attacking;
-
+	public float maxHealth;
 	private float health;
 	private float attackCooldownTime;
 	private Vector3 moveDirection;
@@ -21,17 +21,23 @@ public class Enemy : MonoBehaviour {
 	/*public GameObject drawCapsulePrefab;
 	private GameObject drawCapsule;
 */
+
+	//Sound effects
+	public AudioClip zapAudio;
+	public AudioClip[] hurtAudio;
+	
 	void Start () 
 	{
 		// needs to get the enemies movement direction
 		moveDirection = Vector3.forward;
-		health = 100f;
+		health = maxHealth;
 		attackCooldownTime = 3f;
 		attackRange = 1f;
 		enemyDamage = 10f;
 		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
 		GetComponentInChildren<ParticleSystem>().startColor = enemyChemicals.getChemicalsWithAlpha(0.15f);
 		SetPlayerList ();
+		findNewTarget();
 	}
 
 	void SetPlayerList(){
@@ -107,6 +113,9 @@ public class Enemy : MonoBehaviour {
 	
 	public void LoseHealth(float damage, Chemicals chemicals, Player playerAttacked)
 	{
+		//play sound effect
+		int randClip = Random.Range(0, hurtAudio.Length) ;
+		audio.PlayOneShot(hurtAudio[randClip]);;
 		//implement damage formula
 		this.health -= damage * (1-enemyChemicals.getReaction(chemicals));
 		for (int i=0; i<playerList.Length; ++i) {
@@ -114,6 +123,10 @@ public class Enemy : MonoBehaviour {
 				damageTaken[i] += damage;
 		}
 		Destroy(Instantiate (bloodPrefab, transform.position, transform.rotation) as GameObject, 15f);
+	}
+	public float GetHealth()
+	{
+		return this.health;
 	}
 
 	public Vector3 GetDirection() {
@@ -133,7 +146,6 @@ public class Enemy : MonoBehaviour {
 	
 	private void Attack()
 	{
-		
 		Vector3 attackDirection = GetComponent<AI>().GetDirectionToTarget();
 		//sphere.position=transform.position + attackDirection * attackRange;
 		Vector3 attackPosition = transform.position + attackDirection * attackRange;
@@ -158,6 +170,7 @@ public class Enemy : MonoBehaviour {
 				float dist = Vector3.Distance(transform.position, hit.transform.position);
 				if(dist < closestDistance){
 					attacking = true;
+					audio.PlayOneShot(zapAudio);
 					closestDistance = dist;
 					nearest = hit.transform;
 				}

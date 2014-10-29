@@ -11,6 +11,7 @@ GameObject:
   - 143: {fileID: 14300000}
   - 114: {fileID: 11400000}
   - 114: {fileID: 11400004}
+  - 82: {fileID: 8200000}
   m_Layer: 8
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -280,6 +281,64 @@ MeshCollider:
   m_SmoothSphereCollisions: 0
   m_Convex: 0
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!82 &8200000
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!95 &9500000
 Animator:
   serializedVersion: 3
@@ -355,6 +414,14 @@ MonoBehaviour:
   controller: {fileID: 0}
   blockPrefab: {fileID: 100000, guid: c9618d5391277435a8d925dcb999441d, type: 2}
   renderBlockPrefab: {fileID: 100000, guid: f7fb4332b7cf048a98dc7e68697f31ff, type: 2}
+  attackAudio:
+  - {fileID: 8300000, guid: acc509d708aa0ce46a0e6ceb936084cb, type: 3}
+  hurtAudio:
+  - {fileID: 8300000, guid: 2a02be9fc5c3b884c8283011b9e1cea0, type: 3}
+  barrelDrop: {fileID: 8300000, guid: bc74cb7f201a02f45962beb79d8d7bf8, type: 3}
+  missSwoosh: {fileID: 8300000, guid: dc3dbfa8f7c008c4caaa3c6f3ed056d1, type: 3}
+  hitEnemy: {fileID: 8300000, guid: ed4c0b78c22e09544a47a141b0bd024e, type: 3}
+  runningAudio: {fileID: 8300000, guid: 363f16ddc4aa4854fa5beaf2738218fb, type: 3}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
