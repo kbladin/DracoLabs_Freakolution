@@ -471,8 +471,8 @@ public class Pathfinder : MonoBehaviour
 
 	private void SetStartAndEndNodeEmpty(Vector3 start, Vector3 end)
 	{
-		startNode = FindClosestNodeEmpty(start);
-		endNode = FindClosestNodeEmpty(end);
+		startNode = FindClosestEmptyNode(start);//FindClosestNodeEmpty(start);
+		endNode = FindClosestEmptyNode(end);//FindClosestNodeEmpty(end);
 	}
 
 	public bool IsTheClosestNodeWalkable(Vector3 pos)
@@ -634,7 +634,7 @@ public class Pathfinder : MonoBehaviour
 				radius ++;
 			}
 		}
-				UnityEngine.Debug.Log("c free a x=" + n.xCoord + ", y = " +n.zCoord);
+	//			UnityEngine.Debug.Log("c free a x=" + n.xCoord + ", y = " +n.zCoord);
 		return n;
 		
 		
