@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour {
 	private GameObject drawSphere;
 	public GameObject sparkPrefab;
 	private GameObject spark;
+
+	private GameObject[] playerList;
+	private float[] damageTaken;
 	/*public GameObject drawCapsulePrefab;
 	private GameObject drawCapsule;
 */
@@ -29,11 +32,47 @@ public class Enemy : MonoBehaviour {
 		enemyDamage = 10f;
 		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
 		GetComponentInChildren<ParticleSystem>().startColor = enemyChemicals.getChemicalsWithAlpha(0.15f);
+		SetPlayerList ();
 	}
-	
+
+	void SetPlayerList(){
+		playerList = GameObject.FindGameObjectsWithTag("Player");
+		damageTaken = new float[playerList.Length];
+		
+		//need to remove dead player
+	}
+
+	void findNewTarget() {
+		// Should actually find the one which is closest.
+		float minimumDistance = 10000000000;
+		float maxDamageTaken = 0;
+		int maxDmgIndex = 0;
+		int minDistIndex = 0;
+		for (int i=0; i<playerList.Length; ++i) {
+			//			Player p = playerList[i].GetComponent<Player>();
+			if( !playerList[i].GetComponent<Player>().Alive)
+				continue;
+			
+			if (damageTaken[i] > maxDamageTaken) {
+				maxDamageTaken = damageTaken[i];
+				maxDmgIndex = i;
+			}
+			
+			if ((playerList [i].transform.position - transform.position).magnitude < minimumDistance) {
+				minimumDistance = (playerList [i].transform.position - transform.position).magnitude;
+				minDistIndex = i;
+			}
+		}
+		if (maxDamageTaken > 0)
+			GetComponentInParent<AI> ().setPlayer (playerList[maxDmgIndex].transform); 
+		else
+			GetComponentInParent<AI> ().setPlayer (playerList[minDistIndex].transform); 
+	}
+
 	// Update is called once per frame
 	void Update () 
 	{
+		findNewTarget();
 		if(health < 0)
 		{
 			Destroy(gameObject);
@@ -70,10 +109,14 @@ public class Enemy : MonoBehaviour {
 		
 	}
 	
-	public void LoseHealth(float damage, Chemicals chemicals)
+	public void LoseHealth(float damage, Chemicals chemicals, Player playerAttacked)
 	{
 		//implement damage formula
-		this.health -= damage*(1-chemicals.getReaction(enemyChemicals));
+		this.health -= damage * (1-enemyChemicals.getReaction(chemicals));
+		for (int i=0; i<playerList.Length; ++i) {
+			if (playerList[i].GetComponent<Player>() == playerAttacked)
+				damageTaken[i] += damage;
+		}
 	}
 
 	public Vector3 GetDirection() {
