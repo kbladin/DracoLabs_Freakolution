@@ -122,7 +122,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public float GetHealth() {
-		return health;
+		return this.health;
 	}
 	
 	private void Attack() 

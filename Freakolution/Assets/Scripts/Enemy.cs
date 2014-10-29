@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public bool attacking;
-
+	public float maxHealth;
 	private float health;
 	private float attackCooldownTime;
 	private Vector3 moveDirection;
@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour {
 	{
 		// needs to get the enemies movement direction
 		moveDirection = Vector3.forward;
-		health = 100f;
+		health = maxHealth;
 		attackCooldownTime = 3f;
 		attackRange = 1f;
 		enemyDamage = 10f;
@@ -74,6 +74,10 @@ public class Enemy : MonoBehaviour {
 	{
 		//implement damage formula
 		this.health -= damage*(1-chemicals.getReaction(enemyChemicals));
+	}
+	public float GetHealth()
+	{
+		return this.health;
 	}
 
 	public Vector3 GetDirection() {
