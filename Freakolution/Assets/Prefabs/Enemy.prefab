@@ -156,6 +156,7 @@ MonoBehaviour:
   enemyDamage: 0
   drawSpherePrefab: {fileID: 100000, guid: 02b321a9046334cd48cf75de8902e9f9, type: 2}
   sparkPrefab: {fileID: 100000, guid: 97aa96d99f5964bb297f532aeba729e3, type: 2}
+  bloodPrefab: {fileID: 100000, guid: a2dc0dec355164a839bf4b09188c912c, type: 2}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 0

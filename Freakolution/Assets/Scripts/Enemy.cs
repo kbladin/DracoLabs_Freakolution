@@ -13,10 +13,9 @@ public class Enemy : MonoBehaviour {
 	private Chemicals enemyChemicals;
 	// Use this for initialization
 	public GameObject drawSpherePrefab;
-	private GameObject drawSphere;
+	//private GameObject drawSphere;
 	public GameObject sparkPrefab;
-	private GameObject spark;
-
+	public GameObject bloodPrefab;
 	private GameObject[] playerList;
 	private float[] damageTaken;
 	/*public GameObject drawCapsulePrefab;
@@ -88,9 +87,6 @@ public class Enemy : MonoBehaviour {
 			attackCooldownTime += Time.deltaTime;
 		}
 
-		if (spark && !spark.GetComponent<ParticleSystem>().IsAlive()) {
-			Destroy (spark);
-		}
 		/*
 		if (!drawCapsule) {
 			drawCapsule =
@@ -117,6 +113,7 @@ public class Enemy : MonoBehaviour {
 			if (playerList[i].GetComponent<Player>() == playerAttacked)
 				damageTaken[i] += damage;
 		}
+		Destroy(Instantiate (bloodPrefab, transform.position, transform.rotation) as GameObject, 3f);
 	}
 
 	public Vector3 GetDirection() {
@@ -144,7 +141,7 @@ public class Enemy : MonoBehaviour {
 		Collider[] targets = Physics.OverlapSphere(attackPosition, attackRadius);
 		Transform nearest = null;
 		float closestDistance = attackRange+attackRadius;
-
+		/*
 		if (!drawSphere) {
 						drawSphere =
 				Instantiate (
@@ -155,7 +152,7 @@ public class Enemy : MonoBehaviour {
 			drawSphere.transform.position = transform.position + attackDirection * attackRange;
 			drawSphere.GetComponent<Transform>().localScale = new Vector3(attackRadius,attackRadius,attackRadius);
 		}
-
+		*/
 		foreach (Collider hit in targets){
 			if(hit && hit.tag == "Player"){
 				float dist = Vector3.Distance(transform.position, hit.transform.position);
@@ -171,7 +168,7 @@ public class Enemy : MonoBehaviour {
 			Player enemyComponent = nearest.transform.GetComponent<Player>();
 			enemyComponent.LoseHealth(enemyDamage, enemyChemicals);
 			attackCooldownTime = 0;
-			spark = Instantiate(sparkPrefab, attackPosition, transform.rotation) as GameObject;
+			Destroy(Instantiate(sparkPrefab, attackPosition, transform.rotation) as GameObject, 1f);
 		}
 	}
 	
