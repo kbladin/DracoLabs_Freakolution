@@ -107,6 +107,7 @@ public class Player : MonoBehaviour {
 
 	}
 
+
 	public void LoseHealth(float damage, Chemicals enemyChemicals) 
 	{
 		//here needs to be damage formula
@@ -146,7 +147,7 @@ public class Player : MonoBehaviour {
 		}
 		if(nearest){
 			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
-			enemyComponent.LoseHealth(playerDamage, playerChemicals);
+			enemyComponent.LoseHealth(playerDamage, playerChemicals, this);
 		}
 		attackCooldown = 0;
 	}
