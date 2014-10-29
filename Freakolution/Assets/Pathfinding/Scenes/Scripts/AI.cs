@@ -17,6 +17,7 @@ public class AI : Pathfinding {
     private GameObject[] AIList;
 	private GameObject[] playerList;
 
+
 	private Node currentNode;
 	private Node previousNode;
 
@@ -206,7 +207,18 @@ public class AI : Pathfinding {
 	}
 
 	public Vector3 GetVelocity() {
+
+		if(isPositionOptimal()){
 			return new Vector3 (0, 0, 0);
+
+		}
+
+			if (Path.Count > 0){
+				Vector3 direction = (Path[0] - transform.position).normalized;
+				return direction * speed;
+			} else {
+				return new Vector3 (0, 0, 0);
+			} 
 	}
     private void MoveMethod()
     {
