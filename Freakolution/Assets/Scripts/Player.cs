@@ -68,7 +68,7 @@ public class Player : MonoBehaviour {
 		if(Input.GetButtonUp(controller.GetFire2InputName()))
 		{
 			if ((buildCooldown > buildCooldownTime)) {
-				BuildBlock ();
+				TryBuildBlock ();
 			}
 
 			blockWait = false;
@@ -190,16 +190,21 @@ public class Player : MonoBehaviour {
 		attackCooldown = 0;
 	}
 
-	private void BuildBlock() {
-	
-		//Play sound effect
-		AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
-		
+	private bool CanBuildHere(Vector3 v){
+		Vector3 n = Pathfinder.Instance.FindRealClosestNode(transform.position).GetVector();
+		float dist = (v - n).magnitude;
+		return (!Physics.CheckSphere (v, /*1 / Mathf.Sqrt(2))*/ 0.45f) && dist < 2.3);
+	}
+
+	private void TryBuildBlock() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.45f)) {
-			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
+		if (CanBuildHere(realLoc)) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
+
+			GameObject block = Instantiate(blockPrefab, realLoc, new Quaternion(0f,0f,0f, 0f)) as GameObject;
 			n.walkable = false;
 			n.currentObject = block;
 			
@@ -218,7 +223,7 @@ public class Player : MonoBehaviour {
 				} else {
 			renderBlock.transform.position = realLoc;	
 		}
-		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.45f)) {
+		if (!CanBuildHere(realLoc)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
 		} else if (buildCooldown < buildCooldownTime) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
@@ -242,6 +247,9 @@ public class Player : MonoBehaviour {
 			}
 		}
 		if (nearest) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
+
 			Node n = Pathfinder.Instance.FindRealClosestNode(nearest.gameObject.transform.position);
 			carriedBlock = nearest.gameObject;
 			n.walkable = true;
@@ -258,7 +266,9 @@ public class Player : MonoBehaviour {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, 0.45f) && carriedBlock) {
+		if (carriedBlock && CanBuildHere(realLoc)) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
 			carriedBlock.transform.position = realLoc;
 			n.walkable = false;
 			n.currentObject = carriedBlock;
