@@ -43,8 +43,8 @@ public class Player : MonoBehaviour {
 		attackRange = 1f;
 
 		attacking = false;
-		ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
-		ps[1].startColor = playerChemicals.getChemicals();
+		ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+		ps.startColor = playerChemicals.getChemicals();
 		GetComponentInChildren<SpriteRenderer> ().color =
 			new Color(playerChemicals.getChemicals ().r + 0.6f,
 			          playerChemicals.getChemicals ().g + 0.6f,
