@@ -692,42 +692,14 @@ GameObject:
   m_Component:
   - 4: {fileID: 307944407}
   - 33: {fileID: 307944406}
-  - 64: {fileID: 307944405}
   - 23: {fileID: 307944404}
-  - 114: {fileID: 307944403}
   m_Layer: 0
-  m_Name: Ground
+  m_Name: Ground2
   m_TagString: Walkable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &307944403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11400000, guid: 540e2d8f2e86a18478877689f17da613,
-    type: 2}
-  m_PrefabInternal: {fileID: 1794121016}
-  m_GameObject: {fileID: 307944402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc0e93fd94edc5b499f78284dc41c47a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnCount: 0
-  waveCounter: 0
-  waveInterval: 10
-  spawnInterval: 20
-  spawnCooldown: 5
-  spawns:
-  - {fileID: 129478211}
-  - {fileID: 70986795}
-  enemies: []
-  location: {fileID: 0}
-  enemyPrefab: {fileID: 100000, guid: 41a0391549214064c94f55a8d77ce97f, type: 2}
-  blockPrefab: {fileID: 100000, guid: c9618d5391277435a8d925dcb999441d, type: 2}
-  numberOfStartingBlocks: 10
-  player: {fileID: 0}
 --- !u!23 &307944404
 Renderer:
   m_ObjectHideFlags: 0
@@ -749,20 +721,6 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!64 &307944405
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6400000, guid: 540e2d8f2e86a18478877689f17da613,
-    type: 2}
-  m_PrefabInternal: {fileID: 1794121016}
-  m_GameObject: {fileID: 307944402}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &307944406
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2722,6 +2680,10 @@ Prefab:
       propertyPath: spawns.Array.data[1]
       value: 
       objectReference: {fileID: 70986795}
+    - target: {fileID: 11400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
+      propertyPath: numberOfStartingBlocks
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
   m_RootGameObject: {fileID: 1617689871}
@@ -4750,7 +4712,7 @@ MonoBehaviour:
   location: {fileID: 0}
   enemyPrefab: {fileID: 100000, guid: 41a0391549214064c94f55a8d77ce97f, type: 2}
   blockPrefab: {fileID: 100000, guid: c9618d5391277435a8d925dcb999441d, type: 2}
-  numberOfStartingBlocks: 10
+  numberOfStartingBlocks: 20
   player: {fileID: 0}
 --- !u!1 &1653474417
 GameObject:
@@ -5212,7 +5174,13 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: df08cb7422cd29b4d90828497516ba73, type: 2}
-    m_RemovedComponents: []
+    - target: {fileID: 100000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
+      propertyPath: m_Name
+      value: Ground2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 11400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
+    - {fileID: 6400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
   m_RootGameObject: {fileID: 307944402}
   m_IsPrefabParent: 0
