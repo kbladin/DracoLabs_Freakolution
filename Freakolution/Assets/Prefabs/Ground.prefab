@@ -26,8 +26,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalPosition: {x: 0, y: 0, z: 25.0343018}
+  m_LocalScale: {x: 10, y: 10, z: 9.07999992}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -43,7 +43,7 @@ Renderer:
   m_LightmapIndex: 255
   m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
   m_Materials:
-  - {fileID: 2100000, guid: 447163a1b5c5bc049bdca54d85c974fc, type: 2}
+  - {fileID: 2100000, guid: 46be5f15e363aac4381cc9eb6efc673f, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 0
@@ -90,10 +90,11 @@ MonoBehaviour:
   spawns:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
   enemies: []
   location: {fileID: 0}
   enemyPrefab: {fileID: 100000, guid: 41a0391549214064c94f55a8d77ce97f, type: 2}
+  blockPrefab: {fileID: 100000, guid: c9618d5391277435a8d925dcb999441d, type: 2}
+  numberOfStartingBlocks: 10
   player: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
