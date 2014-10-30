@@ -65,8 +65,8 @@ GameObject:
   - 4: {fileID: 400006}
   - 33: {fileID: 3300000}
   - 23: {fileID: 2300000}
-  - 114: {fileID: 11400008}
   - 114: {fileID: 11400010}
+  - 114: {fileID: 11400008}
   m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
@@ -339,7 +339,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5c902ba14f0e3dc4da6c133829fe1a8a, type: 3}
 --- !u!114 &11400004
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100002}
@@ -362,7 +362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
 --- !u!114 &11400008
 MonoBehaviour:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100006}

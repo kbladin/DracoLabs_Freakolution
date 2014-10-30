@@ -30,10 +30,13 @@ public class GameManager : MonoBehaviour {
 			player.GetComponent<Player>().SetChemicals(new Chemicals(i));
 			players.Add (player);
 		}
-		
-		pauseGUI.enabled = false;
-		gameOverGUI.enabled = false;
 	
+	}
+	
+	void Start ()
+	{
+		pauseGUI.enabled = false;
+		gameOverGUI.enabled = false;	
 	}
 	
 	void Update () {
