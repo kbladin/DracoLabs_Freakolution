@@ -30,7 +30,6 @@ GameObject:
   - 212: {fileID: 21200000}
   - 114: {fileID: 11400006}
   - 95: {fileID: 9500000}
-  - 114: {fileID: 11400002}
   m_Layer: 0
   m_Name: CharacterSprite
   m_TagString: Sprite
@@ -383,18 +382,6 @@ MonoBehaviour:
   rotateSpeed: 500
   trotAfterSeconds: 1000
   canJump: 1
---- !u!114 &11400002
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1131937d4caa46942a728251aa03bd2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Camera: {fileID: 2000000, guid: 2e226ce40bdb54d4ba8235eccfb0b784, type: 2}
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
