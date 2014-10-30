@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 	
 	private int numOfPlayers = 2;
 	
-	void Start () {
+	void Awake () {
 	
 		
 		players = new List<GameObject>();
