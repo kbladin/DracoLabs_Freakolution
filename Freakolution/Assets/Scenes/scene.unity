@@ -1136,7 +1136,6 @@ GameObject:
   - 20: {fileID: 453648109}
   - 92: {fileID: 453648108}
   - 124: {fileID: 453648107}
-  - 81: {fileID: 453648106}
   m_Layer: 0
   m_Name: UICamera
   m_TagString: MainCamera
@@ -1144,14 +1143,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &453648106
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 8100000, guid: 2e226ce40bdb54d4ba8235eccfb0b784,
-    type: 2}
-  m_PrefabInternal: {fileID: 1575659383}
-  m_GameObject: {fileID: 453648104}
-  m_Enabled: 1
 --- !u!124 &453648107
 Behaviour:
   m_ObjectHideFlags: 0
@@ -3288,7 +3279,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: c951c90892d9d4d75b0101f08ddcf8b8, type: 3}
   m_PrefabInternal: {fileID: 1903624358}
   m_GameObject: {fileID: 1291228442}
-  m_LocalRotation: {x: 0, y: .707106829, z: 0, w: .707106709}
+  m_LocalRotation: {x: 0, y: .707106888, z: 0, w: .707106769}
   m_LocalPosition: {x: 5.19126388e-07, y: 8.76008987, z: 7.50781918}
   m_LocalScale: {x: 6.53000021, y: 1.58000004, z: 44.25}
   m_Children: []
@@ -4584,7 +4575,8 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8100000, guid: 2e226ce40bdb54d4ba8235eccfb0b784, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 2e226ce40bdb54d4ba8235eccfb0b784, type: 2}
   m_RootGameObject: {fileID: 1372557120}
   m_IsPrefabParent: 0

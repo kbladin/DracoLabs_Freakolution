@@ -34,6 +34,7 @@ public class Player : MonoBehaviour {
 	public AudioClip missSwoosh;
 	public AudioClip hitEnemy;
 	public AudioClip runningAudio;
+	public AudioClip barrelPickup;
 	
 	// Use this for initialization
 	void Start ()
@@ -245,7 +246,8 @@ public class Player : MonoBehaviour {
 			Node n = Pathfinder.Instance.FindRealClosestNode(nearest.gameObject.transform.position);
 			carriedBlock = nearest.gameObject;
 			n.walkable = true;
-
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelPickup, transform.position);
 		}
 	}
 	

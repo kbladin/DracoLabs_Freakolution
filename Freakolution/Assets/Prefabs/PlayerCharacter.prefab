@@ -290,7 +290,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: .300000012
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -409,6 +409,7 @@ MonoBehaviour:
   missSwoosh: {fileID: 8300000, guid: dc3dbfa8f7c008c4caaa3c6f3ed056d1, type: 3}
   hitEnemy: {fileID: 8300000, guid: ed4c0b78c22e09544a47a141b0bd024e, type: 3}
   runningAudio: {fileID: 8300000, guid: 363f16ddc4aa4854fa5beaf2738218fb, type: 3}
+  barrelPickup: {fileID: 8300000, guid: c6807b02eb8920e408ea5405e99b386a, type: 3}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1
