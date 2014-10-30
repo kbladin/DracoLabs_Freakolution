@@ -8,15 +8,13 @@ public class AI : Pathfinding {
 	public float speed = 12f;
 	public float detectionRange = 50f;
 
-	//private GameObject playerObject;
+	private GameObject playerObject;
 	private Transform target;
 	private CharacterController controller;
     private bool newPath = true;
     private bool moving = false;
 	private bool resetPath = false;
     private GameObject[] AIList;
-
-
 
 	private Node currentNode;
 	private Node previousNode;
@@ -31,14 +29,12 @@ public class AI : Pathfinding {
 	void Start () 
     {
 //		this.renderer.material.color = Color.red;
-		//SetPlayerList();
+
 	}
 
-//	bool isTargetOptimal(){
+//	bool isTarg	etOptimal(){
 //		return true;
 //	}
-
-
 
 	bool isPositionOptimal() {
 		Node nPlayer = Pathfinder.Instance.FindRealClosestNode(target.position);
@@ -55,7 +51,8 @@ public class AI : Pathfinding {
 				return false;
 		} else {
 			Node nBestWalkable = Pathfinder.Instance.FindClosestEmptyNode(target.position);
-			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <=rangeDistance) {// Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+
+			//if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= Vector3.Distance(nPlayer.GetVector(), nBestWalkable.GetVector())+rangeDistance) {
+			if (Vector3.Distance(nPlayer.GetVector(), nTransform.GetVector()) <= rangeDistance) {
 //				this.renderer.material.color = Color.blue;
 //				transform.LookAt(target.position);
 				return true;
@@ -107,8 +104,6 @@ public class AI : Pathfinding {
 //			if(!isPathOptimal()){
 				//newPath
 //				this.renderer.material.color = Color.red;
-
-
 				if(newPath)
 					StartCoroutine(NewPathToFreeSpot());
 				else 
@@ -183,18 +178,17 @@ public class AI : Pathfinding {
 	}
 
 	public Vector3 GetVelocity() {
-
+	
 		if(isPositionOptimal()){
 			return new Vector3 (0, 0, 0);
-
 		}
-
-			if (Path.Count > 0){
+		
+		if (Path.Count > 0){
 				Vector3 direction = (Path[0] - transform.position).normalized;
 				return direction * speed;
-			} else {
+		} else {
 				return new Vector3 (0, 0, 0);
-			} 
+		} 
 	}
     private void MoveMethod()
     {

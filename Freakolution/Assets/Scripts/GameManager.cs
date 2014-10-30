@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour {
 	
 	private int numOfPlayers = 2;
 	
-	void Start () {
+	void Awake () {
 	
 		
 		players = new List<GameObject>();
@@ -30,10 +30,13 @@ public class GameManager : MonoBehaviour {
 			player.GetComponent<Player>().SetChemicals(new Chemicals(i));
 			players.Add (player);
 		}
-		
-		pauseGUI.enabled = false;
-		gameOverGUI.enabled = false;
 	
+	}
+	
+	void Start ()
+	{
+		pauseGUI.enabled = false;
+		gameOverGUI.enabled = false;	
 	}
 	
 	void Update () {
@@ -53,7 +56,7 @@ public class GameManager : MonoBehaviour {
 			pauseGUI.enabled = false;
 		}
 		
-		if(!isPlayersAlive())
+		if(!isPlayersAlive() && !gameOverGUI.enabled)
 		{
 			//Game over... bitch
 			// load main menu.

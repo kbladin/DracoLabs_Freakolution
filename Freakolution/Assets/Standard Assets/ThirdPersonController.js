@@ -165,7 +165,7 @@ function UpdateSmoothedMovementDirection ()
 	
 	var wasMoving = isMoving;
 	isMoving = Mathf.Abs (h) > 0.1 || Mathf.Abs (v) > 0.1;
-		
+	
 	// Target direction relative to the camera
 	var targetDirection = h * right + v * forward;
 	
@@ -324,7 +324,7 @@ function Update() {
 
 	// Apply jumping logic
 	ApplyJumping ();
-	
+
 	// Calculate actual motion
 	var movement = moveDirection * moveSpeed + Vector3 (0, verticalSpeed, 0) + inAirVelocity;
 	movement *= Time.deltaTime;

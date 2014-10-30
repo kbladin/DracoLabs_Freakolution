@@ -49,7 +49,11 @@ TagManager:
     userID: 0
     uniqueID: 0
     locked: 0
-  - name: 
+  - name: HealthBar
     userID: 2
     uniqueID: 4161670745
+    locked: 0
+  - name: HealthBarIndicator
+    userID: 1
+    uniqueID: 457712245
     locked: 0

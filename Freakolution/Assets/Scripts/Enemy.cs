@@ -4,7 +4,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public bool attacking;
-
+	public float maxHealth;
 	private float health;
 	private float attackCooldownTime;
 	private Vector3 moveDirection;
@@ -13,26 +13,32 @@ public class Enemy : MonoBehaviour {
 	private Chemicals enemyChemicals;
 	// Use this for initialization
 	public GameObject drawSpherePrefab;
-	private GameObject drawSphere;
+	//private GameObject drawSphere;
 	public GameObject sparkPrefab;
-	private GameObject spark;
-
+	public GameObject bloodPrefab;
 	private GameObject[] playerList;
 	private float[] damageTaken;
 	/*public GameObject drawCapsulePrefab;
 	private GameObject drawCapsule;
 */
+
+	//Sound effects
+	public AudioClip zapAudio;
+	public AudioClip[] hurtAudio;
+	
 	void Start () 
 	{
 		// needs to get the enemies movement direction
 		moveDirection = Vector3.forward;
-		health = 100f;
+		health = maxHealth;
 		attackCooldownTime = 3f;
 		attackRange = 1f;
 		enemyDamage = 10f;
+		enemyChemicals = new Chemicals();
 		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
 		GetComponentInChildren<ParticleSystem>().startColor = enemyChemicals.getChemicalsWithAlpha(0.15f);
 		SetPlayerList ();
+		findNewTarget();
 	}
 
 	void SetPlayerList(){
@@ -64,7 +70,7 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 		if (maxDamageTaken > 0)
-			GetComponentInParent<AI> ().setPlayer (playerList[maxDmgIndex].transform); 
+			GetComponentInParent<AI> ().setPlayer (playerList[maxDmgIndex].transform);
 		else
 			GetComponentInParent<AI> ().setPlayer (playerList[minDistIndex].transform); 
 	}
@@ -88,9 +94,6 @@ public class Enemy : MonoBehaviour {
 			attackCooldownTime += Time.deltaTime;
 		}
 
-		if (spark && !spark.GetComponent<ParticleSystem>().IsAlive()) {
-			Destroy (spark);
-		}
 		/*
 		if (!drawCapsule) {
 			drawCapsule =
@@ -111,12 +114,20 @@ public class Enemy : MonoBehaviour {
 	
 	public void LoseHealth(float damage, Chemicals chemicals, Player playerAttacked)
 	{
+		//play sound effect
+		int randClip = Random.Range(0, hurtAudio.Length) ;
+		AudioSource.PlayClipAtPoint(hurtAudio[randClip],transform.position);;
 		//implement damage formula
 		this.health -= damage * (1-enemyChemicals.getReaction(chemicals));
 		for (int i=0; i<playerList.Length; ++i) {
 			if (playerList[i].GetComponent<Player>() == playerAttacked)
 				damageTaken[i] += damage;
 		}
+		Destroy(Instantiate (bloodPrefab, transform.position, transform.rotation) as GameObject, 15f);
+	}
+	public float GetHealth()
+	{
+		return this.health;
 	}
 
 	public Vector3 GetDirection() {
@@ -136,7 +147,6 @@ public class Enemy : MonoBehaviour {
 	
 	private void Attack()
 	{
-		
 		Vector3 attackDirection = GetComponent<AI>().GetDirectionToTarget();
 		//sphere.position=transform.position + attackDirection * attackRange;
 		Vector3 attackPosition = transform.position + attackDirection * attackRange;
@@ -144,7 +154,7 @@ public class Enemy : MonoBehaviour {
 		Collider[] targets = Physics.OverlapSphere(attackPosition, attackRadius);
 		Transform nearest = null;
 		float closestDistance = attackRange+attackRadius;
-
+		/*
 		if (!drawSphere) {
 						drawSphere =
 				Instantiate (
@@ -155,12 +165,13 @@ public class Enemy : MonoBehaviour {
 			drawSphere.transform.position = transform.position + attackDirection * attackRange;
 			drawSphere.GetComponent<Transform>().localScale = new Vector3(attackRadius,attackRadius,attackRadius);
 		}
-
+		*/
 		foreach (Collider hit in targets){
 			if(hit && hit.tag == "Player"){
 				float dist = Vector3.Distance(transform.position, hit.transform.position);
 				if(dist < closestDistance){
 					attacking = true;
+					audio.PlayOneShot(zapAudio);
 					closestDistance = dist;
 					nearest = hit.transform;
 				}
@@ -171,7 +182,7 @@ public class Enemy : MonoBehaviour {
 			Player enemyComponent = nearest.transform.GetComponent<Player>();
 			enemyComponent.LoseHealth(enemyDamage, enemyChemicals);
 			attackCooldownTime = 0;
-			spark = Instantiate(sparkPrefab, attackPosition, transform.rotation) as GameObject;
+			Destroy(Instantiate(sparkPrefab, attackPosition, transform.rotation) as GameObject, 1f);
 		}
 	}
 	

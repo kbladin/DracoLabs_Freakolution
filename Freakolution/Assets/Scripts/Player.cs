@@ -27,6 +27,14 @@ public class Player : MonoBehaviour {
 	Node previousNode = null;
 	Node currentNode = null;
 	bool previousObst = false;
+	//Sound effects
+	public AudioClip[] attackAudio;
+	public AudioClip[] hurtAudio;
+	public AudioClip barrelDrop;
+	public AudioClip missSwoosh;
+	public AudioClip hitEnemy;
+	public AudioClip runningAudio;
+	
 	// Use this for initialization
 	void Start ()
 	{
@@ -34,8 +42,12 @@ public class Player : MonoBehaviour {
 		attackRange = 1f;
 
 		attacking = false;
-		ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
-		ps[1].startColor = playerChemicals.getChemicals();
+		ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+		ps.startColor = playerChemicals.getChemicals();
+		GetComponentInChildren<SpriteRenderer> ().color =
+			new Color(playerChemicals.getChemicals ().r + 0.6f,
+			          playerChemicals.getChemicals ().g + 0.6f,
+			          playerChemicals.getChemicals ().b + 0.6f);
 
 		playerDamage = 30f;
 		health = maxHealth;
@@ -56,7 +68,7 @@ public class Player : MonoBehaviour {
 		if(Input.GetButtonUp(controller.GetFire2InputName()))
 		{
 			if ((buildCooldown > buildCooldownTime)) {
-				BuildBlock ();
+				TryBuildBlock ();
 			}
 
 			blockWait = false;
@@ -70,6 +82,19 @@ public class Player : MonoBehaviour {
 			TryPlaceBlock();
 		} else if (Input.GetButtonDown (controller.GetFire3InputName ())) {
 			TryPickBlock();
+		}
+		
+		CharacterController characterController = GetComponent<CharacterController>();
+		
+		if(characterController.velocity.magnitude >= 0.2f && characterController.isGrounded && !audio.isPlaying)
+		{
+			audio.clip = runningAudio;
+			audio.Play();
+		}
+		else if(characterController.velocity.magnitude < 0.2f && audio.isPlaying)
+		{
+			audio.clip = runningAudio;
+			audio.Stop();
 		}
 
 		if (carriedBlock) {
@@ -110,7 +135,11 @@ public class Player : MonoBehaviour {
 
 	public void LoseHealth(float damage, Chemicals enemyChemicals) 
 	{
-		//here needs to be damage formula
+		//play sound effect
+		int randClip = Random.Range(0, hurtAudio.Length) ;
+		AudioSource.PlayClipAtPoint(hurtAudio[randClip], transform.position);
+		
+		//Damagae formula
 		this.health -= damage * playerChemicals.getReaction(enemyChemicals);
 		if(health <= 0)
 		{
@@ -123,13 +152,17 @@ public class Player : MonoBehaviour {
 	}
 
 	public float GetHealth() {
-		return health;
+		return this.health;
 	}
 	
 	private void Attack() 
 	{
 		attacking = true;
-
+		
+		//play sound effect
+		int randClip = Random.Range(0, attackAudio.Length) ;
+		AudioSource.PlayClipAtPoint(attackAudio[randClip], transform.position);
+		
 		Vector3 attackDirection = controller.GetDirection();
 
 		Collider[] targets = Physics.OverlapSphere(transform.position + attackDirection * attackRange, 0.5f);
@@ -148,16 +181,30 @@ public class Player : MonoBehaviour {
 		if(nearest){
 			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
 			enemyComponent.LoseHealth(playerDamage, playerChemicals, this);
+			AudioSource.PlayClipAtPoint(hitEnemy,transform.position);
+		}
+		else
+		{
+			AudioSource.PlayClipAtPoint(missSwoosh,transform.position);
 		}
 		attackCooldown = 0;
 	}
 
-	private void BuildBlock() {
+	private bool CanBuildHere(Vector3 v){
+		Vector3 n = Pathfinder.Instance.FindRealClosestNode(transform.position).GetVector();
+		float dist = (v - n).magnitude;
+		return (!Physics.CheckSphere (v, /*1 / Mathf.Sqrt(2))*/ 0.45f) && dist < 2.3);
+	}
+
+	private void TryBuildBlock() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.45f)) {
-			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
+		if (CanBuildHere(realLoc)) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
+
+			GameObject block = Instantiate(blockPrefab, realLoc, new Quaternion(0f,0f,0f, 0f)) as GameObject;
 			n.walkable = false;
 			n.currentObject = block;
 			
@@ -176,7 +223,7 @@ public class Player : MonoBehaviour {
 				} else {
 			renderBlock.transform.position = realLoc;	
 		}
-		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.45f)) {
+		if (!CanBuildHere(realLoc)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
 		} else if (buildCooldown < buildCooldownTime) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
@@ -200,6 +247,9 @@ public class Player : MonoBehaviour {
 			}
 		}
 		if (nearest) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
+
 			Node n = Pathfinder.Instance.FindRealClosestNode(nearest.gameObject.transform.position);
 			carriedBlock = nearest.gameObject;
 			n.walkable = true;
@@ -216,7 +266,9 @@ public class Player : MonoBehaviour {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, 0.45f) && carriedBlock) {
+		if (carriedBlock && CanBuildHere(realLoc)) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
 			carriedBlock.transform.position = realLoc;
 			n.walkable = false;
 			n.currentObject = carriedBlock;

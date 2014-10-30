@@ -33,6 +33,9 @@ public class RandomSpawn : MonoBehaviour {
 		
 		//The gameObject that will be spawned
 		public GameObject enemyPrefab;
+
+	public GameObject blockPrefab;
+	public int numberOfStartingBlocks;
 				
 		public GameObject player;
 		void Start () {
@@ -44,6 +47,7 @@ public class RandomSpawn : MonoBehaviour {
 //			waveCounter = 1;
 //			waveInterval = 10.0f;
 //			spawnInterval = 20.0f;
+		SpawnBlocks ();
 		}
 		
 		// Is executed every frame
@@ -96,8 +100,23 @@ public class RandomSpawn : MonoBehaviour {
 			location = spawns[randomSpawnPick];
 			//enemyPrefab.GetComponent<AI>().setPlayer( player);
 			GameObject enemy = Instantiate(enemyPrefab, location.position, location.rotation) as GameObject;
-			enemy.GetComponent<Enemy>().SetChemicals(new Chemicals());
+			//enemy.GetComponent<Enemy>().SetChemicals(new Chemicals());
 			//enemy.rigidbody.AddForce(location.forward * 100f);
 		}
+
+	void SpawnBlocks() {
+		for (int i=0; i<numberOfStartingBlocks; ++i) {
+			Vector3 randPos = new Vector3(Random.Range(-17.5f, 17.5f), 0.5f,Random.Range(-19f, -10.5f));
+			Node n = Pathfinder.Instance.FindRealClosestNode(randPos);
+
+			if(n.walkable) {
+				Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f,n.zCoord);
+				Instantiate(blockPrefab, realLoc, new Quaternion(0,0,0,0));
+				n.walkable = false;
+			}
+			else {--i;}
+
+		}
+	}
 	
 }
