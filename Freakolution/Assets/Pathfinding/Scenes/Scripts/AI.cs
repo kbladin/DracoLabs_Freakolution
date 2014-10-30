@@ -104,7 +104,7 @@ public class AI : Pathfinding {
     {
 		if (!isPositionOptimal()){
 			//move
-			if(!isPathOptimal()){
+//			if(!isPathOptimal()){
 				//newPath
 //				this.renderer.material.color = Color.red;
 
@@ -123,7 +123,7 @@ public class AI : Pathfinding {
 //					transform.collider.enabled = false;
 //					MoveMethod();
 //				}
-			}
+//			}
 
 			//only move if next point on path is free
 			if (newPath){//&& false

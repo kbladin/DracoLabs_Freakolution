@@ -634,7 +634,7 @@ public class Pathfinder : MonoBehaviour
 				radius ++;
 			}
 		}
-				UnityEngine.Debug.Log("c free a x=" + n.xCoord + ", y = " +n.zCoord);
+//				UnityEngine.Debug.Log("c free a x=" + n.xCoord + ", y = " +n.zCoord);
 		return n;
 		
 		
