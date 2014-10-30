@@ -69,7 +69,7 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 		if (maxDamageTaken > 0)
-			GetComponentInParent<AI> ().setPlayer (playerList[maxDmgIndex].transform); 
+			GetComponentInParent<AI> ().setPlayer (playerList[maxDmgIndex].transform);
 		else
 			GetComponentInParent<AI> ().setPlayer (playerList[minDistIndex].transform); 
 	}
