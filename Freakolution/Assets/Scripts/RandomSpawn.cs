@@ -96,7 +96,7 @@ public class RandomSpawn : MonoBehaviour {
 			location = spawns[randomSpawnPick];
 			//enemyPrefab.GetComponent<AI>().setPlayer( player);
 			GameObject enemy = Instantiate(enemyPrefab, location.position, location.rotation) as GameObject;
-			enemy.GetComponent<Enemy>().SetChemicals(new Chemicals());
+			//enemy.GetComponent<Enemy>().SetChemicals(new Chemicals());
 			//enemy.rigidbody.AddForce(location.forward * 100f);
 		}
 	

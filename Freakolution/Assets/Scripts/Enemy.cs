@@ -34,6 +34,7 @@ public class Enemy : MonoBehaviour {
 		attackCooldownTime = 3f;
 		attackRange = 1f;
 		enemyDamage = 10f;
+		enemyChemicals = new Chemicals();
 		//GetComponentInChildren<Light>().color = new Color(enemyChemicals.Redion, enemyChemicals.Greenium, enemyChemicals.Blurine);
 		GetComponentInChildren<ParticleSystem>().startColor = enemyChemicals.getChemicalsWithAlpha(0.15f);
 		SetPlayerList ();
