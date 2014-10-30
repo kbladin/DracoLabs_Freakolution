@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 26ff9f79f09814a809970a9807d225f9
+guid: 17e027ccf27df4f8b872d000ea7c8f94
 TextureImporter:
   fileIDToRecycleName:
-    21300000: shadow
+    21300000: particleSprite 1
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
