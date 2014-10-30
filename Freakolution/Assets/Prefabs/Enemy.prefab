@@ -30,7 +30,6 @@ GameObject:
   - 212: {fileID: 21200000}
   - 95: {fileID: 9500000}
   - 114: {fileID: 11400006}
-  - 114: {fileID: 11400004}
   m_Layer: 8
   m_Name: EnemySprite
   m_TagString: Sprite
@@ -336,18 +335,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 437889e4c498db847bab8a7586a50595, type: 3}
   - {fileID: 8300000, guid: 94eb282a407d27644a1d6bda8a32fc3a, type: 3}
   - {fileID: 8300000, guid: 5c902ba14f0e3dc4da6c133829fe1a8a, type: 3}
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100002}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1131937d4caa46942a728251aa03bd2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Camera: {fileID: 2000000, guid: 2e226ce40bdb54d4ba8235eccfb0b784, type: 2}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

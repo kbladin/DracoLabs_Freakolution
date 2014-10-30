@@ -116,7 +116,7 @@ public class Enemy : MonoBehaviour {
 	{
 		//play sound effect
 		int randClip = Random.Range(0, hurtAudio.Length) ;
-		audio.PlayOneShot(hurtAudio[randClip]);;
+		AudioSource.PlayClipAtPoint(hurtAudio[randClip],transform.position);;
 		//implement damage formula
 		this.health -= damage * (1-enemyChemicals.getReaction(chemicals));
 		for (int i=0; i<playerList.Length; ++i) {
