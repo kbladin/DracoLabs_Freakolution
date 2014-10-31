@@ -38,7 +38,8 @@ public class Player : MonoBehaviour {
 	public AudioClip missSwoosh;
 	public AudioClip hitEnemy;
 	public AudioClip runningAudio;
-	
+	public AudioClip pukeAudio;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -198,6 +199,8 @@ public class Player : MonoBehaviour {
 	}
 
 	private void Puke() {
+		AudioSource.PlayClipAtPoint(pukeAudio, transform.position);
+
 		puke = Instantiate (pukePrefab,
 		                               transform.position + new Vector3(0,0.5f,0),
 		                               Quaternion.LookRotation(controller.GetDirection())) as GameObject;
