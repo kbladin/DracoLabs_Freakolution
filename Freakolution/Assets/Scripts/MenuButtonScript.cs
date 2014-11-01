@@ -31,17 +31,17 @@ public class MenuButtonScript : MonoBehaviour
 	void OnMouseEnter(){
 		SetSelected(true);
 		MainMenu.instance.SetSelectedButton(gameObject);
-		MainMenu.instance.SetMenuSelector();
+		MainMenu.instance.SetMenuSelectorMouse();
 	}
 
 	void OnMouseExit() {
 		SetSelected(false);
-		if(MainMenu.instance.menuSelect.activeSelf)
-			MainMenu.instance.SetMenuSelector();
+//		if(MainMenu.instance.menuSelect.activeSelf)
+			MainMenu.instance.SetMenuSelectorMouse();
 	}
 
 	void OnMouseUp(){
-		MainMenu.instance.ButtonPressed(buttonName);
+		MainMenu.instance.ButtonPressed(buttonName, gameObject,1);
 	}
 
 	public void SetSelected(bool isSelected){

@@ -4,7 +4,7 @@ using System.Collections;
 public class PortraitCoin : MonoBehaviour {
 
 	bool rotatePortrait = false;
-
+	public bool facingCamera = false;
 	// Use this for initialization
 	void Start () {
 	
@@ -17,10 +17,14 @@ public class PortraitCoin : MonoBehaviour {
 	}
 
 	void OnMouseUp(){
-		if( !rotatePortrait){
-			rotatePortrait = true;
-			StartCoroutine(Rotation (this.transform.up * 180, 1.0f));
+//		FlipCoin();
+	}
 
+	public void FlipCoin(){
+		if( !rotatePortrait){
+			rotatePortrait = true;		
+			facingCamera = !facingCamera;
+			StartCoroutine(Rotation (this.transform.up * 180, 1.0f));
 		}
 	}
 
