@@ -7,11 +7,14 @@ public class Player : MonoBehaviour {
 	private float health;
 	public bool attacking;
 	public float attackCooldownTime;
+	public float pukeCooldownTime;
 	public float buildCooldownTime;
+	private float pukeCooldown = 0;
 	private float attackCooldown = 0;
 	private float buildCooldown = 0;
 	private float attackRange;
-	private float playerDamage;
+	public float playerDamage;
+	public float playerPukeDamage;
 	private bool alive;
 	private Chemicals playerChemicals;
 	private bool blockWait = false;
@@ -19,11 +22,12 @@ public class Player : MonoBehaviour {
 	//property
 	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
-	private string fireInputName;
 	public ThirdPersonController controller;
 	public GameObject blockPrefab;
 	public GameObject renderBlockPrefab;
 	private GameObject renderBlock;
+	public GameObject pukePrefab;
+	public GameObject puke;
 	Node previousNode = null;
 	Node currentNode = null;
 	bool previousObst = false;
@@ -34,7 +38,13 @@ public class Player : MonoBehaviour {
 	public AudioClip missSwoosh;
 	public AudioClip hitEnemy;
 	public AudioClip runningAudio;
+<<<<<<< HEAD
+	public AudioClip barrelPickup;
 	
+=======
+	public AudioClip pukeAudio;
+
+>>>>>>> 571519cb34e49febc6f3454809210735fb3f22b4
 	// Use this for initialization
 	void Start ()
 	{
@@ -42,22 +52,24 @@ public class Player : MonoBehaviour {
 		attackRange = 1f;
 
 		attacking = false;
-		ParticleSystem[] ps = GetComponentsInChildren<ParticleSystem>();
-		ps[1].startColor = playerChemicals.getChemicals();
+		ParticleSystem ps = GetComponentInChildren<ParticleSystem>();
+		ps.startColor = playerChemicals.getChemicals();
 		GetComponentInChildren<SpriteRenderer> ().color =
 			new Color(playerChemicals.getChemicals ().r + 0.6f,
 			          playerChemicals.getChemicals ().g + 0.6f,
 			          playerChemicals.getChemicals ().b + 0.6f);
 
-		playerDamage = 30f;
 		health = maxHealth;
 		controller = GetComponent<ThirdPersonController>();
-		fireInputName = controller.GetFireInputName();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButtonDown(fireInputName) && (attackCooldown > attackCooldownTime))
+		if(Input.GetButtonDown(controller.GetJumpInputName()) && (pukeCooldown > pukeCooldownTime))
+		{
+			Puke();
+		}
+		if(Input.GetButtonDown(controller.GetFireInputName()) && (attackCooldown > attackCooldownTime))
 		{
 			Attack();
 		}
@@ -68,7 +80,7 @@ public class Player : MonoBehaviour {
 		if(Input.GetButtonUp(controller.GetFire2InputName()))
 		{
 			if ((buildCooldown > buildCooldownTime)) {
-				BuildBlock ();
+				TryBuildBlock ();
 			}
 
 			blockWait = false;
@@ -106,9 +118,9 @@ public class Player : MonoBehaviour {
 			carriedBlock.GetComponent<BoxCollider>().enabled = false;
 		}
 
-		attackCooldown += Time.deltaTime;
-		buildCooldown += Time.deltaTime;
-
+		if (puke) {
+			puke.transform.position = transform.position + new Vector3(0,0.5f,0);
+		}
 
 		previousNode = currentNode;
 
@@ -128,24 +140,20 @@ public class Player : MonoBehaviour {
 		//currentNode.walkable = false;
 		currentNode.currentObject = gameObject;
 		
-
-
+		attackCooldown += Time.deltaTime;
+		buildCooldown += Time.deltaTime;
+		pukeCooldown += Time.deltaTime;
 	}
 
 
 	public void LoseHealth(float damage, Chemicals enemyChemicals) 
 	{
-<<<<<<< HEAD
 		//play sound effect
 		int randClip = Random.Range(0, hurtAudio.Length) ;
 		AudioSource.PlayClipAtPoint(hurtAudio[randClip], transform.position);
 		
 		//Damagae formula
-		this.health -= damage * (1 + enemyChemicals.getReaction(enemyChemicals));
-=======
-		//here needs to be damage formula
 		this.health -= damage * playerChemicals.getReaction(enemyChemicals);
->>>>>>> d6eea8762fa9503ded9b1c9a70322672bfc646bc
 		if(health <= 0)
 		{
 			alive = false;
@@ -157,7 +165,7 @@ public class Player : MonoBehaviour {
 	}
 
 	public float GetHealth() {
-		return health;
+		return this.health;
 	}
 	
 	private void Attack() 
@@ -185,30 +193,55 @@ public class Player : MonoBehaviour {
 		}
 		if(nearest){
 			Enemy enemyComponent = nearest.transform.GetComponent<Enemy>();
-<<<<<<< HEAD
-			enemyComponent.LoseHealth(playerDamage, playerChemicals);
+			enemyComponent.LoseHealth(playerDamage, playerChemicals, this);
 			AudioSource.PlayClipAtPoint(hitEnemy,transform.position);
 		}
 		else
 		{
 			AudioSource.PlayClipAtPoint(missSwoosh,transform.position);
-=======
-			enemyComponent.LoseHealth(playerDamage, playerChemicals, this);
->>>>>>> d6eea8762fa9503ded9b1c9a70322672bfc646bc
 		}
 		attackCooldown = 0;
 	}
 
-	private void BuildBlock() {
-	
-		//Play sound effect
-		AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
-		
+	private void Puke() {
+		AudioSource.PlayClipAtPoint(pukeAudio, transform.position);
+
+		puke = Instantiate (pukePrefab,
+		                               transform.position + new Vector3(0,0.5f,0),
+		                               Quaternion.LookRotation(controller.GetDirection())) as GameObject;
+		puke.GetComponent<Puke> ().SetPlayer(this);
+		puke.GetComponent<Puke> ().SetPukeChemicals(playerChemicals);
+		puke.GetComponent<Puke> ().SetDamage(playerPukeDamage);
+		puke.GetComponent<ParticleSystem> ().startColor = playerChemicals.getChemicals();
+		puke.GetComponentsInChildren<ParticleSystem> ()[1].startColor = playerChemicals.getChemicals();
+		Destroy(puke, 3f);
+		pukeCooldown = 0;
+	}
+
+	void OnParticleCollision(GameObject other) {
+		Rigidbody body = other.rigidbody;
+		if (body) {
+			Vector3 direction = other.transform.position - transform.position;
+			direction = direction.normalized;
+			Destroy(other);// body.AddForce(direction * 5);
+		}
+	}
+
+	private bool CanBuildHere(Vector3 v){
+		Vector3 n = Pathfinder.Instance.FindRealClosestNode(transform.position).GetVector();
+		float dist = (v - n).magnitude;
+		return (!Physics.CheckSphere (v, /*1 / Mathf.Sqrt(2))*/ 0.45f) && dist < 2.3);
+	}
+
+	private void TryBuildBlock() {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt(2))*/ 0.45f)) {
-			GameObject block = Instantiate(blockPrefab, realLoc, transform.rotation) as GameObject;
+		if (CanBuildHere(realLoc)) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
+
+			GameObject block = Instantiate(blockPrefab, realLoc, new Quaternion(0f,0f,0f, 0f)) as GameObject;
 			n.walkable = false;
 			n.currentObject = block;
 			
@@ -227,7 +260,7 @@ public class Player : MonoBehaviour {
 				} else {
 			renderBlock.transform.position = realLoc;	
 		}
-		if (Physics.CheckSphere (realLoc, /*1 / Mathf.Sqrt (2))*/0.45f)) {
+		if (!CanBuildHere(realLoc)) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 0, 0, 0.4f);
 		} else if (buildCooldown < buildCooldownTime) {
 						renderBlock.GetComponent<MeshRenderer> ().material.color = new Color (1f, 1f, 0, 0.4f);
@@ -251,10 +284,14 @@ public class Player : MonoBehaviour {
 			}
 		}
 		if (nearest) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
+
 			Node n = Pathfinder.Instance.FindRealClosestNode(nearest.gameObject.transform.position);
 			carriedBlock = nearest.gameObject;
 			n.walkable = true;
-
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelPickup, transform.position);
 		}
 	}
 	
@@ -267,7 +304,9 @@ public class Player : MonoBehaviour {
 		Vector3 location = transform.position + controller.GetDirection() * 1.3f;
 		Node n = Pathfinder.Instance.FindRealClosestNode(location);
 		Vector3 realLoc = new Vector3(n.xCoord, n.yCoord + 0.5f, n.zCoord);
-		if (!Physics.CheckSphere (realLoc, 0.45f) && carriedBlock) {
+		if (carriedBlock && CanBuildHere(realLoc)) {
+			//Play sound effect
+			AudioSource.PlayClipAtPoint(barrelDrop, transform.position);
 			carriedBlock.transform.position = realLoc;
 			n.walkable = false;
 			n.currentObject = carriedBlock;
