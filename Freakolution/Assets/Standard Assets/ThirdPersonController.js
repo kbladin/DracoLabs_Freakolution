@@ -485,13 +485,19 @@ function setJumpInputName(playerNumber)
 	switch(playerNumber)
 	{
 		case 0: 
-			jumpInputName = "Jump1";
+			jumpInputName = "P1Alt_Button3";
 			break;
 		case 1:
-			jumpInputName = "Jump2";
+			jumpInputName = "P2_Button3";
+			break;
+		case 2: 
+			jumpInputName = "P3_Button3";
+			break;
+		case 3:
+			jumpInputName = "P4_Button3";
 			break;
 		default:
-			jumpInputName = "Jump1";
+			jumpInputName = "P1_Button3";
 	}
 
 }
@@ -500,13 +506,19 @@ function setHorizontalInputName(playerNumber)
 	switch(playerNumber)
 	{
 		case 0: 
-			horizontalInputName = "Horizontal1";
+			horizontalInputName = "P1Alt_Horizontal";
 			break;
 		case 1:
-			horizontalInputName = "Horizontal2";
+			horizontalInputName = "P2_Horizontal";
+			break;
+		case 2: 
+			horizontalInputName = "P3_Horizontal";
+			break;
+		case 3:
+			horizontalInputName = "P4_Horizontal";
 			break;
 		default:
-			horizontalInputName = "Horizontal1";
+			horizontalInputName = "P1_Horizontal";
 	}
 
 }
@@ -515,13 +527,19 @@ function setVerticalInputName(playerNumber)
 	switch(playerNumber)
 	{
 		case 0: 
-			verticalInputName = "Vertical1";
+			verticalInputName = "P1Alt_Vertical";
 			break;
 		case 1:
-			verticalInputName = "Vertical2";
+			verticalInputName = "P2_Vertical";
+			break;
+		case 2: 
+			verticalInputName = "P3_Vertical";
+			break;
+		case 3:
+			verticalInputName = "P4_Vertical";
 			break;
 		default:
-			verticalInputName = "Vertical1";
+			verticalInputName = "P1_Vertical";
 	}
 
 }
@@ -531,13 +549,19 @@ function setFireInputName(playerNumber)
 	switch(playerNumber)
 	{
 		case 0: 
-			fireInputName = "Fire1_1";
+			fireInputName = "P1Alt_Button0";
 			break;
 		case 1:
-			fireInputName = "Fire1_2";
+			fireInputName = "P2_Button0";
+			break;
+		case 2: 
+			fireInputName = "P3_Button0";
+			break;
+		case 3:
+			fireInputName = "P4_Button0";
 			break;
 		default:
-			fireInputName = "Fire1_1";
+			fireInputName = "P1_Button0";
 	}
 
 }
@@ -547,13 +571,19 @@ function SetFire2InputName(playerNumber)
 	switch(playerNumber)
 	{
 		case 0: 
-			fire2InputName = "Fire2_1";
+			fire2InputName = "P1Alt_Button1";
 			break;
 		case 1:
-			fire2InputName = "Fire2_2";
+			fire2InputName = "P2_Button1";
+			break;
+		case 2: 
+			fire2InputName = "P3_Button1";
+			break;
+		case 3:
+			fire2InputName = "P4_Button1";
 			break;
 		default:
-			fire2InputName = "Fire2_1";
+			fire2InputName = "P1_Button1";
 	}
 
 }
@@ -563,13 +593,19 @@ function SetFire3InputName(playerNumber)
 	switch(playerNumber)
 	{
 		case 0: 
-			fire3InputName = "Fire3_1";
+			fire3InputName = "P1Alt_Button2";
 			break;
 		case 1:
-			fire3InputName = "Fire3_2";
+			fire3InputName = "P2_Button2";
+			break;
+		case 2: 
+			fire3InputName = "P3_Button2";
+			break;
+		case 3:
+			fire3InputName = "P4_Button2";
 			break;
 		default:
-			fire3InputName = "Fire3_1";
+			fire3InputName = "P1_Button2";
 	}
 
 }
