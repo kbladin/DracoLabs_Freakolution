@@ -19,24 +19,29 @@ public class Camera : MonoBehaviour {
 			SpriteGo.transform.LookAt(SpriteGo.transform.position + transform.rotation * Vector3.forward,
 			                 transform.rotation * Vector3.up);
 		}
-
+		bool alive = false;
 		// Update camera position
 		Vector3 meanPos = new Vector3(0,0,0);
 		foreach (GameObject player in players) {
-			if (player.GetComponent<Player>().Alive)
+			if (player.GetComponent<Player>().Alive){
 				meanPos += player.transform.position;
+				alive = true;
+			}
 		}
-		meanPos /= players.Length;
+		if (alive) {
 
-		Vector3 relativeCamPosition = new Vector3 (0, 3f, -5f);
+						meanPos /= players.Length;
 
-		Vector3 goalPosition = meanPos + relativeCamPosition;
-		goalPosition += MaxDistance (players) * 0.12f * (goalPosition - meanPos);
+						Vector3 relativeCamPosition = new Vector3 (0, 3f, -5f);
 
-		transform.position = Delay(transform.position,
+						Vector3 goalPosition = meanPos + relativeCamPosition;
+
+						goalPosition += MaxDistance (players) * 0.12f * (goalPosition - meanPos);
+
+						transform.position = Delay (transform.position,
 		                           goalPosition,
 		                           0.03f);
-
+				}
 		/*transform.LookAt (Delay(transform.position - relativeCamPosition,
 		                        relativeCamPosition,
 		                        0.1f));*/
@@ -45,11 +50,11 @@ public class Camera : MonoBehaviour {
 	private float MaxDistance(GameObject[] gos){
 		float maxDistance = 0;
 		foreach (GameObject Go1 in gos) {
-			foreach (GameObject Go2 in gos) {
-				float tmpDistance = (Go1.transform.position - Go2.transform.position).magnitude;
-				maxDistance = (tmpDistance > maxDistance ? 
-				               tmpDistance : maxDistance);
-			}
+				foreach (GameObject Go2 in gos) {
+					float tmpDistance = (Go1.transform.position - Go2.transform.position).magnitude;
+					maxDistance = (tmpDistance > maxDistance ? 
+					               tmpDistance : maxDistance);
+				}
 		}
 		return maxDistance;
 	}

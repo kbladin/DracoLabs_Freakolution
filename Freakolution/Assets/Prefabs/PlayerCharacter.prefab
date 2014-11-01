@@ -67,7 +67,7 @@ GameObject:
   - 114: {fileID: 11400008}
   - 33: {fileID: 3300002}
   - 23: {fileID: 2300002}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,7 +478,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618f4c3dbad5b1f47b9cecb1facd8ddb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  gameOver: {fileID: 100002, guid: aa475f37f8bc9409893b5542afc1249e, type: 2}
+  maxHealth: 10
   attacking: 0
   attackCooldownTime: .5
   pukeCooldownTime: 2

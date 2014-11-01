@@ -9,18 +9,21 @@ using System.Collections.Generic;
 public class GameManager : MonoBehaviour {
 	
 	private bool pause = false;
+	private bool gameOverBool = false;
 	public GUITexture pauseGUI;
-	public GUITexture gameOverGUI;
+	//public GUITexture gameOverGUI;
+	public GameObject gameOverDisplay;
 	
 	public Transform[] playerSpawns;
 	public GameObject playerPrefab;
 	private List<GameObject> players;
 	public Texture waveHUDTex;
 	
-	private int numOfPlayers = 2;
+	private int numOfPlayers = 4;
 	
 	void Awake () {
 	
+		
 		players = new List<GameObject>();
 		numOfPlayers = GameVariables.nPlayers;
 //		print("n players = " + );
@@ -60,13 +63,14 @@ public class GameManager : MonoBehaviour {
 	void Start ()
 	{
 		pauseGUI.enabled = false;
-		gameOverGUI.enabled = false;	
+		gameOverBool = false;
+
+
 	}
 	
 	void Update () {
-	
 
-		if(!gameOverGUI.enabled && Input.GetKeyUp(KeyCode.Escape)) 
+		if(!gameOverBool && Input.GetKeyUp(KeyCode.Escape)) 
 		{
 			pause = !pause;
 		}
@@ -80,14 +84,12 @@ public class GameManager : MonoBehaviour {
 			pauseGUI.enabled = false;
 		}
 		
-		if(!isPlayersAlive() && !gameOverGUI.enabled)
+		if(!isPlayersAlive() && !gameOverBool)
 		{
-			//Game over... bitch
-			// load main menu.
 			gameOver();
 		}
 		
-		if(gameOverGUI.enabled && Input.GetKeyUp(KeyCode.Escape))
+		if(gameOverBool && Input.GetKeyUp(KeyCode.Escape))
 		{
 			Application.LoadLevel(0);
 		}
@@ -112,9 +114,9 @@ public class GameManager : MonoBehaviour {
 	
 	
 	private void gameOver(){
-		
+		gameOverDisplay.GetComponent<GameOverDisplay> ().Display ();
 		Time.timeScale=0.0f;
-		gameOverGUI.enabled = true;
+		gameOverBool = true;
 	}
 	
 //	void OnGUI()

@@ -78,11 +78,7 @@ public class Enemy : MonoBehaviour {
 	void Update () 
 	{
 		findNewTarget();
-		if(health < 0)
-		{
-			Destroy(gameObject);
-		}
-		
+
 		if(attackCooldownTime>=3)
 		{
 			Attack();
@@ -117,12 +113,18 @@ public class Enemy : MonoBehaviour {
 		int randClip = Random.Range(0, hurtAudio.Length) ;
 		AudioSource.PlayClipAtPoint(hurtAudio[randClip],transform.position);;
 		//implement damage formula
-		this.health -= damage * (1-enemyChemicals.getReaction(chemicals));
+		float dmgToLoose = damage * (1 - enemyChemicals.getReaction (chemicals));
+		this.health -= dmgToLoose;
+		playerAttacked.stats.damageDone += dmgToLoose;
 		for (int i=0; i<playerList.Length; ++i) {
 			if (playerList[i].GetComponent<Player>() == playerAttacked)
 				damageTaken[i] += damage;
 		}
 		Destroy(Instantiate (bloodPrefab, transform.position, transform.rotation) as GameObject, 15f);
+		if(health < 0){
+			++playerAttacked.stats.killCount;
+			Destroy(gameObject);
+		}
 	}
 	public float GetHealth()
 	{
