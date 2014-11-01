@@ -1,10 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+public struct PlayerStats {
+	public int killCount;
+	public float damageDone;
+	public float damageTaken;
+	public int barrelsBuilt;
+	public int barrelsMoved;
+}
+
 public class Player : MonoBehaviour {
 
+	private GameObject gameOverDisplay;
 	public float maxHealth;
 	private float health;
+	//public PlayerStats stats;
 	public bool attacking;
 	public float attackCooldownTime;
 	public float pukeCooldownTime;
@@ -48,6 +58,8 @@ public class Player : MonoBehaviour {
 	
 	public AudioClip pukeAudio;
 
+	public PlayerStats stats;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -64,6 +76,7 @@ public class Player : MonoBehaviour {
 
 		health = maxHealth;
 		controller = GetComponent<ThirdPersonController>();
+		gameOverDisplay = GameObject.Find ("GameOverDisplay");
 	}
 	
 	// Update is called once per frame
@@ -156,14 +169,17 @@ public class Player : MonoBehaviour {
 		AudioSource.PlayClipAtPoint(hurtAudio[randClip], transform.position);
 		
 		//Damagae formula
-		this.health -= damage * playerChemicals.getReaction(enemyChemicals);
+		float dmgToLoose = damage * playerChemicals.getReaction (enemyChemicals);
+		this.health -= dmgToLoose;
+		stats.damageTaken += dmgToLoose;
+
 		if(health <= 0)
 		{
 			alive = false;
-			gameObject.SetActive(false);
-
+			gameOverDisplay.GetComponent<GameOverDisplay>().AddPlayerStats(stats);
 			currentNode.walkable = true;
 			currentNode.currentObject = null;
+			gameObject.SetActive(false);
 		}
 	}
 	
@@ -178,7 +194,7 @@ public class Player : MonoBehaviour {
 	public float GetHealth() {
 		return this.health;
 	}
-	
+
 	private void Attack() 
 	{
 		attacking = true;
@@ -228,7 +244,7 @@ public class Player : MonoBehaviour {
 		Destroy(puke, 3f);
 		pukeCooldown = 0;
 	}
-
+	/*
 	void OnParticleCollision(GameObject other) {
 		Rigidbody body = other.rigidbody;
 		if (body) {
@@ -237,7 +253,7 @@ public class Player : MonoBehaviour {
 			Destroy(other);// body.AddForce(direction * 5);
 		}
 	}
-
+*/
 	private bool CanBuildHere(Vector3 v){
 		Vector3 n = Pathfinder.Instance.FindRealClosestNode(transform.position).GetVector();
 		float dist = (v - n).magnitude;
@@ -259,6 +275,7 @@ public class Player : MonoBehaviour {
 			block.GetComponent<Rigidbody> ().isKinematic = true;
 			Destroy(carriedBlock);
 			buildCooldown = 0;
+			stats.barrelsBuilt++;
 		}
 	}
 
@@ -325,6 +342,9 @@ public class Player : MonoBehaviour {
 			carriedBlock.GetComponent<Rigidbody> ().isKinematic = true;
 			carriedBlock.GetComponent<BoxCollider>().enabled = true;
 			carriedBlock = null;
+			stats.barrelsMoved++;
 				}
 	}
 }
+
+
