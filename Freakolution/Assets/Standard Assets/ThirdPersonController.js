@@ -435,6 +435,11 @@ function GetLockCameraTimer ()
 	return lockCameraTimer;
 }
 
+function GetJumpInputName()
+{
+	return jumpInputName;
+}
+
 function GetFireInputName()
 {
 	return fireInputName;

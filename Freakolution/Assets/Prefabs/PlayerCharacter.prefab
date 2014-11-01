@@ -232,7 +232,7 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: .300000012
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -339,10 +339,15 @@ MonoBehaviour:
   maxHealth: 200
   attacking: 0
   attackCooldownTime: .5
+  pukeCooldownTime: 2
   buildCooldownTime: 10
+  playerDamage: 30
+  playerPukeDamage: 10
   controller: {fileID: 0}
   blockPrefab: {fileID: 100000, guid: c9618d5391277435a8d925dcb999441d, type: 2}
   renderBlockPrefab: {fileID: 100000, guid: f7fb4332b7cf048a98dc7e68697f31ff, type: 2}
+  pukePrefab: {fileID: 100000, guid: 8a8bcd68e91574df3b6f8370c9f6c135, type: 2}
+  puke: {fileID: 0}
   attackAudio:
   - {fileID: 8300000, guid: acc509d708aa0ce46a0e6ceb936084cb, type: 3}
   hurtAudio:
@@ -352,6 +357,7 @@ MonoBehaviour:
   hitEnemy: {fileID: 8300000, guid: ed4c0b78c22e09544a47a141b0bd024e, type: 3}
   runningAudio: {fileID: 8300000, guid: 363f16ddc4aa4854fa5beaf2738218fb, type: 3}
   barrelPickup: {fileID: 8300000, guid: c6807b02eb8920e408ea5405e99b386a, type: 3}
+  pukeAudio: {fileID: 8300000, guid: 2b9801d77396044689d96a9af43110c1, type: 3}
 --- !u!114 &11400006
 MonoBehaviour:
   m_ObjectHideFlags: 1

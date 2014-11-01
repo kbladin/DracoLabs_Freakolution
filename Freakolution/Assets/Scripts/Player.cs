@@ -7,11 +7,14 @@ public class Player : MonoBehaviour {
 	private float health;
 	public bool attacking;
 	public float attackCooldownTime;
+	public float pukeCooldownTime;
 	public float buildCooldownTime;
+	private float pukeCooldown = 0;
 	private float attackCooldown = 0;
 	private float buildCooldown = 0;
 	private float attackRange;
-	private float playerDamage;
+	public float playerDamage;
+	public float playerPukeDamage;
 	private bool alive;
 	private Chemicals playerChemicals;
 	private bool blockWait = false;
@@ -19,11 +22,12 @@ public class Player : MonoBehaviour {
 	//property
 	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
-	private string fireInputName;
 	public ThirdPersonController controller;
 	public GameObject blockPrefab;
 	public GameObject renderBlockPrefab;
 	private GameObject renderBlock;
+	public GameObject pukePrefab;
+	public GameObject puke;
 	Node previousNode = null;
 	Node currentNode = null;
 	bool previousObst = false;
@@ -36,6 +40,8 @@ public class Player : MonoBehaviour {
 	public AudioClip runningAudio;
 	public AudioClip barrelPickup;
 	
+	public AudioClip pukeAudio;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -50,15 +56,17 @@ public class Player : MonoBehaviour {
 			          playerChemicals.getChemicals ().g + 0.6f,
 			          playerChemicals.getChemicals ().b + 0.6f);
 
-		playerDamage = 30f;
 		health = maxHealth;
 		controller = GetComponent<ThirdPersonController>();
-		fireInputName = controller.GetFireInputName();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(Input.GetButtonDown(fireInputName) && (attackCooldown > attackCooldownTime))
+		if(Input.GetButtonDown(controller.GetJumpInputName()) && (pukeCooldown > pukeCooldownTime))
+		{
+			Puke();
+		}
+		if(Input.GetButtonDown(controller.GetFireInputName()) && (attackCooldown > attackCooldownTime))
 		{
 			Attack();
 		}
@@ -107,9 +115,9 @@ public class Player : MonoBehaviour {
 			carriedBlock.GetComponent<BoxCollider>().enabled = false;
 		}
 
-		attackCooldown += Time.deltaTime;
-		buildCooldown += Time.deltaTime;
-
+		if (puke) {
+			puke.transform.position = transform.position + new Vector3(0,0.5f,0);
+		}
 
 		previousNode = currentNode;
 
@@ -129,8 +137,9 @@ public class Player : MonoBehaviour {
 		//currentNode.walkable = false;
 		currentNode.currentObject = gameObject;
 		
-
-
+		attackCooldown += Time.deltaTime;
+		buildCooldown += Time.deltaTime;
+		pukeCooldown += Time.deltaTime;
 	}
 
 
@@ -189,6 +198,30 @@ public class Player : MonoBehaviour {
 			AudioSource.PlayClipAtPoint(missSwoosh,transform.position);
 		}
 		attackCooldown = 0;
+	}
+
+	private void Puke() {
+		AudioSource.PlayClipAtPoint(pukeAudio, transform.position);
+
+		puke = Instantiate (pukePrefab,
+		                               transform.position + new Vector3(0,0.5f,0),
+		                               Quaternion.LookRotation(controller.GetDirection())) as GameObject;
+		puke.GetComponent<Puke> ().SetPlayer(this);
+		puke.GetComponent<Puke> ().SetPukeChemicals(playerChemicals);
+		puke.GetComponent<Puke> ().SetDamage(playerPukeDamage);
+		puke.GetComponent<ParticleSystem> ().startColor = playerChemicals.getChemicals();
+		puke.GetComponentsInChildren<ParticleSystem> ()[1].startColor = playerChemicals.getChemicals();
+		Destroy(puke, 3f);
+		pukeCooldown = 0;
+	}
+
+	void OnParticleCollision(GameObject other) {
+		Rigidbody body = other.rigidbody;
+		if (body) {
+			Vector3 direction = other.transform.position - transform.position;
+			direction = direction.normalized;
+			Destroy(other);// body.AddForce(direction * 5);
+		}
 	}
 
 	private bool CanBuildHere(Vector3 v){
