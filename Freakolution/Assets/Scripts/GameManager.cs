@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
 		players = new List<GameObject>();
 		numOfPlayers = GameVariables.nPlayers;
 //		print("n players = " + );
-		for(int i=0;i<numOfPlayers;i++){
+		for(int i=0;i<4;i++){
 //			print("player "+i+" playing = " + GameVariables.playersPlaying[i]);
 //			print("player "+i+" class = " + GameVariables.playerClasses[i]);
 //			print("player "+i+" chemical = " + GameVariables.playerChemicals[i]);
@@ -32,17 +32,15 @@ public class GameManager : MonoBehaviour {
 			if(GameVariables.playerChemicals != null)
 				chemical = GameVariables.playerChemicals[i];
 
+			if(GameVariables.playersPlaying[i]){
 
-			GameObject player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation) as GameObject;
-			player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
-			player.GetComponent<Player>().SetChemicals(new Chemicals(chemical));
-//			player.transform.Find("CharacterSprite").transform.Find("PlayerNumberBack").Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
-			player.transform.Find("CharacterSprite").transform.Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
-			//			player.transform.Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
+				GameObject player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation) as GameObject;
+				player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
+				player.GetComponent<Player>().SetChemicals(new Chemicals(chemical));
+				player.transform.Find("CharacterSprite").transform.Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
+				players.Add (player);
 
-			players.Add (player);
-
-
+			}	
 
 		}
 

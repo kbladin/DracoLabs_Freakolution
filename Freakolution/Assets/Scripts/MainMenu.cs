@@ -284,7 +284,7 @@ public class MainMenu : MonoBehaviour
 
 			int nPlayersPlaying = 0;
 			int nPlayersReady = 0;
-			int regPlayers = 0;
+//			int regPlayers = 0;
 			for(int i=0; i<playerPlaying.Length ;i++){
 				if(playerReady[i])
 					nPlayersReady++;
@@ -292,12 +292,12 @@ public class MainMenu : MonoBehaviour
 				if(playerPlaying[i])
 					nPlayersPlaying++;
 
-				if(playerPlaying[i]){
-					GameVariables.playersPlaying[regPlayers] = playerPlaying[i];
-					GameVariables.playerClasses[regPlayers] = classes[playerClass[i]];
-					GameVariables.playerChemicals[regPlayers] = playerChemical[i];
-					regPlayers++;
-				}
+//				if(playerPlaying[i]){
+					GameVariables.playersPlaying[i] = playerPlaying[i];
+					GameVariables.playerClasses[i] = classes[playerClass[i]];
+					GameVariables.playerChemicals[i] = playerChemical[i];
+//					regPlayers++;
+//				}
 			}
 			GameVariables.nPlayers = nPlayersPlaying;
 
@@ -305,6 +305,7 @@ public class MainMenu : MonoBehaviour
 			if(nPlayersReady == nPlayersPlaying)
 				Application.LoadLevel(1);
 
+			RefreshMenuButtons();
 			return;
 		} else  if (btnName == "Exit"){
 			Application.Quit();
@@ -456,19 +457,25 @@ public class MainMenu : MonoBehaviour
 
 
 		if(nControllers == 0) {
+			GetKeyBoardInput(1);
 		} else if (nControllers == 1) {
 			GetJoystick1Input();
-	
+			GetKeyBoardInput(2);
+
 		} else if (nControllers == 2) {
 			GetJoystick1Input();
 			GetJoystick2Input();
+			GetKeyBoardInput(3);
 
 		} else if (nControllers == 3) {
 			GetJoystick1Input();
 			GetJoystick2Input();
 			GetJoystick3Input();
+			GetKeyBoardInput(4);
 
 		} else if (nControllers == 4) {
+			GetKeyBoardInput(1);
+
 			GetJoystick1Input();
 			GetJoystick2Input();
 			GetJoystick3Input();
@@ -476,31 +483,154 @@ public class MainMenu : MonoBehaviour
 
 		}
 
-		if(Input.GetKeyDown(KeyCode.UpArrow)){
-			GameObject target = findTopObject(menuButtonsP1, currentSelect1);
-			if(target != null){
-				currentSelect1 = target;
-				SetMenuSelector(menuSelect1, currentSelect1);
-			}
-		}
 
-		if(Input.GetKeyDown(KeyCode.DownArrow)){
-			GameObject target = findBottomObject(menuButtonsP1, currentSelect1);
-			if(target != null){
-				currentSelect1 = target;
-				SetMenuSelector(menuSelect1, currentSelect1);
-			}
-		}
-
-
-		if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)){
-			if(currentSelect1 != null)
-				ButtonPressed(currentSelect1.GetComponent<MenuButtonScript>().buttonName, currentSelect1, 1);
-		}
 
 
 
 	}
+
+	void GetKeyBoardInput(int player){
+		if(player == 1){
+			if(!playerReady[0]){
+
+				if(Input.GetKeyDown(KeyCode.UpArrow)){
+					GameObject target = findTopObject(menuButtonsP1, currentSelect1);
+					if(target != null){
+						currentSelect1 = target;
+						SetMenuSelector(menuSelect1, currentSelect1);
+					}
+				}
+				
+				if(Input.GetKeyDown(KeyCode.DownArrow)){
+					GameObject target = findBottomObject(menuButtonsP1, currentSelect1);
+					if(target != null){
+						currentSelect1 = target;
+						SetMenuSelector(menuSelect1, currentSelect1);
+					}
+				}
+			}
+			if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)){
+				if(currentSelect1 != null)
+					ButtonPressed(currentSelect1.GetComponent<MenuButtonScript>().buttonName, currentSelect1, player);
+			}
+			if (Input.GetKeyDown (KeyCode.Escape)){
+				//Back! Cancel			
+				playerReady[0] = false;
+				playerFrame1.transform.Find("ReadyFrame").gameObject.SetActive(false);
+				currentSelect1 = null;
+				GameObject target = findTopObject(menuButtonsP1, currentSelect1);
+				if(target != null){
+					currentSelect1 = target;
+					SetMenuSelector(menuSelect1, currentSelect1);
+				}
+			}
+
+		} else if(player == 2){
+			if(!playerReady[1]){
+				if(Input.GetKeyDown(KeyCode.UpArrow)){
+					GameObject target = findTopObject(menuButtonsP2, currentSelect2);
+					if(target != null){
+						currentSelect2 = target;
+						SetMenuSelector(menuSelect2, currentSelect2);
+					}
+				}
+				
+				if(Input.GetKeyDown(KeyCode.DownArrow)){
+					GameObject target = findBottomObject(menuButtonsP2, currentSelect2);
+					if(target != null){
+						currentSelect2 = target;
+						SetMenuSelector(menuSelect2, currentSelect2);
+					}
+				}
+			}
+			if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)){
+				if(currentSelect2 != null)
+					ButtonPressed(currentSelect2.GetComponent<MenuButtonScript>().buttonName, currentSelect2, player);
+			}
+			if (Input.GetKeyDown (KeyCode.Escape)){
+				//Back! Cancel			
+				playerReady[1] = false;
+				playerFrame2.transform.Find("ReadyFrame").gameObject.SetActive(false);
+				currentSelect2 = null;
+				GameObject target = findTopObject(menuButtonsP2, currentSelect2);
+				if(target != null){
+					currentSelect2 = target;
+					SetMenuSelector(menuSelect2, currentSelect2);
+				}
+			}
+		} else if(player == 3){
+			if(!playerReady[2]){
+				if(Input.GetKeyDown(KeyCode.UpArrow)){
+					GameObject target = findTopObject(menuButtonsP3, currentSelect3);
+					if(target != null){
+						currentSelect3 = target;
+						SetMenuSelector(menuSelect3, currentSelect3);
+					}
+				}
+				
+				if(Input.GetKeyDown(KeyCode.DownArrow)){
+					GameObject target = findBottomObject(menuButtonsP3, currentSelect3);
+					if(target != null){
+						currentSelect3 = target;
+						SetMenuSelector(menuSelect3, currentSelect3);
+					}
+				}
+			}
+			if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)){
+				if(currentSelect3 != null)
+					ButtonPressed(currentSelect3.GetComponent<MenuButtonScript>().buttonName, currentSelect3, player);
+			}
+			if (Input.GetKeyDown (KeyCode.Escape)){
+				//Back! Cancel			
+				playerReady[2] = false;
+				playerFrame3.transform.Find("ReadyFrame").gameObject.SetActive(false);
+				currentSelect3 = null;
+				GameObject target = findTopObject(menuButtonsP3, currentSelect3);
+				if(target != null){
+					currentSelect3 = target;
+					SetMenuSelector(menuSelect3, currentSelect3);
+				}
+			}
+		} else{
+			if(!playerReady[3]){
+				if(Input.GetKeyDown(KeyCode.UpArrow)){
+					GameObject target = findTopObject(menuButtonsP4, currentSelect4);
+					if(target != null){
+						currentSelect4 = target;
+						SetMenuSelector(menuSelect4, currentSelect4);
+					}
+				}
+				
+				if(Input.GetKeyDown(KeyCode.DownArrow)){
+					GameObject target = findBottomObject(menuButtonsP4, currentSelect4);
+					if(target != null){
+						currentSelect4 = target;
+						SetMenuSelector(menuSelect4, currentSelect4);
+					}
+				}
+			}
+			if(Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space)){
+				if(currentSelect4 != null)
+					ButtonPressed(currentSelect4.GetComponent<MenuButtonScript>().buttonName, currentSelect4, player);
+			}
+			if (Input.GetKeyDown (KeyCode.Escape)){
+				//Back! Cancel			
+				playerReady[3] = false;
+				playerFrame4.transform.Find("ReadyFrame").gameObject.SetActive(false);
+				currentSelect4 = null;
+				GameObject target = findTopObject(menuButtonsP4, currentSelect4);
+				if(target != null){
+					currentSelect4 = target;
+					SetMenuSelector(menuSelect4, currentSelect4);
+				}
+			}
+		}
+
+
+
+
+	}
+
 
 	GameObject findTopObject(GameObject[] buttons, GameObject myCurrentSelect) {
 		GameObject returnObject = null;
