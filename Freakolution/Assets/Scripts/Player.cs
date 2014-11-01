@@ -31,6 +31,12 @@ public class Player : MonoBehaviour {
 	Node previousNode = null;
 	Node currentNode = null;
 	bool previousObst = false;
+	
+	//Maybe the healer should be its own inherited class of player
+	// but for now its just a boolean
+	private bool isHealer = false;
+	public bool IsHealer {get{return isHealer;} set{isHealer=value;}}
+	
 	//Sound effects
 	public AudioClip[] attackAudio;
 	public AudioClip[] hurtAudio;
@@ -159,6 +165,14 @@ public class Player : MonoBehaviour {
 			currentNode.walkable = true;
 			currentNode.currentObject = null;
 		}
+	}
+	
+	public void GainHealth(float healPower, Chemicals pukeChemicals)
+	{
+		this.health += healPower * playerChemicals.getReaction(pukeChemicals);
+		
+		if(this.health > this.maxHealth)
+			this.health = this.maxHealth;
 	}
 
 	public float GetHealth() {

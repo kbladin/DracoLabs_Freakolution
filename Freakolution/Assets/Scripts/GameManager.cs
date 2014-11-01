@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour {
 			GameObject player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation) as GameObject;
 			player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
 			player.GetComponent<Player>().SetChemicals(new Chemicals(i));
+			
+			if(i == 0)
+				player.GetComponent<Player>().IsHealer = true;
+			
 			players.Add (player);
 		}
 	
