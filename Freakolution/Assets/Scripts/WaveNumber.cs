@@ -2,18 +2,26 @@
 using System.Collections;
 
 public class WaveNumber : MonoBehaviour {
-	GameObject ground;
-	RandomSpawn randomSpawn;
+
+	private RandomSpawn randomSpawn;
+	private int waveNumber;
 	// Use this for initialization
 	void Start () {
-		ground = GameObject.Find("Ground");
-		randomSpawn = ground.GetComponent<RandomSpawn>();
+		
+		randomSpawn = GetComponentInParent<RandomSpawn>();
+		waveNumber = randomSpawn.WaveCounter;
+		GetComponent<GUIText>().text = waveNumber.ToString();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		GetComponent<TextMesh>().text = randomSpawn.waveCounter.ToString();;
+		if(waveNumber != randomSpawn.WaveCounter)
+		{
+			waveNumber = randomSpawn.WaveCounter;
+			GetComponent<GUIText>().text = waveNumber.ToString();
+		}
+		
 		
 	}
 }
