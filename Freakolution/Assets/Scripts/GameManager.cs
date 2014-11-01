@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour {
 	public Transform[] playerSpawns;
 	public GameObject playerPrefab;
 	private List<GameObject> players;
+	public Texture waveHUDTex;
 	
 	private int numOfPlayers = 4;
 	
@@ -90,5 +91,10 @@ public class GameManager : MonoBehaviour {
 		Time.timeScale=0.0f;
 		gameOverBool = true;
 	}
+	
+//	void OnGUI()
+//	{
+//		GUI.Box (new Rect (Screen.width/2 - 50,0,100,50), new GUIContent(waveHUDTex));
+//	}
 	
 }	

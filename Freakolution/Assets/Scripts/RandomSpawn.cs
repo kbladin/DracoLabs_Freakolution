@@ -14,15 +14,14 @@ public class RandomSpawn : MonoBehaviour {
 		private float waveIntervalTimer = 0.0f;
 		// THe number of spawned enemies each wave
 		public int spawnCount = 0;
-		// The number of waves that have passed (started)
-		public int waveCounter = 1;
 		// THe between waves
 		public float waveInterval = 10.0f;
 		// the time that enemies are spawned in a wave
 		public float spawnInterval = 20.0f;
 		// The time it takes between spawning enemies in a wave
 		public float spawnCooldown = 5.0f;
-				
+		// The number of waves that have passed (started)
+		private int waveCounter = 1;				
 		// Empty game objects with the spawn point locations
 		public Transform[] spawns;
 		
@@ -34,8 +33,10 @@ public class RandomSpawn : MonoBehaviour {
 		//The gameObject that will be spawned
 		public GameObject enemyPrefab;
 
-	public GameObject blockPrefab;
-	public int numberOfStartingBlocks;
+		public GameObject blockPrefab;
+		public int numberOfStartingBlocks;
+		
+		public int WaveCounter {get{return waveCounter;} set{waveCounter = value;}}
 				
 		public GameObject player;
 		void Start () {
@@ -117,6 +118,11 @@ public class RandomSpawn : MonoBehaviour {
 			else {--i;}
 
 		}
+	}
+	
+	public float GetWaveInterval()
+	{
+		return waveInterval;
 	}
 	
 }
