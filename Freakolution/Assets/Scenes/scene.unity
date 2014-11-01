@@ -188,7 +188,7 @@ GUIText:
   m_Text: 0
   m_Anchor: 0
   m_Alignment: 0
-  m_PixelOffset: {x: 9, y: -60}
+  m_PixelOffset: {x: 9, y: -68}
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 0}
@@ -636,7 +636,7 @@ GUIText:
   m_Text: 1
   m_Anchor: 0
   m_Alignment: 0
-  m_PixelOffset: {x: -79, y: -21}
+  m_PixelOffset: {x: -79, y: -27}
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 0}
@@ -1293,9 +1293,9 @@ GUITexture:
   m_PixelInset:
     serializedVersion: 2
     x: -128
-    y: -132.410004
+    y: -145
     width: 200
-    height: 128
+    height: 142
   m_LeftBorder: 0
   m_RightBorder: 0
   m_TopBorder: 0
