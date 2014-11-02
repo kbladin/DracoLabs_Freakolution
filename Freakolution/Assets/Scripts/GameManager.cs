@@ -40,15 +40,14 @@ public class GameManager : MonoBehaviour {
 				player.GetComponent<Player>().SetChemicals(new Chemicals(chemical));
 				player.GetComponent<Player>().stats.playerNumber = i;
 				player.transform.Find("CharacterSprite").transform.Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
-//				if(GameVariables.playerClasses[i] == "Healer")
-//					player.GetComponent<Player>().
-					
+				player.GetComponent<Player>().SetPlayerClass(GameVariables.playerClasses[i]);
+				
 				if(GameVariables.keyboardPlayer == i){
 					player.GetComponent<ThirdPersonController>().SetPlayerNumber(4);
 				} else {
 					player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
 				}
-
+				
 				players.Add (player);
 			}	
 		}

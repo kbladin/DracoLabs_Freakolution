@@ -14,7 +14,7 @@ public class HealthBar : MonoBehaviour {
 		if (transform.parent != null && transform.parent.tag == "Enemy")
 			scaleHealth = GetComponentInParent<Enemy> ().GetHealth () / GetComponentInParent<Enemy> ().maxHealth;
 		else if(transform.parent != null && transform.parent.tag == "Player")
-			scaleHealth = GetComponentInParent<Player> ().GetHealth () / GetComponentInParent<Player> ().maxHealth;
+			scaleHealth = GetComponentInParent<Player> ().GetHealth () / GetComponentInParent<Player> ().MaxHealth;
 
 		float r = Mathf.Min(2 * (1 - scaleHealth), 1f);
 		float g = Mathf.Min(2 * scaleHealth, 1f);

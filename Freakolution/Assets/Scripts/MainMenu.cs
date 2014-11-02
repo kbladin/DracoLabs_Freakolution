@@ -54,7 +54,7 @@ public class MainMenu : MonoBehaviour
 	private GameObject playerFrame3;
 	private GameObject playerFrame4;
 
-	private string[] classes = {"Tank","Engineer","Marskman","Healer"};
+	private string[] classes = {"Tank","Engineer","Marksman","Healer"};
 	private string[] classDescs = {"Melee","Melee","Range","Range"};
 	private string[] chemicals = {"Redium","Greenogen","Bluorine"};
 

@@ -13,26 +13,25 @@ public struct PlayerStats {
 
 public class Player : MonoBehaviour {
 
+	//Fields
 	private GameObject gameOverDisplay;
-	public float maxHealth;
+	private float maxHealth;
 	private float health;
 	//public PlayerStats stats;
 	public bool attacking;
-	public float attackCooldownTime;
-	public float pukeCooldownTime;
-	public float buildCooldownTime;
+	private float attackCooldownTime;
+	private float pukeCooldownTime;
+	private float buildCooldownTime;
 	private float pukeCooldown = 0;
 	private float attackCooldown = 0;
 	private float buildCooldown = 0;
 	private float attackRange;
-	public float playerDamage;
-	public float playerPukeDamage;
+	private float playerDamage;
+	private float playerPukeDamage;
 	private bool alive;
 	private Chemicals playerChemicals;
 	private bool blockWait = false;
 	private GameObject carriedBlock;
-	//property
-	public bool Alive {get{return alive;} set{alive = value;}}
 	//needs this to get movement direction
 	public ThirdPersonController controller;
 	public GameObject blockPrefab;
@@ -47,7 +46,16 @@ public class Player : MonoBehaviour {
 	//Maybe the healer should be its own inherited class of player
 	// but for now its just a boolean
 	private bool isHealer = false;
+	
+	//Properties
+	public bool Alive {get{return alive;} set{alive = value;}}
 	public bool IsHealer {get{return isHealer;} set{isHealer=value;}}
+	public float MaxHealth {get{return maxHealth;} set{maxHealth=value;}}
+	public float AttackCooldownTime {get{return attackCooldownTime;} set{attackCooldownTime = value;}}
+	public float PukeCooldownTime {get{return pukeCooldownTime;} set{pukeCooldownTime = value;}}
+	public float BuildCooldownTime {get{return buildCooldownTime;} set{buildCooldownTime = value;}}
+	public float PlayerDamage {get{return playerDamage;} set{playerDamage = value;}}
+	public float PlayerPukeDamage {get{return playerPukeDamage;} set{playerPukeDamage = value;}}
 	
 	//Sound effects
 	public AudioClip[] attackAudio;
@@ -57,7 +65,6 @@ public class Player : MonoBehaviour {
 	public AudioClip hitEnemy;
 	public AudioClip runningAudio;
 	public AudioClip barrelPickup;
-	
 	public AudioClip pukeAudio;
 
 	public PlayerStats stats;
@@ -347,6 +354,51 @@ public class Player : MonoBehaviour {
 			carriedBlock = null;
 			stats.barrelsMoved++;
 				}
+	}
+	
+	// should maybe be done with seperate classes
+	public void SetPlayerClass(string playerClass)
+	{
+		if(playerClass == "Healer")
+		{
+			IsHealer=true;
+			MaxHealth=200f;
+			AttackCooldownTime=0.4f;
+			PukeCooldownTime=3.0f;
+			BuildCooldownTime=20.0f;
+			PlayerDamage=30f;
+			PlayerPukeDamage=7f;
+		}
+		if(playerClass == "Tank")
+		{
+			IsHealer=false;
+			MaxHealth=300;
+			AttackCooldownTime=0.4f;
+			PukeCooldownTime=4.0f;
+			BuildCooldownTime=20.0f;
+			PlayerDamage=60f;
+			PlayerPukeDamage=2f;
+		}
+		if(playerClass == "Marksman")
+		{
+			IsHealer=false;
+			MaxHealth=100;
+			AttackCooldownTime=0.5f;
+			PukeCooldownTime=2.0f;
+			BuildCooldownTime=20.0f;
+			PlayerDamage=15f;
+			PlayerPukeDamage=15f;
+		}
+		if(playerClass == "Engineer")
+		{
+			IsHealer=false;
+			MaxHealth=200f;
+			AttackCooldownTime=0.4f;
+			PukeCooldownTime=3.0f;
+			BuildCooldownTime=3.0f;
+			PlayerDamage=30f;
+			PlayerPukeDamage=4f;
+		}
 	}
 }
 
