@@ -22,8 +22,10 @@ public class GameManager : MonoBehaviour {
 	private int numOfPlayers = 4;
 	
 	void Awake () {
+<<<<<<< HEAD
 	
-		
+=======
+>>>>>>> f3b20a38b9e1bcbc07268a3233fa87b3abb95a57
 		players = new List<GameObject>();
 		numOfPlayers = GameVariables.nPlayers;
 //		print("n players = " + );
@@ -35,26 +37,18 @@ public class GameManager : MonoBehaviour {
 			if(GameVariables.playerChemicals != null)
 				chemical = GameVariables.playerChemicals[i];
 
-
 			if(GameVariables.playersPlaying[i]){
 
 				GameObject player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation) as GameObject;
+				player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
 				player.GetComponent<Player>().SetChemicals(new Chemicals(chemical));
 				player.transform.Find("CharacterSprite").transform.Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
-//				if(GameVariables.playerClasses[i] == "Healer")
-//					player.GetComponent<Player>().
-					
-				if(GameVariables.keyboardPlayer == i){
-					player.GetComponent<ThirdPersonController>().SetPlayerNumber(4);
-				} else {
-					player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
-				}
-
 				players.Add (player);
 
 			}	
 
 		}
+<<<<<<< HEAD
 
 
 
@@ -67,6 +61,8 @@ public class GameManager : MonoBehaviour {
 //			players.Add (player);
 //		}
 	
+=======
+>>>>>>> f3b20a38b9e1bcbc07268a3233fa87b3abb95a57
 	}
 	
 	void Start ()
