@@ -22,8 +22,6 @@ public class GameManager : MonoBehaviour {
 	private int numOfPlayers = 4;
 	
 	void Awake () {
-	
-		
 		players = new List<GameObject>();
 		numOfPlayers = GameVariables.nPlayers;
 //		print("n players = " + );
@@ -40,6 +38,7 @@ public class GameManager : MonoBehaviour {
 
 				GameObject player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation) as GameObject;
 				player.GetComponent<Player>().SetChemicals(new Chemicals(chemical));
+				player.GetComponent<Player>().stats.playerNumber = i;
 				player.transform.Find("CharacterSprite").transform.Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
 //				if(GameVariables.playerClasses[i] == "Healer")
 //					player.GetComponent<Player>().
@@ -51,11 +50,8 @@ public class GameManager : MonoBehaviour {
 				}
 
 				players.Add (player);
-
 			}	
-
 		}
-
 
 
 //		for(int i = 0; i<numOfPlayers;i++)

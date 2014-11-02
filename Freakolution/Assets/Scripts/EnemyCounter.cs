@@ -7,7 +7,7 @@ public class EnemyCounter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		numOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-		GetComponent<GUIText>().text = numOfEnemies.ToString();
+		GetComponent<GUIText>().text ="Enemies: " + numOfEnemies.ToString();
 	}
 	
 	// Update is called once per frame
@@ -16,7 +16,7 @@ public class EnemyCounter : MonoBehaviour {
 		if(newNumOfEnemies != numOfEnemies)
 		{
 			numOfEnemies = newNumOfEnemies;
-			GetComponent<GUIText>().text = numOfEnemies.ToString();
+			GetComponent<GUIText>().text ="Enemies: " + numOfEnemies.ToString();
 		}
 			
 	}

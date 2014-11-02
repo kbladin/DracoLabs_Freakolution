@@ -6,6 +6,8 @@ public class Puke : MonoBehaviour {
 	public Chemicals pukeChemicals;
 	public float damage;
 	public Player player;
+	//factor that is multiplied with the damage for the healer
+	public float healerDagamageFactor;
 
 	// Use this for initialization
 	void Start () {
@@ -27,10 +29,26 @@ public class Puke : MonoBehaviour {
 	}
 
 	void OnParticleCollision(GameObject other) {
-		if (other.tag == "Enemy") {
-			Enemy enemy = other.GetComponent<Enemy>();
-			enemy.LoseHealth(damage, pukeChemicals, player);
-			//Destroy(other);// body.AddForce(direction * 5);
+		
+		if (player.IsHealer )
+		{
+			if (other.tag == "Player") {
+				Player ally = other.GetComponent<Player>();
+				ally.GainHealth(damage, pukeChemicals);
+			}
+			if (other.tag == "Enemy") {
+				Enemy enemy = other.GetComponent<Enemy>();
+				enemy.LoseHealth(damage*healerDagamageFactor, pukeChemicals, player);
+				//Destroy(other);// body.AddForce(direction * 5);
+			}
+		}
+		else
+		{
+			if (other.tag == "Enemy") {
+				Enemy enemy = other.GetComponent<Enemy>();
+				enemy.LoseHealth(damage, pukeChemicals, player);
+				//Destroy(other);// body.AddForce(direction * 5);
+			}
 		}
 	}
 }

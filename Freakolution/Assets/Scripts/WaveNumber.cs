@@ -10,7 +10,7 @@ public class WaveNumber : MonoBehaviour {
 		
 		randomSpawn = GetComponentInParent<RandomSpawn>();
 		waveNumber = randomSpawn.WaveCounter;
-		GetComponent<GUIText>().text = waveNumber.ToString();
+		GetComponent<GUIText>().text ="Wave: " + waveNumber.ToString();
 	}
 	
 	// Update is called once per frame
@@ -19,7 +19,7 @@ public class WaveNumber : MonoBehaviour {
 		if(waveNumber != randomSpawn.WaveCounter)
 		{
 			waveNumber = randomSpawn.WaveCounter;
-			GetComponent<GUIText>().text = waveNumber.ToString();
+			GetComponent<GUIText>().text ="Wave: " + waveNumber.ToString();
 		}
 		
 		

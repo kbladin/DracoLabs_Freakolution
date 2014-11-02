@@ -2,11 +2,13 @@
 using System.Collections;
 
 public struct PlayerStats {
+	public int playerNumber;
 	public int killCount;
 	public float damageDone;
 	public float damageTaken;
 	public int barrelsBuilt;
 	public int barrelsMoved;
+	public Chemicals chemicals;
 }
 
 public class Player : MonoBehaviour {
@@ -41,6 +43,12 @@ public class Player : MonoBehaviour {
 	Node previousNode = null;
 	Node currentNode = null;
 	bool previousObst = false;
+	
+	//Maybe the healer should be its own inherited class of player
+	// but for now its just a boolean
+	private bool isHealer = false;
+	public bool IsHealer {get{return isHealer;} set{isHealer=value;}}
+	
 	//Sound effects
 	public AudioClip[] attackAudio;
 	public AudioClip[] hurtAudio;
@@ -170,11 +178,20 @@ public class Player : MonoBehaviour {
 		if(health <= 0)
 		{
 			alive = false;
+			stats.chemicals = playerChemicals;
 			gameOverDisplay.GetComponent<GameOverDisplay>().AddPlayerStats(stats);
 			currentNode.walkable = true;
 			currentNode.currentObject = null;
 			gameObject.SetActive(false);
 		}
+	}
+	
+	public void GainHealth(float healPower, Chemicals pukeChemicals)
+	{
+		this.health += healPower * playerChemicals.getReaction(pukeChemicals);
+		
+		if(this.health > this.maxHealth)
+			this.health = this.maxHealth;
 	}
 
 	public float GetHealth() {
