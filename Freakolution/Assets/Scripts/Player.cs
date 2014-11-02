@@ -2,11 +2,13 @@
 using System.Collections;
 
 public struct PlayerStats {
+	public int playerNumber;
 	public int killCount;
 	public float damageDone;
 	public float damageTaken;
 	public int barrelsBuilt;
 	public int barrelsMoved;
+	public Chemicals chemicals;
 }
 
 public class Player : MonoBehaviour {
@@ -176,6 +178,7 @@ public class Player : MonoBehaviour {
 		if(health <= 0)
 		{
 			alive = false;
+			stats.chemicals = playerChemicals;
 			gameOverDisplay.GetComponent<GameOverDisplay>().AddPlayerStats(stats);
 			currentNode.walkable = true;
 			currentNode.currentObject = null;

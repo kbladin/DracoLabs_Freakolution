@@ -9,6 +9,7 @@ public class GameVariables{
 	public static bool[] playersPlaying;
 	public static bool isMusicOn = true;
 	public static bool isSFXOn = true;
+	public static int keyboardPlayer = -1;
 
 
 	// Use this for initialization

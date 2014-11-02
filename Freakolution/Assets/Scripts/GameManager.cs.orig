@@ -8,9 +8,9 @@ using System.Collections.Generic;
 */
 public class GameManager : MonoBehaviour {
 	
-	//private bool pause = false;
+	private bool pause = false;
 	private bool gameOverBool = false;
-	public GameObject pauseMenu;
+	public GUITexture pauseGUI;
 	//public GUITexture gameOverGUI;
 	public GameObject gameOverDisplay;
 	
@@ -22,6 +22,10 @@ public class GameManager : MonoBehaviour {
 	private int numOfPlayers = 4;
 	
 	void Awake () {
+<<<<<<< HEAD
+	
+=======
+>>>>>>> f3b20a38b9e1bcbc07268a3233fa87b3abb95a57
 		players = new List<GameObject>();
 		numOfPlayers = GameVariables.nPlayers;
 //		print("n players = " + );
@@ -33,25 +37,19 @@ public class GameManager : MonoBehaviour {
 			if(GameVariables.playerChemicals != null)
 				chemical = GameVariables.playerChemicals[i];
 
-
 			if(GameVariables.playersPlaying[i]){
 
 				GameObject player = Instantiate(playerPrefab, playerSpawns[i].position, playerSpawns[i].rotation) as GameObject;
+				player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
 				player.GetComponent<Player>().SetChemicals(new Chemicals(chemical));
-				player.GetComponent<Player>().stats.playerNumber = i;
 				player.transform.Find("CharacterSprite").transform.Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
-//				if(GameVariables.playerClasses[i] == "Healer")
-//					player.GetComponent<Player>().
-					
-				if(GameVariables.keyboardPlayer == i){
-					player.GetComponent<ThirdPersonController>().SetPlayerNumber(4);
-				} else {
-					player.GetComponent<ThirdPersonController>().SetPlayerNumber(i);
-				}
-
 				players.Add (player);
+
 			}	
+
 		}
+<<<<<<< HEAD
+
 
 
 //		for(int i = 0; i<numOfPlayers;i++)
@@ -63,27 +61,32 @@ public class GameManager : MonoBehaviour {
 //			players.Add (player);
 //		}
 	
+=======
+>>>>>>> f3b20a38b9e1bcbc07268a3233fa87b3abb95a57
 	}
 	
 	void Start ()
 	{
-		pauseMenu.GetComponent<PauseMenu>().GamePaused=false;
+		pauseGUI.enabled = false;
 		gameOverBool = false;
+
 
 	}
 	
 	void Update () {
-	
-		if(!gameOverBool && (Input.GetKeyUp(KeyCode.Escape) || Input.GetButtonUp("P_Button7"))) 
+
+		if(!gameOverBool && Input.GetKeyUp(KeyCode.Escape)) 
 		{
-			if(pauseMenu.GetComponent<PauseMenu>().GamePaused)
-			{
-				pauseMenu.GetComponent<PauseMenu>().UnPauseGame();
-			}
-			else
-			{
-				pauseMenu.GetComponent<PauseMenu>().PauseGame();
-			}
+			pause = !pause;
+		}
+		
+		if(pause) {
+			Time.timeScale = 0.0f;
+			pauseGUI.enabled = true;
+		}
+		else {
+			Time.timeScale = 1.0f;
+			pauseGUI.enabled = false;
 		}
 		
 		if(!isPlayersAlive() && !gameOverBool)
@@ -91,7 +94,7 @@ public class GameManager : MonoBehaviour {
 			gameOver();
 		}
 		
-		if(gameOverBool && (Input.GetKeyUp(KeyCode.Escape) || Input.GetAxis("P_Button7")>0))
+		if(gameOverBool && Input.GetKeyUp(KeyCode.Escape))
 		{
 			Application.LoadLevel(0);
 		}

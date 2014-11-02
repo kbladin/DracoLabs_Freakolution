@@ -17,6 +17,10 @@ public class MainMenu : MonoBehaviour
 	
 	public float ScreensTransitionTime = 0.5f;
 
+	public AudioClip selectSound;
+	public AudioClip switchSound;
+
+	
 	//constants
 	private static int SETTINGS_MENU = 0;
 	private static int MAIN_MENU = 1;
@@ -105,7 +109,7 @@ public class MainMenu : MonoBehaviour
 
 		string[] joysticks = Input.GetJoystickNames();
 		nControllers = joysticks.Length;
-		print(nControllers);
+//		print(nControllers);
 
 
 		RefreshMenuButtons();
@@ -160,7 +164,9 @@ public class MainMenu : MonoBehaviour
 
 	public void ButtonPressed(string btnName, GameObject myCurrentSelect, int player){
 
-		print (btnName);
+//		print (btnName);
+//		audio.clip = selectSound;
+		audio.PlayOneShot(selectSound);
 
 		int previousScreen = currentScreen;
 		if (btnName == "Play"){
@@ -301,6 +307,11 @@ public class MainMenu : MonoBehaviour
 			}
 			GameVariables.nPlayers = nPlayersPlaying;
 
+			if(nControllers < 4 && playerPlaying[nControllers]){
+				GameVariables.keyboardPlayer = nControllers ;
+			}
+
+			print ("keyBoard player = "+GameVariables.keyboardPlayer);
 
 			if(nPlayersReady == nPlayersPlaying)
 				Application.LoadLevel(1);
@@ -441,6 +452,8 @@ public class MainMenu : MonoBehaviour
 			}
 		}
 		myMenuSelect.SetActive(true);
+		audio.PlayOneShot(switchSound);
+
 	}
 
 	public void SetSelectedButton(GameObject button){
