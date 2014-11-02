@@ -8,7 +8,7 @@ using System.Collections.Generic;
 */
 public class GameManager : MonoBehaviour {
 	
-	private bool pause = false;
+	//private bool pause = false;
 	private bool gameOverBool = false;
 	public GameObject pauseMenu;
 	//public GUITexture gameOverGUI;
@@ -65,23 +65,20 @@ public class GameManager : MonoBehaviour {
 		pauseMenu.GetComponent<PauseMenu>().GamePaused=false;
 		gameOverBool = false;
 
-
 	}
 	
 	void Update () {
-
-		if(!gameOverBool && Input.GetKeyUp(KeyCode.Escape)) 
+	
+		if(!gameOverBool && (Input.GetKeyUp(KeyCode.Escape) || Input.GetButtonUp("P_Button7"))) 
 		{
-			pause = !pause;
-		}
-		
-		if(pause) {
-			//Time.timeScale = 0.0f;
-			pauseMenu.GetComponent<PauseMenu>().PauseGame();
-		}
-		else {
-			//Time.timeScale = 1.0f;
-			pauseMenu.GetComponent<PauseMenu>().UnPauseGame();
+			if(pauseMenu.GetComponent<PauseMenu>().GamePaused)
+			{
+				pauseMenu.GetComponent<PauseMenu>().UnPauseGame();
+			}
+			else
+			{
+				pauseMenu.GetComponent<PauseMenu>().PauseGame();
+			}
 		}
 		
 		if(!isPlayersAlive() && !gameOverBool)
@@ -89,7 +86,7 @@ public class GameManager : MonoBehaviour {
 			gameOver();
 		}
 		
-		if(gameOverBool && Input.GetKeyUp(KeyCode.Escape))
+		if(gameOverBool && (Input.GetKeyUp(KeyCode.Escape) || Input.GetAxis("P_Button7")>0))
 		{
 			Application.LoadLevel(0);
 		}

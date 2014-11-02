@@ -2086,7 +2086,7 @@ GUIText:
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 12800000, guid: b0f2e9ebf77c24d38b6729d80d5db1f8, type: 3}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b0f2e9ebf77c24d38b6729d80d5db1f8, type: 3}
   m_FontSize: 40
   m_FontStyle: 0
   m_Color:
@@ -4435,7 +4435,7 @@ GUIText:
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 12800000, guid: b0f2e9ebf77c24d38b6729d80d5db1f8, type: 3}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: b0f2e9ebf77c24d38b6729d80d5db1f8, type: 3}
   m_FontSize: 25
   m_FontStyle: 0
   m_Color:
@@ -5545,7 +5545,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 36
+  m_RootOrder: 35
 --- !u!1001 &1451442158
 Prefab:
   m_ObjectHideFlags: 0
@@ -7446,7 +7446,7 @@ Transform:
   m_LocalScale: {x: 9.36999989, y: 2.41000009, z: 35}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 35
+  m_RootOrder: 36
 --- !u!1 &1980184939
 GameObject:
   m_ObjectHideFlags: 0
