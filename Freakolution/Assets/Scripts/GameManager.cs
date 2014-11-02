@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
 	
 	private bool pause = false;
 	private bool gameOverBool = false;
-	public GUITexture pauseGUI;
+	public GameObject pauseMenu;
 	//public GUITexture gameOverGUI;
 	public GameObject gameOverDisplay;
 	
@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour {
 	
 	void Start ()
 	{
-		pauseGUI.enabled = false;
+		pauseMenu.GetComponent<PauseMenu>().GamePaused=false;
 		gameOverBool = false;
 
 
@@ -76,12 +76,12 @@ public class GameManager : MonoBehaviour {
 		}
 		
 		if(pause) {
-			Time.timeScale = 0.0f;
-			pauseGUI.enabled = true;
+			//Time.timeScale = 0.0f;
+			pauseMenu.GetComponent<PauseMenu>().PauseGame();
 		}
 		else {
-			Time.timeScale = 1.0f;
-			pauseGUI.enabled = false;
+			//Time.timeScale = 1.0f;
+			pauseMenu.GetComponent<PauseMenu>().UnPauseGame();
 		}
 		
 		if(!isPlayersAlive() && !gameOverBool)
