@@ -778,8 +778,8 @@ public class MainMenu : MonoBehaviour
 	}
 
 	void GetJoystick1Input(){
-		float h = Input.GetAxis("P1Alt_Horizontal");
-		float v = Input.GetAxis("P1Alt_Vertical");
+		float h = Input.GetAxis("P1_Horizontal");
+		float v = Input.GetAxis("P1_Vertical");
 		bool up = false;
 		bool down = false;
 		bool left = false;

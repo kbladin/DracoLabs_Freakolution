@@ -106,7 +106,7 @@ public class PauseMenu : MonoBehaviour {
 	
 	private int getKeyboardInput()
 	{
-		float verticalInput = Input.GetAxis("P1Alt_Vertical") ;
+		float verticalInput = Input.GetAxisRaw("P1Alt_Vertical") ;
 		if (verticalInput > 0.2f)
 		{
 			return Mathf.CeilToInt(verticalInput);
