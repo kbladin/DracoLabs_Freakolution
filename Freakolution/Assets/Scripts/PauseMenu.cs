@@ -92,7 +92,7 @@ public class PauseMenu : MonoBehaviour {
 	
 	private int getJoystickInput(int joystick)
 	{
-		float verticalInput = Input.GetAxis("P"+joystick+"_Vertical") ;
+		float verticalInput = Input.GetAxisRaw("P"+joystick+"_Vertical") ;
 		if (verticalInput > 0.2f)
 		{
 			return Mathf.CeilToInt(verticalInput);
