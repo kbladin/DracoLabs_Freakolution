@@ -124,11 +124,11 @@ public class PauseMenu : MonoBehaviour {
 		{
 			if(i == selectedMenuButton)
 			{
-				menuButtons[i].GetComponent<GUIText>().color = new Color(0,1,0);
+				menuButtons[i].GetComponent<GUIText>().color = new Color(1,1,1);
 			}
 			else
 			{
-				menuButtons[i].GetComponent<GUIText>().color = new Color(1,1,1);
+				menuButtons[i].GetComponent<GUIText>().color = new Color(0,0.7,0);
 			}
 			
 		}
