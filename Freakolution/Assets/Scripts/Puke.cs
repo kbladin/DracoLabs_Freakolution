@@ -7,7 +7,7 @@ public class Puke : MonoBehaviour {
 	public float damage;
 	public Player player;
 	//factor that is multiplied with the damage for the healer
-	public float healerDagamageFactor;
+	public float healerDamageFactor;
 
 	// Use this for initialization
 	void Start () {
@@ -38,7 +38,7 @@ public class Puke : MonoBehaviour {
 			}
 			if (other.tag == "Enemy") {
 				Enemy enemy = other.GetComponent<Enemy>();
-				enemy.LoseHealth(damage*healerDagamageFactor, pukeChemicals, player);
+				enemy.LoseHealth(damage*healerDamageFactor, pukeChemicals, player);
 				//Destroy(other);// body.AddForce(direction * 5);
 			}
 		}

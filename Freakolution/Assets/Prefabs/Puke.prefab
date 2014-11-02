@@ -74,7 +74,7 @@ MonoBehaviour:
   pukeChemicals: {fileID: 0}
   damage: 0
   player: {fileID: 0}
-  healerDagamageFactor: .300000012
+  healerDamageFactor: .300000012
 --- !u!198 &19800000
 ParticleSystem:
   m_ObjectHideFlags: 1
