@@ -128,7 +128,7 @@ public class PauseMenu : MonoBehaviour {
 			}
 			else
 			{
-				menuButtons[i].GetComponent<GUIText>().color = new Color(0,0.7,0);
+				menuButtons[i].GetComponent<GUIText>().color = new Color(0,0.7f,0);
 			}
 			
 		}
