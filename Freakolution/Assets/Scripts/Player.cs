@@ -57,6 +57,8 @@ public class Player : MonoBehaviour {
 	public float PlayerDamage {get{return playerDamage;} set{playerDamage = value;}}
 	public float PlayerPukeDamage {get{return playerPukeDamage;} set{playerPukeDamage = value;}}
 	
+	public Chemicals PlayerChemicals {get{return playerChemicals;} set{playerChemicals = value;}}
+	
 	//Sound effects
 	public AudioClip[] attackAudio;
 	public AudioClip[] hurtAudio;
@@ -332,7 +334,10 @@ public class Player : MonoBehaviour {
 			AudioSource.PlayClipAtPoint(barrelPickup, transform.position);
 		}
 	}
-	
+	public int getNumberOfKills ()
+	{
+		return stats.killCount;
+	}
 	
 	public void SetChemicals(Chemicals theChemicals)
 	{
