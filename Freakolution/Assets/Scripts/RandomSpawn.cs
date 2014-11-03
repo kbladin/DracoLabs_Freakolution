@@ -15,11 +15,11 @@ public class RandomSpawn : MonoBehaviour {
 		// A counter for how many enemies should spawn
 		private int numberOfSpawns = 0;
 		// THe number of spawned enemies each wave
-		public int spawnsPerWave = 5; //Initiate to 5 enemies for wave 1, should be changed to depend on the nr of players
+	public int spawnsPerWave;// = 5; //Initiate to 5 enemies for wave 1, should be changed to depend on the nr of players
 		// THe time between waves
-		public float waveInterval = 10.0f;
+	public float waveInterval;// = 10.0f;
 		// the time that enemies are spawned in a wave
-		public float spawnInterval = 20.0f;
+	public float spawnInterval;// = 20.0f;
 		// The time it takes between spawning enemies in a wave
 		public float spawnCooldown;
 		// The number of waves that have passed (started)
@@ -45,6 +45,9 @@ public class RandomSpawn : MonoBehaviour {
 		public int NumberOfSpawns {get{return numberOfSpawns;} set{numberOfSpawns=value;}}
 		public int SpawnsPerWave {get{return spawnsPerWave;} set{spawnsPerWave=value;}}
 				
+		// Audio
+		public AudioClip alarmAudio;
+
 		public GameObject player;
 		void Start () {
 
@@ -80,16 +83,16 @@ public class RandomSpawn : MonoBehaviour {
 						//Number of spawns increase for each wave by a factor
 						spawnsPerWave += (int)(waveFactor*spawnsPerWave);
 						waveCounter++;
+						AudioSource.PlayClipAtPoint(alarmAudio, transform.position);
+
 						spawnIntervalTimer=0.0f;
 						numberOfSpawns = 0;
 						//The cooldown between each spawn depends on number of spawns and total spawn time
 						spawnCooldown = spawnInterval / spawnsPerWave;
 						waveIntervalTimer = 0.0f;
+					}
 				}
-				}
-				
 			}
-			
 		}
 
 
