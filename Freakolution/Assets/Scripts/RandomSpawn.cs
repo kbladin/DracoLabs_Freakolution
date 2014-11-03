@@ -17,7 +17,7 @@ public class RandomSpawn : MonoBehaviour {
 		// THe number of spawned enemies each wave
 		public int spawnsPerWave = 5; //Initiate to 5 enemies for wave 1, should be changed to depend on the nr of players
 		// THe time between waves
-		public float waveInterval = 10.0f;
+		public float waveInterval = 15.0f;
 		// the time that enemies are spawned in a wave
 		public float spawnInterval = 20.0f;
 		// The time it takes between spawning enemies in a wave
@@ -56,7 +56,7 @@ public class RandomSpawn : MonoBehaviour {
 		void Update () {
 			
 			//If the time since start of the wave is smaller than the total time for
-			if(spawnIntervalTimer < spawnInterval)
+			if(numberOfSpawns < spawnsPerWave)
 			{
 				spawnIntervalTimer += Time.deltaTime;
 				spawnCooldownTimer += Time.deltaTime;

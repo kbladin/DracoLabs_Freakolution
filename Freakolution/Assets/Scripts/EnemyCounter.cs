@@ -27,9 +27,13 @@ public class EnemyCounter : MonoBehaviour {
 		{
 			numOfEnemiesStart = spawnScript.SpawnsPerWave;
 			numOfEnemies = numOfEnemiesStart;
-		}
-		
+			enemyCounterComponent.text ="Scientists: " + numOfEnemies.ToString() + "/" + numOfEnemiesStart.ToString();
+		}	
+	}
+	
+	public void decreaseEnemyCount()
+	{
+		numOfEnemies = numOfEnemies -1;
 		enemyCounterComponent.text ="Scientists: " + numOfEnemies.ToString() + "/" + numOfEnemiesStart.ToString();
-			
 	}
 }
