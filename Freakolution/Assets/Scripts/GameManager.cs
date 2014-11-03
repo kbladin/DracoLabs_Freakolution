@@ -41,7 +41,8 @@ public class GameManager : MonoBehaviour {
 				player.GetComponent<Player>().stats.playerNumber = i;
 				player.transform.Find("CharacterSprite").transform.Find("PlayerNumberText").GetComponent<TextMesh>().text = (i+1).ToString();
 				player.GetComponent<Player>().SetPlayerClass(GameVariables.playerClasses[i]);
-				
+				player.GetComponent<HealthGlobe>().SetPlayerNumber(i);
+
 				if(GameVariables.keyboardPlayer == i){
 					player.GetComponent<ThirdPersonController>().SetPlayerNumber(4);
 				} else {
