@@ -359,45 +359,46 @@ public class Player : MonoBehaviour {
 	// should maybe be done with seperate classes
 	public void SetPlayerClass(string playerClass)
 	{
-		if(playerClass == "Healer")
-		{
-			IsHealer=true;
-			MaxHealth=200f;
-			AttackCooldownTime=0.4f;
-			PukeCooldownTime=3.0f;
-			BuildCooldownTime=20.0f;
-			PlayerDamage=30f;
-			PlayerPukeDamage=7f;
-		}
-		if(playerClass == "Tank")
-		{
-			IsHealer=false;
-			MaxHealth=300;
-			AttackCooldownTime=0.4f;
-			PukeCooldownTime=4.0f;
-			BuildCooldownTime=20.0f;
-			PlayerDamage=60f;
-			PlayerPukeDamage=2f;
-		}
-		if(playerClass == "Marksman")
-		{
-			IsHealer=false;
-			MaxHealth=100;
-			AttackCooldownTime=0.5f;
-			PukeCooldownTime=2.0f;
-			BuildCooldownTime=20.0f;
-			PlayerDamage=15f;
-			PlayerPukeDamage=15f;
-		}
-		if(playerClass == "Engineer")
-		{
-			IsHealer=false;
-			MaxHealth=200f;
-			AttackCooldownTime=0.4f;
-			PukeCooldownTime=3.0f;
-			BuildCooldownTime=3.0f;
-			PlayerDamage=30f;
-			PlayerPukeDamage=4f;
+		if (playerClass == "Healer") {
+						IsHealer = true;
+						MaxHealth = 200f;
+						AttackCooldownTime = 0.4f;
+						PukeCooldownTime = 3.0f;
+						BuildCooldownTime = 20.0f;
+						PlayerDamage = 30f;
+						PlayerPukeDamage = 7f;
+				} else if (playerClass == "Tank") {
+						IsHealer = false;
+						MaxHealth = 300;
+						AttackCooldownTime = 0.4f;
+						PukeCooldownTime = 4.0f;
+						BuildCooldownTime = 20.0f;
+						PlayerDamage = 60f;
+						PlayerPukeDamage = 2f;
+				} else if (playerClass == "Marksman") {
+						IsHealer = false;
+						MaxHealth = 100;
+						AttackCooldownTime = 0.5f;
+						PukeCooldownTime = 2.0f;
+						BuildCooldownTime = 20.0f;
+						PlayerDamage = 15f;
+						PlayerPukeDamage = 15f;
+				} else if (playerClass == "Engineer") {
+						IsHealer = false;
+						MaxHealth = 200f;
+						AttackCooldownTime = 0.4f;
+						PukeCooldownTime = 3.0f;
+						BuildCooldownTime = 3.0f;
+						PlayerDamage = 30f;
+						PlayerPukeDamage = 4f;
+				} else {
+						IsHealer = false;
+						MaxHealth = 300;
+						AttackCooldownTime = 0.4f;
+						PukeCooldownTime = 4.0f;
+						BuildCooldownTime = 20.0f;
+						PlayerDamage = 60f;
+						PlayerPukeDamage = 2f;
 		}
 	}
 }
