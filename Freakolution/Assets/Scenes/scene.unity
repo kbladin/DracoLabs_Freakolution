@@ -185,10 +185,10 @@ GUIText:
   m_GameObject: {fileID: 21161111}
   m_Enabled: 1
   serializedVersion: 3
-  m_Text: 'Scientists: 1'
+  m_Text: 'Scientists: 5/5'
   m_Anchor: 0
   m_Alignment: 0
-  m_PixelOffset: {x: 19.6599998, y: -5}
+  m_PixelOffset: {x: -.699999988, y: -5}
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 12800000, guid: b0f2e9ebf77c24d38b6729d80d5db1f8, type: 3}
@@ -636,7 +636,7 @@ GUIText:
   m_Text: 'Wave: 1'
   m_Anchor: 0
   m_Alignment: 0
-  m_PixelOffset: {x: -148.800003, y: -5}
+  m_PixelOffset: {x: -174, y: -5}
   m_LineSpacing: 1
   m_TabSize: 4
   m_Font: {fileID: 12800000, guid: b0f2e9ebf77c24d38b6729d80d5db1f8, type: 3}
@@ -1292,9 +1292,9 @@ GUITexture:
   m_Color: {r: .5, g: .5, b: .5, a: .5}
   m_PixelInset:
     serializedVersion: 2
-    x: -165.100006
+    x: -187
     y: -39.4000015
-    width: 345
+    width: 396
     height: 37
   m_LeftBorder: 0
   m_RightBorder: 0

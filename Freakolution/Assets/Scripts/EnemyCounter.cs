@@ -4,19 +4,32 @@ using System.Collections;
 public class EnemyCounter : MonoBehaviour {
 	
 	private int numOfEnemies;
+	private int numOfEnemiesStart;
+	private RandomSpawn spawnScript;
+	
+	private GUIText enemyCounterComponent;
+	
+	public int NumOfEnemies {get {return numOfEnemies;} set{numOfEnemies = value;}}
 
 	void Start () {
-		numOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-		GetComponent<GUIText>().text ="Scientists: " + numOfEnemies.ToString();
+		spawnScript = GetComponentInParent<RandomSpawn>();
+		numOfEnemiesStart = spawnScript.SpawnsPerWave ;
+		numOfEnemies = numOfEnemiesStart;
+		
+		enemyCounterComponent = GetComponent<GUIText>();
+		
+		enemyCounterComponent.text ="Scientists: " + numOfEnemies.ToString() + "/" + numOfEnemiesStart.ToString();
 	}
 	
 	void Update () {
-		int newNumOfEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
-		if(newNumOfEnemies != numOfEnemies)
+		
+		if(numOfEnemiesStart != spawnScript.SpawnsPerWave)
 		{
-			numOfEnemies = newNumOfEnemies;
-			GetComponent<GUIText>().text ="Scientists: " + numOfEnemies.ToString();
+			numOfEnemiesStart = spawnScript.SpawnsPerWave;
+			numOfEnemies = numOfEnemiesStart;
 		}
+		
+		enemyCounterComponent.text ="Scientists: " + numOfEnemies.ToString() + "/" + numOfEnemiesStart.ToString();
 			
 	}
 }

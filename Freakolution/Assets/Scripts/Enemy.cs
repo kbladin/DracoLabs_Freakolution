@@ -123,6 +123,8 @@ public class Enemy : MonoBehaviour {
 		Destroy(Instantiate (bloodPrefab, transform.position, transform.rotation) as GameObject, 15f);
 		if(health < 0){
 			++playerAttacked.stats.killCount;
+			EnemyCounter enemyCounter = GameObject.Find ("EnemyCounter").GetComponent<EnemyCounter>();
+			enemyCounter.NumOfEnemies = enemyCounter.NumOfEnemies - 1;
 			Destroy(gameObject);
 		}
 	}
