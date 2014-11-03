@@ -9,7 +9,7 @@ public class RandomSpawn : MonoBehaviour {
 		// A timer that will reset at the end of spawnInterval
 		private float spawnIntervalTimer = 0.0f;
 		// A timer that will reset every spawn cooldown
-		private float spawnCooldownTimer = 0.0f;
+		private float spawnCooldownTimer = -15.0f;
 		// A timer that will reset every waveInterval
 		private float waveIntervalTimer = 0.0f;
 		// A counter for how many enemies should spawn
@@ -59,7 +59,7 @@ public class RandomSpawn : MonoBehaviour {
 		void Update () {
 			
 			//If the time since start of the wave is smaller than the total time for
-			if(spawnIntervalTimer < spawnInterval)
+			if(numberOfSpawns < spawnsPerWave)
 			{
 				spawnIntervalTimer += Time.deltaTime;
 				spawnCooldownTimer += Time.deltaTime;
@@ -69,7 +69,6 @@ public class RandomSpawn : MonoBehaviour {
 					Spawn();
 					spawnCooldownTimer = 0.0f;
 				}
-						
 			}
 			else
 			{
@@ -83,7 +82,6 @@ public class RandomSpawn : MonoBehaviour {
 						//Number of spawns increase for each wave by a factor
 						spawnsPerWave += (int)(waveFactor*spawnsPerWave);
 						waveCounter++;
-						AudioSource.PlayClipAtPoint(alarmAudio, transform.position);
 
 						spawnIntervalTimer=0.0f;
 						numberOfSpawns = 0;
