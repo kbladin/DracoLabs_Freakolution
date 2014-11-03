@@ -12,18 +12,22 @@ public class RandomSpawn : MonoBehaviour {
 		private float spawnCooldownTimer = 0.0f;
 		// A timer that will reset every waveInterval
 		private float waveIntervalTimer = 0.0f;
+		// A counter for how many enemies should spawn
+		private int numberOfSpawns = 0;
 		// THe number of spawned enemies each wave
-		public int spawnCount = 0;
-		// THe between waves
+		public int spawnsPerWave = 5; //Initiate to 5 enemies for wave 1, should be changed to depend on the nr of players
+		// THe time between waves
 		public float waveInterval = 10.0f;
 		// the time that enemies are spawned in a wave
 		public float spawnInterval = 20.0f;
 		// The time it takes between spawning enemies in a wave
-		public float spawnCooldown = 5.0f;
+		public float spawnCooldown;
 		// The number of waves that have passed (started)
 		private int waveCounter = 1;				
 		// Empty game objects with the spawn point locations
 		public Transform[] spawns;
+		//The factor for how the number of enemies increase each wave
+		private float waveFactor = 0.2f;
 		
 		public List<GameObject> enemies;
 		
@@ -36,35 +40,31 @@ public class RandomSpawn : MonoBehaviour {
 		public GameObject blockPrefab;
 		public int numberOfStartingBlocks;
 		
+		//properties
 		public int WaveCounter {get{return waveCounter;} set{waveCounter = value;}}
+		public int NumberOfSpawns {get{return numberOfSpawns;} set{numberOfSpawns=value;}}
+		public int SpawnsPerWave {get{return spawnsPerWave;} set{spawnsPerWave=value;}}
 				
 		public GameObject player;
 		void Start () {
-//			spawnIntervalTimer = 0.0f;
-//			spawnCooldownTimer = 0.0f;
-//			waveIntervalTimer = 0.0f;
-//			spawnCooldown = 5.0f;
-//			spawnCount = 0;
-//			waveCounter = 1;
-//			waveInterval = 10.0f;
-//			spawnInterval = 20.0f;
+
 		SpawnBlocks ();
+		spawnCooldown = spawnInterval / spawnsPerWave;
 		}
 		
 		// Is executed every frame
 		void Update () {
 			
-			
+			//If the time since start of the wave is smaller than the total time for
 			if(spawnIntervalTimer < spawnInterval)
 			{
 				spawnIntervalTimer += Time.deltaTime;
 				spawnCooldownTimer += Time.deltaTime;
-				
+				//If the time between spawns > spawncooldown, spawn..
 				if(spawnCooldownTimer >=spawnCooldown)
 				{	
 					Spawn();
 					spawnCooldownTimer = 0.0f;
-					spawnCount++;
 				}
 						
 			}
@@ -77,10 +77,13 @@ public class RandomSpawn : MonoBehaviour {
 					waveIntervalTimer += Time.deltaTime;
 					if(waveIntervalTimer > waveInterval)
 					{
+						//Number of spawns increase for each wave by a factor
+						spawnsPerWave += (int)(waveFactor*spawnsPerWave);
 						waveCounter++;
 						spawnIntervalTimer=0.0f;
-						spawnCount = 0;
-						spawnCooldown *= 0.8f; 
+						numberOfSpawns = 0;
+						//The cooldown between each spawn depends on number of spawns and total spawn time
+						spawnCooldown = spawnInterval / spawnsPerWave;
 						waveIntervalTimer = 0.0f;
 				}
 				}
@@ -101,6 +104,8 @@ public class RandomSpawn : MonoBehaviour {
 			location = spawns[randomSpawnPick];
 			//enemyPrefab.GetComponent<AI>().setPlayer( player);
 			GameObject enemy = Instantiate(enemyPrefab, location.position, location.rotation) as GameObject;
+			//Increment number of spawns
+			numberOfSpawns++;
 			//enemy.GetComponent<Enemy>().SetChemicals(new Chemicals());
 			//enemy.rigidbody.AddForce(location.forward * 100f);
 		}
@@ -118,11 +123,6 @@ public class RandomSpawn : MonoBehaviour {
 			else {--i;}
 
 		}
-	}
-	
-	public float GetWaveInterval()
-	{
-		return waveInterval;
 	}
 	
 }
