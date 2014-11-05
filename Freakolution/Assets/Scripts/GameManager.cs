@@ -19,6 +19,11 @@ public class GameManager : MonoBehaviour {
 	private List<GameObject> players;
 	public Texture waveHUDTex;
 	
+	public Texture2D healerSelector;
+	public Texture2D tankSelector;
+	public Texture2D engineerSelector;
+	public Texture2D marksmanSelector;
+	
 	private int numOfPlayers = 4;
 	
 	void Awake () {
@@ -43,6 +48,16 @@ public class GameManager : MonoBehaviour {
 				player.GetComponent<Player>().SetPlayerClass(GameVariables.playerClasses[i]);
 				player.GetComponent<HealthGlobe>().SetPlayerNumber(i);
 
+				
+				if(GameVariables.playerClasses[i] == "Healer")
+					player.transform.Find("CharacterSprite").transform.Find("PlayerNumberBack").renderer.material.mainTexture = healerSelector;
+				else if(GameVariables.playerClasses[i] == "Tank")
+					player.transform.Find("CharacterSprite").transform.Find("PlayerNumberBack").renderer.material.mainTexture = tankSelector;
+				else if(GameVariables.playerClasses[i] == "Engineer")
+					player.transform.Find("CharacterSprite").transform.Find("PlayerNumberBack").renderer.material.mainTexture = engineerSelector;
+				else if(GameVariables.playerClasses[i] == "Marksman")
+					player.transform.Find("CharacterSprite").transform.Find("PlayerNumberBack").renderer.material.mainTexture = marksmanSelector;
+				
 				if(GameVariables.keyboardPlayer == i){
 					player.GetComponent<ThirdPersonController>().SetPlayerNumber(4);
 				} else {

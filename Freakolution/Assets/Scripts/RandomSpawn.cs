@@ -6,28 +6,28 @@ public class RandomSpawn : MonoBehaviour {
 
 		// Variables
 		
-		// A timer that will reset at the end of spawnInterval
-		private float spawnIntervalTimer = 0.0f;
 		// A timer that will reset every spawn cooldown
-		private float spawnCooldownTimer = 0.0f;
+		private float spawnCooldownTimer = -15.0f;
 		// A timer that will reset every waveInterval
 		private float waveIntervalTimer = 0.0f;
 		// A counter for how many enemies should spawn
 		private int numberOfSpawns = 0;
 		// THe number of spawned enemies each wave
-		public int spawnsPerWave = 5; //Initiate to 5 enemies for wave 1, should be changed to depend on the nr of players
+	public int spawnsPerWave;// = 5; //Initiate to 5 enemies for wave 1, should be changed to depend on the nr of players
 		// THe time between waves
-		public float waveInterval = 10.0f;
+	public float waveInterval;// = 15.0f;
 		// the time that enemies are spawned in a wave
-		public float spawnInterval = 20.0f;
+	public float spawnInterval;// = 20.0f;
 		// The time it takes between spawning enemies in a wave
-		public float spawnCooldown;
+		private float spawnCooldown;
 		// The number of waves that have passed (started)
-		private int waveCounter = 1;				
+		private int waveCounter = 0;				
 		// Empty game objects with the spawn point locations
 		public Transform[] spawns;
 		//The factor for how the number of enemies increase each wave
 		private float waveFactor = 0.2f;
+		
+		private bool waveStarted=false;
 		
 		public List<GameObject> enemies;
 		
@@ -45,20 +45,36 @@ public class RandomSpawn : MonoBehaviour {
 		public int NumberOfSpawns {get{return numberOfSpawns;} set{numberOfSpawns=value;}}
 		public int SpawnsPerWave {get{return spawnsPerWave;} set{spawnsPerWave=value;}}
 				
+		// Audio
+		public AudioClip alarmAudio;
+
 		public GameObject player;
 		void Start () {
 
 		SpawnBlocks ();
-		spawnCooldown = spawnInterval / spawnsPerWave;
 		}
 		
 		// Is executed every frame
 		void Update () {
+		
 			
-			//If the time since start of the wave is smaller than the total time for
-			if(spawnIntervalTimer < spawnInterval)
+			if(waveIntervalTimer < waveInterval)
 			{
-				spawnIntervalTimer += Time.deltaTime;
+				waveIntervalTimer += Time.deltaTime;
+			}
+			//Check if waveinterval timer is below waveinterval
+			else if(!waveStarted)
+			{
+				waveStarted = true;
+				waveCounter++;
+				InitiateWave(waveCounter);
+				//Sound horn
+				AudioSource.PlayClipAtPoint(alarmAudio, transform.position);
+		}
+		
+			else if(numberOfSpawns < spawnsPerWave)
+			{
+				//spawn enemies
 				spawnCooldownTimer += Time.deltaTime;
 				//If the time between spawns > spawncooldown, spawn..
 				if(spawnCooldownTimer >=spawnCooldown)
@@ -66,48 +82,33 @@ public class RandomSpawn : MonoBehaviour {
 					Spawn();
 					spawnCooldownTimer = 0.0f;
 				}
-						
-			}
-			else
-			{
-				//Debug.Log(enemies.Count);
-				GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
-				if(enemy.Length == 0){
-					//wait for next wave
-					waveIntervalTimer += Time.deltaTime;
-					if(waveIntervalTimer > waveInterval)
-					{
-						//Number of spawns increase for each wave by a factor
-						spawnsPerWave += (int)(waveFactor*spawnsPerWave);
-						waveCounter++;
-						spawnIntervalTimer=0.0f;
-						numberOfSpawns = 0;
-						//The cooldown between each spawn depends on number of spawns and total spawn time
-						spawnCooldown = spawnInterval / spawnsPerWave;
-						waveIntervalTimer = 0.0f;
-				}
-				}
-				
 			}
 			
+			else
+			{
+				GameObject[] enemy = GameObject.FindGameObjectsWithTag("Enemy");
+				if(enemy.Length == 0)
+				{
+					numberOfSpawns = 0;
+					//The cooldown between each spawn depends on number of spawns and total spawn time
+					spawnCooldown = spawnInterval / spawnsPerWave;
+					waveIntervalTimer = 0.0f;
+					waveStarted = false;
+				}
+			}
 		}
 
 
 		
 		void Spawn()
 		{		
-			//int numOfPlayers = GameObject.FindGameObjectsWithTag("Player").Length;
-			//int randomChemicalPick = Mathf.Abs(Random.Range(0,numOfPlayers-1));
 			//Will randomly pick a number between 0 and the size of spawns array
 			//The length will be determined by the number of spawn elements in Unity
 			int randomSpawnPick = Mathf.Abs(Random.Range(0,spawns.Length));
 			location = spawns[randomSpawnPick];
-			//enemyPrefab.GetComponent<AI>().setPlayer( player);
 			GameObject enemy = Instantiate(enemyPrefab, location.position, location.rotation) as GameObject;
 			//Increment number of spawns
 			numberOfSpawns++;
-			//enemy.GetComponent<Enemy>().SetChemicals(new Chemicals());
-			//enemy.rigidbody.AddForce(location.forward * 100f);
 		}
 
 	void SpawnBlocks() {
@@ -123,6 +124,20 @@ public class RandomSpawn : MonoBehaviour {
 			else {--i;}
 
 		}
+	}
+	
+	void InitiateWave(int waveCounter)
+	{
+		if(waveCounter == 1)
+		{
+			spawnsPerWave = 5;
+		}
+		else
+		{
+			spawnsPerWave += (int)(waveFactor*spawnsPerWave);
+		}
+		spawnCooldown = spawnInterval / spawnsPerWave;
+		
 	}
 	
 }

@@ -197,7 +197,7 @@ public class Player : MonoBehaviour {
 	
 	public void GainHealth(float healPower, Chemicals pukeChemicals)
 	{
-		this.health += healPower * playerChemicals.getReaction(pukeChemicals);
+		this.health += healPower/2 + healPower * playerChemicals.getReaction(pukeChemicals);
 		
 		if(this.health > this.maxHealth)
 			this.health = this.maxHealth;
@@ -371,7 +371,7 @@ public class Player : MonoBehaviour {
 						PukeCooldownTime = 3.0f;
 						BuildCooldownTime = 20.0f;
 						PlayerDamage = 30f;
-						PlayerPukeDamage = 7f;
+						PlayerPukeDamage = 4f;
 				} else if (playerClass == "Tank") {
 						IsHealer = false;
 						MaxHealth = 300;
