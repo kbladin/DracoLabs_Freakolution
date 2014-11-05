@@ -2061,11 +2061,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -.100000001
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 9.66868496
+      value: 1.2030673
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
       propertyPath: m_LocalRotation.x
@@ -2085,7 +2085,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
       propertyPath: spawns.Array.data[0]
@@ -2095,6 +2095,14 @@ Prefab:
       propertyPath: spawns.Array.data[1]
       value: 
       objectReference: {fileID: 70986795}
+    - target: {fileID: 400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 7.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 540e2d8f2e86a18478877689f17da613, type: 2}
@@ -5172,7 +5180,7 @@ Transform:
   - {fileID: 453648110}
   - {fileID: 760380781}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!114 &1372557126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6203,11 +6211,11 @@ Transform:
   m_PrefabInternal: {fileID: 485872241}
   m_GameObject: {fileID: 1617689871}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 9.66868496}
-  m_LocalScale: {x: 18.6000004, y: 10, z: 6}
+  m_LocalPosition: {x: 0, y: -.100000001, z: 1.2030673}
+  m_LocalScale: {x: 7.5, y: 10, z: 5}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
 --- !u!1 &1653474417
 GameObject:
   m_ObjectHideFlags: 0
@@ -6380,7 +6388,6 @@ MonoBehaviour:
   spawnsPerWave: 5
   waveInterval: 15
   spawnInterval: 20
-  spawnCooldown: 5
   spawns:
   - {fileID: 129478211}
   - {fileID: 70986795}
