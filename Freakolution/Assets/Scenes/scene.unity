@@ -2132,7 +2132,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400006, guid: 65fb86f734ce568408b3eaad4fca1b60, type: 3}
   m_PrefabInternal: {fileID: 1996170851}
   m_GameObject: {fileID: 513109747}
-  m_LocalRotation: {x: -.707106829, y: 0, z: -0, w: .707106709}
+  m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
   m_LocalPosition: {x: -1.16415322e-10, y: .185772896, z: -2.68220811e-06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2388,7 +2388,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400010, guid: 2e226ce40bdb54d4ba8235eccfb0b784, type: 2}
   m_PrefabInternal: {fileID: 1388211935}
   m_GameObject: {fileID: 715725845}
-  m_LocalRotation: {x: .70710659, y: 0, z: 0, w: -.707106948}
+  m_LocalRotation: {x: .70710665, y: 0, z: 0, w: -.707107008}
   m_LocalPosition: {x: 0, y: 4.91738319e-07, z: -.436246395}
   m_LocalScale: {x: .0599999987, y: 1, z: .0299999993}
   m_Children: []
@@ -2582,7 +2582,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400004, guid: 65fb86f734ce568408b3eaad4fca1b60, type: 3}
   m_PrefabInternal: {fileID: 1996170851}
   m_GameObject: {fileID: 829594492}
-  m_LocalRotation: {x: -.707106829, y: 0, z: -0, w: .707106709}
+  m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
   m_LocalPosition: {x: .000998497009, y: .0117020607, z: .00538486242}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2669,7 +2669,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400008, guid: 65fb86f734ce568408b3eaad4fca1b60, type: 3}
   m_PrefabInternal: {fileID: 1996170851}
   m_GameObject: {fileID: 845877336}
-  m_LocalRotation: {x: -.707106829, y: 0, z: -0, w: .707106709}
+  m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
   m_LocalPosition: {x: -.0185000896, y: .0665979385, z: -1.52587891e-05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5922,7 +5922,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400000, guid: 65fb86f734ce568408b3eaad4fca1b60, type: 3}
   m_PrefabInternal: {fileID: 1996170851}
   m_GameObject: {fileID: 1534174426}
-  m_LocalRotation: {x: -.707106829, y: 0, z: -0, w: .707106709}
+  m_LocalRotation: {x: -.707106888, y: 0, z: -0, w: .707106769}
   m_LocalPosition: {x: .000998497009, y: 3.22363615, z: -.0033416748}
   m_LocalScale: {x: 1, y: 1.07696903, z: 1}
   m_Children: []
@@ -6385,8 +6385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0e93fd94edc5b499f78284dc41c47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnsPerWave: 5
-  waveInterval: 15
   spawnInterval: 20
   spawns:
   - {fileID: 129478211}

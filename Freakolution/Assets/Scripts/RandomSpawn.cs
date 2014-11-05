@@ -7,17 +7,17 @@ public class RandomSpawn : MonoBehaviour {
 		// Variables
 		
 		// A timer that will reset every spawn cooldown
-		private float spawnCooldownTimer = -15.0f;
+		private float spawnCooldownTimer = 0f;
 		// A timer that will reset every waveInterval
 		private float waveIntervalTimer = 0.0f;
 		// A counter for how many enemies should spawn
 		private int numberOfSpawns = 0;
 		// THe number of spawned enemies each wave
-	public int spawnsPerWave;// = 5; //Initiate to 5 enemies for wave 1, should be changed to depend on the nr of players
+		private int spawnsPerWave = 0;// = 5; //Initiate to 5 enemies for wave 1, should be changed to depend on the nr of players
 		// THe time between waves
-	public float waveInterval;// = 15.0f;
+		private float waveInterval = 8.0f;
 		// the time that enemies are spawned in a wave
-	public float spawnInterval;// = 20.0f;
+		public float spawnInterval;// = 20.0f;
 		// The time it takes between spawning enemies in a wave
 		private float spawnCooldown;
 		// The number of waves that have passed (started)
@@ -130,7 +130,7 @@ public class RandomSpawn : MonoBehaviour {
 	{
 		if(waveCounter == 1)
 		{
-			spawnsPerWave = 5;
+			spawnsPerWave = 10;
 		}
 		else
 		{
